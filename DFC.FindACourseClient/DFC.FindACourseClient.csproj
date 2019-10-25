@@ -11,7 +11,8 @@
     <PackageTags>Find a course</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright (c) 2019 Education and Skills Funding Agency Team</Copyright>
-    <Description>Find a course client that provides course seach functionality,</Description>
+    <Description>Find a course client that provides course seach functionality.
+For details on how to use this package see the ReadMe file that is part of the repository.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/SkillsFundingAgency/dfc-findacourseclient-pkg-netstandard</RepositoryUrl>
   </PropertyGroup>

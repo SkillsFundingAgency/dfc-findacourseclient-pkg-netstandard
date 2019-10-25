@@ -48,6 +48,36 @@ In addition -
 This package can be used as part of a larger solution that need to search for courses.
 Using this package will simplify the interactions with the backend WCF service that is provided by the find a course service.
 
+To use this package you will need to supply configuration settings from the hosting app.
+For a example of how to do this please take a look at the Intergration Test that is part of this solution.
+
+If a logger is not injected in then the package will not do any logging.
+If settings for the Cosmos auditing container are not supplied then there will be no auditing.
+
+        public void GetCoursesAsync()
+        {
+            var configuration = new ConfigurationBuilder()
+                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                      .Build();
+
+            var courseSearchClientSettings = new CourseSearchClientSettings
+            {
+                CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>() ?? new CourseSearchSvcSettings(),
+                CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>() ?? new CourseSearchAuditCosmosDbSettings(),
+            };
+
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton(courseSearchClientSettings)
+                .AddSingleton<ICourseSearchClient, CourseSearchClient>()
+                .AddFindACourseServices(courseSearchClientSettings)
+                .BuildServiceProvider();
+
+            var courseSearchClient = serviceProvider.GetService<ICourseSearchClient>();
+            var results = courseSearchClient.GetCoursesAsync(configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>());
+
+            results.Result.Count().Should().BeGreaterThan(0);
+        }
+
 
 
 ## Built With
