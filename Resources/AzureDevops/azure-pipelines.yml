@@ -41,7 +41,7 @@ jobs:
     displayName: "dotnet build package"
     inputs:
       command: 'build'
-      projects: '${{ parameters.SolutionBaseName }}\${{ parameters.SolutionBaseName }}.csproj'
+      projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
       arguments: '-o "$(build.artifactstagingdirectory)\Build\"'
 
   # Run the unit tests in DFC.FindACourseClient.UnitTests
@@ -49,13 +49,13 @@ jobs:
     displayName:  "Run unit tests"
     inputs:
       command: 'test'
-      projects: '${{ parameters.SolutionBaseName }}.UnitTests\${{ parameters.SolutionBaseName }}.UnitTests.csproj'
+      projects: '$(SolutionBaseName).UnitTests\$(SolutionBaseName).UnitTests.csproj'
 
   # Copy the integration tests directory to the build artifacts
   - task: CopyFiles@2
     displayName: "Copy integration tests"
     inputs:
-      SourceFolder: '${{ parameters.SolutionBaseName }}.IntegrationTests'
+      SourceFolder: '$(SolutionBaseName).IntegrationTests'
       Contents: '**'
       TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
 
@@ -71,7 +71,7 @@ jobs:
     displayName:  "Create nuget package"
     inputs:
       command: 'pack'
-      projects: '${{ parameters.SolutionBaseName }}\${{ parameters.SolutionBaseName }}.csproj'
+      projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
       outputDir: "$(build.artifactstagingdirectory)\\packages"
 
   # And publish it so we can release it in a separate release definition
