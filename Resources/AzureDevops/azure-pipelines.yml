@@ -44,7 +44,6 @@ jobs:
       command: 'build'
       configuration:  '$(BuildConfiguration)'
       projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
-      arguments: '-o "$(build.artifactstagingdirectory)\packages\"'
 
   # Run the unit tests in DFC.FindACourseClient.UnitTests
   - task: DotNetCoreCLI@2
@@ -58,8 +57,17 @@ jobs:
     displayName: "Copy integration tests"
     inputs:
       SourceFolder: '$(SolutionBaseName).IntegrationTests'
-      Contents: '**'
+      contents: |
+        $(SolutionBaseName)/**      
       TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
+
+  # Copy the integration tests directory to the build artifacts
+  - task: CopyFiles@2
+    displayName: "Copy nuget package"
+    inputs:
+      SourceFolder: '$(SolutionBaseName)'
+      contents: '**/*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
 
   # And publish it so we can run it before releasing the nuget package
   - task: PublishBuildArtifacts@1
