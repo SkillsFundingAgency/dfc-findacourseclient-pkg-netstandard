@@ -42,6 +42,7 @@ jobs:
     displayName: "dotnet build package"
     inputs:
       command: 'build'
+      configuration:  '$(BuildConfiguration)'
       projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
       arguments: '-o "$(build.artifactstagingdirectory)\Build\"'
 
