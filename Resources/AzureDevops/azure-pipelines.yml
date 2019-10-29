@@ -44,7 +44,7 @@ jobs:
       command: 'build'
       configuration:  '$(BuildConfiguration)'
       projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
-      arguments: '-o "$(build.artifactstagingdirectory)\Build\"'
+      arguments: '-o "$(build.artifactstagingdirectory)\packages\"'
 
   # Run the unit tests in DFC.FindACourseClient.UnitTests
   - task: DotNetCoreCLI@2
@@ -67,14 +67,6 @@ jobs:
     inputs:
       ArtifactName: "IntegrationTests"
       PathtoPublish: "$(build.artifactstagingdirectory)\\integrationtests"
-
-  # Create a nuget package
-  - task: DotNetCoreCLI@2
-    displayName:  "Create nuget package"
-    inputs:
-      command: 'pack'
-      projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
-      outputDir: "$(build.artifactstagingdirectory)\\packages"
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
