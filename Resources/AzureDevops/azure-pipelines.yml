@@ -6,8 +6,16 @@ variables:
 resources:
   repositories:
   - repository: self
+  - repository: dfc-devops
+    type: github
+    name: SkillsFundingAgency/dfc-devops
+    ref: refs/tags/v1.6.5
+    endpoint: 'GitHub (ESFA)'
 
 jobs:
+
+
+
 
 - job: Build
   displayName: Build
@@ -16,19 +24,8 @@ jobs:
     demands:
     - msbuild
     - visualstudio
-
+  
   steps:
-  - task: DotNetCoreInstaller@0
-    displayName: 'Use .NET Core sdk 2.2.402'
-    inputs:
-      version: 2.2.402
-
-  - task: gittools.gitversion.gitversion-task.GitVersion@4
-    displayName: 'GitVersion'
-    inputs:
-      updateAssemblyInfo: true
-      preferBundledVersion: false
-
   # Copy app settings template file, otherwise the build will fail
   - task: PowerShell@2
     displayName: 'Rename app settings template'    
@@ -37,20 +34,27 @@ jobs:
       script:
         Copy-Item -Path "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings-template.json" -Destination "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings.json"
 
-  # Build DFC.FindACourseClient
-  - task: DotNetCoreCLI@2
-    displayName: "dotnet build package"
+  - task: DotNetCoreCLI@2  
     inputs:
-      command: 'build'
-      configuration:  '$(BuildConfiguration)'
-      projects: '$(SolutionBaseName)\$(SolutionBaseName).csproj'
+      command: custom
+      custom: clean
 
-  # Run the unit tests in DFC.FindACourseClient.UnitTests
+  # Build Package + Unit Tests
+  - template: AzureDevOpsTemplates/Build/dfc-dotnetcore-build.yml@dfc-devops
+    parameters:
+      SolutionBaseName: $(SolutionBaseName)
+      BuildPlatform: $(BuildPlatform)
+      BuildConfiguration: $(BuildConfiguration)
+      DotNetCoreVersion: 2.2.402
+      TestSuffix: UnitTests
+
+  # TODO: Can we get the integration test project file matching it's folder?
+  # Chase this tomorrow.  
   - task: DotNetCoreCLI@2
-    displayName:  "Run unit tests"
     inputs:
-      command: 'test'
-      projects: '$(SolutionBaseName).UnitTests\$(SolutionBaseName).UnitTests.csproj'
+      command: 'build'      
+      projects: '$(SolutionBaseName).IntegrationTests/DFC.FindACourse.IntegrationTests.csproj'
+      arguments: "--configuration $(BuildConfiguration)"
 
   # Copy the integration tests to the build artifacts
   - task: CopyFiles@2
