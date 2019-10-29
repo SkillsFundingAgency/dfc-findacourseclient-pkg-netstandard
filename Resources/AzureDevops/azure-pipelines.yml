@@ -1,0 +1,83 @@
+variables:
+    SolutionBaseName: 'DFC.FindACourseClient'
+    BuildPlatform: 'any cpu'
+    BuildConfiguration: 'release'
+
+resources:
+  repositories:
+  - repository: self
+
+jobs:
+
+- job: Build
+  displayName: Build
+  pool:
+    name: Continuous Integration 02 - SSD - 160ACU
+    demands:
+    - msbuild
+    - visualstudio
+
+  steps:
+  - task: DotNetCoreInstaller@0
+    displayName: 'Use .NET Core sdk 2.2.402'
+    inputs:
+      version: 2.2.402
+
+  - task: gittools.gitversion.gitversion-task.GitVersion@4
+    displayName: 'GitVersion'
+    inputs:
+      updateAssemblyInfo: true
+      preferBundledVersion: false
+
+  # Copy app settings template file, otherwise the build will fail
+  - task: PowerShell@2
+    displayName: 'Rename app settings template'
+    inputs:
+      script:
+        Copy-Item -Path "$(System.DefaultWorkingDirectory)\DFC.FindACourseClient.IntegrationTests\appsettings-template.json" -Destination "$(System.DefaultWorkingDirectory)\DFC.FindACourseClient.IntegrationTests\appsettings.json"
+
+  # Build DFC.FindACourseClient
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet build package"
+    inputs:
+      command: 'build'
+      projects: '${{ parameters.SolutionBaseName }}\${{ parameters.SolutionBaseName }}.csproj'
+      arguments: '-o "$(build.artifactstagingdirectory)\Build\"'
+
+  # Run the unit tests in DFC.FindACourseClient.UnitTests
+  - task: DotNetCoreCLI@2
+    displayName:  "Run unit tests"
+    inputs:
+      command: 'test'
+      projects: '${{ parameters.SolutionBaseName }}.UnitTests\${{ parameters.SolutionBaseName }}.UnitTests.csproj'
+
+  # Copy the integration tests directory to the build artifacts
+  - task: CopyFiles@2
+    displayName: "Copy integration tests"
+    inputs:
+      SourceFolder: '${{ parameters.SolutionBaseName }}.IntegrationTests'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
+
+  # And publish it so we can run it before releasing the nuget package
+  - task: PublishBuildArtifacts@1
+    displayName:  "Publish build artifacts"
+    inputs:
+      ArtifactName: "IntegrationTests"
+      PathtoPublish: "$(build.artifactstagingdirectory)\\integrationtests"
+
+  # Create a nuget package
+  - task: DotNetCoreCLI@2
+    displayName:  "Create nuget package"
+    inputs:
+      command: 'pack'
+      projects: '${{ parameters.SolutionBaseName }}\${{ parameters.SolutionBaseName }}.csproj'
+      outputDir: "$(build.artifactstagingdirectory)\\packages"
+
+  # And publish it so we can release it in a separate release definition
+  - task: PublishBuildArtifacts@1
+    displayName:  "Publish build artifacts"
+    inputs:
+      ArtifactName: "Packages"
+      PathtoPublish: "$(build.artifactstagingdirectory)\\packages"
+
