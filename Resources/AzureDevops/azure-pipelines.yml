@@ -58,8 +58,8 @@ jobs:
     inputs:
       SourceFolder: '$(SolutionBaseName).IntegrationTests'
       contents: |
-        $(SolutionBaseName)/**      
-      TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
+        **/*
+      targetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
 
   # Copy the integration tests directory to the build artifacts
   - task: CopyFiles@2
@@ -82,4 +82,3 @@ jobs:
     inputs:
       ArtifactName: "Packages"
       PathtoPublish: "$(build.artifactstagingdirectory)\\packages"
-
