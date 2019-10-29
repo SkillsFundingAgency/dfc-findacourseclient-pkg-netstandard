@@ -56,17 +56,15 @@ jobs:
   - task: CopyFiles@2
     displayName: "Copy integration tests"
     inputs:
-      SourceFolder: '$(SolutionBaseName).IntegrationTests'
       contents: |
-        **/*
+        '$(SolutionBaseName).IntegrationTests\**'
       targetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
 
   # Copy the integration tests directory to the build artifacts
   - task: CopyFiles@2
     displayName: "Copy nuget package"
     inputs:
-      SourceFolder: '$(SolutionBaseName)'
-      contents: '**/*.nupkg'
+      contents: '$(SolutionBaseName)\**\*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
 
   # And publish it so we can run it before releasing the nuget package
