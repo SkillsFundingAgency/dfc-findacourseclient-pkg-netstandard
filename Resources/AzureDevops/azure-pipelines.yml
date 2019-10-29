@@ -52,21 +52,13 @@ jobs:
       command: 'test'
       projects: '$(SolutionBaseName).UnitTests\$(SolutionBaseName).UnitTests.csproj'
 
-  # Copy the integration tests directory to the build artifacts
-  - task: DotNetCoreCLI@2
-    displayName: "dotnet publish integration tests"
+  # Copy the integration tests to the build artifacts
+  - task: CopyFiles@2
+    displayName: "Copy integration tests"
     inputs:
-      command: 'publish'
-      configuration:  '$(BuildConfiguration)'
-      projects: '$(SolutionBaseName)\$(SolutionBaseName).IntegrationTests.csproj'
-      arguments: '--no-build -o $(build.artifactstagingdirectory)\\integrationtests'
-
-  # And publish it so we can run it before releasing the nuget package
-  - task: PublishBuildArtifacts@1
-    displayName:  "Publish build artifacts"
-    inputs:
-      ArtifactName: "IntegrationTests"
-      PathtoPublish: "$(build.artifactstagingdirectory)\\integrationtests"
+      sourceFolder: 'DFC.FindACourseClient.IntegrationTests'
+      contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
 
   # Copy the nuget package to the build artifacts
   - task: CopyFiles@2
@@ -74,6 +66,13 @@ jobs:
     inputs:
       contents: '$(SolutionBaseName)\**\*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
+
+  # And publish it so we can release it in a separate release definition
+  - task: PublishBuildArtifacts@1
+    displayName:  "Publish build artifacts"
+    inputs:
+      ArtifactName: "IntegrationTests"
+      PathtoPublish: "$(build.artifactstagingdirectory)\\integrationtests"
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
