@@ -51,13 +51,12 @@ jobs:
       DotNetCoreVersion: 2.2.402
       TestSuffix: UnitTests
 
-  - task: DotNetCoreCLI@2
+  - task: PowerShell@2
     displayName: "Pack and version nuget file"
-    inputs: 
-      command: pack
-      configuration: $(BuildConfiguration)
-      outputDir: "$(build.artifactstagingdirectory)\\packages"
-      versionEnvVar: Build.BuildNumber
+    inputs:      
+      targetType: inline
+      script: |
+        dotnet pack DFC.FindACourseClient/DFC.FindACourseClient.csproj --no-build -c Release -o $(build.artifactstagingdirectory)\\packages /p:Version=$(Build.BuildNumber)
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
