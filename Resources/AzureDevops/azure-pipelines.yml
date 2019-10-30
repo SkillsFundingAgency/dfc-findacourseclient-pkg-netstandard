@@ -1,0 +1,66 @@
+variables:
+    SolutionBaseName: 'DFC.FindACourseClient'
+    BuildPlatform: 'any cpu'
+    BuildConfiguration: 'release'
+
+resources:
+  repositories:
+  - repository: self
+  - repository: dfc-devops
+    type: github
+    name: SkillsFundingAgency/dfc-devops
+    ref: refs/tags/v1.6.5
+    endpoint: 'GitHub (ESFA)'
+
+trigger:
+  - dev
+  - master
+pr:
+  - master
+  - dev
+    
+jobs:
+- job: Build
+  displayName: Build
+  pool:
+    name: NCS - CI and CD
+    demands:
+    - msbuild
+    - visualstudio
+  
+  steps:
+  # Copy app settings template file, otherwise the build will fail
+  - task: PowerShell@2
+    displayName: 'Rename app settings template'    
+    inputs:
+      targetType: inline
+      script:
+        Copy-Item -Path "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings-template.json" -Destination "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings.json"
+
+  - task: DotNetCoreCLI@2  
+    inputs:
+      command: custom
+      custom: clean
+
+  # Build Package + Unit Tests
+  - template: AzureDevOpsTemplates/Build/dfc-dotnetcore-build.yml@dfc-devops
+    parameters:
+      SolutionBaseName: $(SolutionBaseName)
+      BuildPlatform: $(BuildPlatform)
+      BuildConfiguration: $(BuildConfiguration)
+      DotNetCoreVersion: 2.2.402
+      TestSuffix: UnitTests
+
+  # Copy the nuget package to the build artifacts
+  - task: CopyFiles@2
+    displayName: "Copy nuget package"
+    inputs:
+      contents: '$(SolutionBaseName)\**\*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
+
+  # And publish it so we can release it in a separate release definition
+  - task: PublishBuildArtifacts@1
+    displayName:  "Publish build artifacts"
+    inputs:
+      ArtifactName: "Packages"
+      PathtoPublish: "$(build.artifactstagingdirectory)\\packages"
