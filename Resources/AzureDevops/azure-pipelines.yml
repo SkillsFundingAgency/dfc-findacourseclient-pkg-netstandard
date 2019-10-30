@@ -51,12 +51,11 @@ jobs:
       DotNetCoreVersion: 2.2.402
       TestSuffix: UnitTests
 
-  # Copy the nuget package to the build artifacts
-  - task: CopyFiles@2
-    displayName: "Copy nuget package"
-    inputs:
-      contents: '$(SolutionBaseName)\**\*.nupkg'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
+  - task: DotNetCoreCLI@2
+    displayName: "Pack and version nuget file"
+    inputs: 
+      command: pack
+      arguments: "--configuration Release -p:Version=$(Build.BuildNumber) -o '$(build.artifactstagingdirectory)\\packages'"
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
