@@ -55,7 +55,9 @@ jobs:
     displayName: "Pack and version nuget file"
     inputs: 
       command: pack
-      arguments: "-c Release -o '$(build.artifactstagingdirectory)\\packages' /p:Version=$(Build.BuildNumber)"
+      configuration: $(BuildConfiguration)
+      outputDir: "$(build.artifactstagingdirectory)\\packages"
+      versionEnvVar: Build.BuildNumber
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
