@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntergrationTests", "Interg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourseClient.UnitTests", "DFC.FindACourseClient.UnitTests\DFC.FindACourseClient.UnitTests.csproj", "{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourse.IntegrationTests", "DFC.FindACourseClient.IntegrationTests\DFC.FindACourse.IntegrationTests.csproj", "{056EC375-ED36-40D1-AF36-B654D9B1A3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourseClient.IntegrationTests", "DFC.FindACourseClient.IntegrationTests\DFC.FindACourseClient.IntegrationTests.csproj", "{056EC375-ED36-40D1-AF36-B654D9B1A3FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
