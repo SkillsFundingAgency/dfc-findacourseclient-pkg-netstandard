@@ -13,14 +13,10 @@ resources:
     endpoint: 'GitHub (ESFA)'
 
 jobs:
-
-
-
-
 - job: Build
   displayName: Build
   pool:
-    name: Continuous Integration 02 - SSD - 160ACU
+    name: NCS - CI and CD
     demands:
     - msbuild
     - visualstudio
@@ -48,35 +44,12 @@ jobs:
       DotNetCoreVersion: 2.2.402
       TestSuffix: UnitTests
 
-  # TODO: Can we get the integration test project file matching it's folder?
-  # Chase this tomorrow.  
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'build'      
-      projects: '$(SolutionBaseName).IntegrationTests/DFC.FindACourse.IntegrationTests.csproj'
-      arguments: "--configuration $(BuildConfiguration)"
-
-  # Copy the integration tests to the build artifacts
-  - task: CopyFiles@2
-    displayName: "Copy integration tests"
-    inputs:
-      sourceFolder: 'DFC.FindACourseClient.IntegrationTests'
-      contents: '**'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)\\integrationtests'
-
   # Copy the nuget package to the build artifacts
   - task: CopyFiles@2
     displayName: "Copy nuget package"
     inputs:
       contents: '$(SolutionBaseName)\**\*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)\\packages'
-
-  # And publish it so we can release it in a separate release definition
-  - task: PublishBuildArtifacts@1
-    displayName:  "Publish build artifacts"
-    inputs:
-      ArtifactName: "IntegrationTests"
-      PathtoPublish: "$(build.artifactstagingdirectory)\\integrationtests"
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
