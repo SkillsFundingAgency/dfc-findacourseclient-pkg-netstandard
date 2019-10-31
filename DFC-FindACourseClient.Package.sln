@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{F6FE4E67-074F-43A0-88F6-ED17AC2FD20E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		DFC.Digital.CodeAnalysis.ruleset = DFC.Digital.CodeAnalysis.ruleset
+		LICENSE = LICENSE
+		package.nuspec = package.nuspec
+		README.md = README.md
+		stylecop.json = stylecop.json
+		UnitTests.CodeAnalysis.ruleset = UnitTests.CodeAnalysis.ruleset
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourseClient", "DFC.FindACourseClient\DFC.FindACourseClient.csproj", "{CBFC2E67-2AB3-44D9-8DCE-698B66BC6710}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{15047265-49E0-43B6-8783-C0BD16B7CC28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{3E800062-8FF3-4870-BC16-6E930892B7EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntergrationTests", "IntergrationTests", "{8DEB6FB3-AE16-469B-BD57-D614636619FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourseClient.UnitTests", "DFC.FindACourseClient.UnitTests\DFC.FindACourseClient.UnitTests.csproj", "{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FindACourseClient.IntegrationTests", "DFC.FindACourseClient.IntegrationTests\DFC.FindACourseClient.IntegrationTests.csproj", "{056EC375-ED36-40D1-AF36-B654D9B1A3FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBFC2E67-2AB3-44D9-8DCE-698B66BC6710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFC2E67-2AB3-44D9-8DCE-698B66BC6710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFC2E67-2AB3-44D9-8DCE-698B66BC6710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFC2E67-2AB3-44D9-8DCE-698B66BC6710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F8F7FB-EB24-4398-9EB4-4659F7D86F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056EC375-ED36-40D1-AF36-B654D9B1A3FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056EC375-ED36-40D1-AF36-B654D9B1A3FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056EC375-ED36-40D1-AF36-B654D9B1A3FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056EC375-ED36-40D1-AF36-B654D9B1A3FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E800062-8FF3-4870-BC16-6E930892B7EC} = {15047265-49E0-43B6-8783-C0BD16B7CC28}
+		{8DEB6FB3-AE16-469B-BD57-D614636619FC} = {15047265-49E0-43B6-8783-C0BD16B7CC28}
+		{77F8F7FB-EB24-4398-9EB4-4659F7D86F26} = {3E800062-8FF3-4870-BC16-6E930892B7EC}
+		{056EC375-ED36-40D1-AF36-B654D9B1A3FC} = {8DEB6FB3-AE16-469B-BD57-D614636619FC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {979F2A68-5197-4EB2-B76C-1A09FA19C1CC}
+	EndGlobalSection
+EndGlobal
