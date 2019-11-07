@@ -40,6 +40,18 @@ namespace DFC.FindACourseClient
             //Used to initialize the OperationTimeout, which governs the whole process of sending a message, including receiving a reply message for a request/ reply service operation.
             binding.SendTimeout = new TimeSpan(0, 0, 0, courseSearchClientSettings.CourseSearchSvcSettings.RequestTimeOutSeconds);
 
+            if (courseSearchClientSettings.CourseSearchSvcSettings.MaxReceivedMessageSize > 0)
+            {
+                binding.MaxReceivedMessageSize = courseSearchClientSettings.CourseSearchSvcSettings.MaxReceivedMessageSize;
+                logger?.LogInformation($"Set binding.MaxReceivedMessageSize to {binding.MaxReceivedMessageSize}");
+            }
+
+            if (courseSearchClientSettings.CourseSearchSvcSettings.MaxBufferSize > 0)
+            {
+                binding.MaxReceivedMessageSize = courseSearchClientSettings.CourseSearchSvcSettings.MaxBufferSize;
+                logger?.LogInformation($"Set binding.MaxBufferSize to {binding.MaxBufferSize}");
+            }
+
             var endpoint = new EndpointAddress(courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint);
             var factory = new ChannelFactory<ServiceInterface>(binding, endpoint);
 

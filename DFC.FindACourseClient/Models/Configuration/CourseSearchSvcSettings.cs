@@ -15,5 +15,9 @@ namespace DFC.FindACourseClient.Models.Configuration
         public string SearchPageSize { get; set; }
 
         public int RequestTimeOutSeconds { get; set; }
+
+        public int MaxReceivedMessageSize { get; set; }
+
+        public int MaxBufferSize { get; set; }
     }
 }
