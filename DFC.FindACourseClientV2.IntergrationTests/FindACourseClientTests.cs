@@ -1,13 +1,11 @@
-﻿using DFC.FindACourseClient;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.Configuration;
+﻿using DFC.FindACourseClientV2;
+using DFC.FindACourseClientV2.Contracts;
+using DFC.FindACourseClientV2.Models.APIRequests;
+using DFC.FindACourseClientV2.Models.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Polly;
 using Xunit;
 
 namespace DFC.FindACourse.IntegrationTests
@@ -30,13 +28,23 @@ namespace DFC.FindACourse.IntegrationTests
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton(courseSearchClientSettings)
-                .AddFindACourseServices(courseSearchClientSettings)
-                .BuildServiceProvider();
+                .AddSingleton<IFindACourseClient, FindACourseClient>()
+                .AddFindACourseServices(courseSearchClientSettings);
 
-            var courseSearchClient = serviceProvider.GetService<ICourseSearchClient>();
-            var results = courseSearchClient.GetCoursesAsync(configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>());
+            serviceProvider.AddHttpClient<IFindACourseClient, FindACourseClient>().AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2));
 
-            results.Result.Count().Should().BeGreaterThan(0);
+            var services = serviceProvider.BuildServiceProvider();
+
+            var findACourseClient = services.GetService<IFindACourseClient>();
+            var courseSearchRequest = new CourseSearchRequest()
+            {
+                SubjectKeyword = configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>(),
+                PageNo = 0,
+                TopResults = 5,
+            };
+            var searchResponse = findACourseClient.CourseSearchAsync(courseSearchRequest);
+
+            searchResponse.Result.Total.Should().BeGreaterThan(0);
         }
     }
 }
