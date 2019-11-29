@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using System.Linq;
 using Xunit;
 
 namespace DFC.FindACourse.IntegrationTests
@@ -39,12 +40,25 @@ namespace DFC.FindACourse.IntegrationTests
             var courseSearchRequest = new CourseSearchRequest()
             {
                 SubjectKeyword = configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>(),
-                PageNo = 0,
-                TopResults = 5,
+                Start = 0,
+                Limit = 5,
             };
             var searchResponse = findACourseClient.CourseSearchAsync(courseSearchRequest);
 
             searchResponse.Result.Total.Should().BeGreaterThan(0);
+
+            var course = searchResponse.Result.Results.FirstOrDefault();
+
+            //Get Details for a course
+            var courseGetRequest = new CourseGetRequest()
+            {
+                CourseId = course.CourseId,
+                RunId = course.CourseRunId,
+            };
+
+            var detailsResponse = findACourseClient.CourseGetAsync(courseGetRequest).Result;
+
+            detailsResponse.Id.Should().Be(course.CourseId);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace DFC.FindACourseClientV2.Models.APIResponses
     {
         public double SearchScore { get; set; }
 
-        public object Distance { get; set; }
+        public string Distance { get; set; }
 
         public VenueLocation VenueLocation { get; set; }
 

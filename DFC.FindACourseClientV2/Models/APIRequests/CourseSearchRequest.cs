@@ -30,9 +30,9 @@ namespace DFC.FindACourseClientV2.Models.APIRequests
 
         public string StartDateTo { get; set; }
 
-        public int TopResults { get; set; }
+        public int Limit { get; set; }
 
-        public int PageNo { get; set; }
+        public int Start { get; set; }
     }
 
 }
