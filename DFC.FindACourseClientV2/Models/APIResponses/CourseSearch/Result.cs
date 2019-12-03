@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DFC.FindACourseClientV2.Models.APIResponses
+namespace DFC.FindACourseClientV2.Models.APIResponses.CourseSearch
 {
     public class Result
     {

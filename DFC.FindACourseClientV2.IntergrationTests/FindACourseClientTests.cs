@@ -1,5 +1,4 @@
-﻿using DFC.FindACourseClientV2;
-using DFC.FindACourseClientV2.Contracts;
+﻿using DFC.FindACourseClientV2.Contracts;
 using DFC.FindACourseClientV2.Models.APIRequests;
 using DFC.FindACourseClientV2.Models.Configuration;
 using FluentAssertions;
@@ -9,9 +8,9 @@ using Polly;
 using System.Linq;
 using Xunit;
 
-namespace DFC.FindACourse.IntegrationTests
+namespace DFC.FindACourseClientV2.IntegrationTests
 {
-    [Trait("Course Search Client", "Intergration Tests")]
+    [Trait("Course Search Client", "Integration Tests")]
     public class FindACourseClientTests
     {
         [Fact]

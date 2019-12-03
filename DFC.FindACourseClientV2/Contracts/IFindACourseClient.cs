@@ -1,9 +1,6 @@
-﻿using DFC.FindACourseClientV2.Models;
-using DFC.FindACourseClientV2.Models.APIRequests;
-using DFC.FindACourseClientV2.Models.APIResponses;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DFC.FindACourseClientV2.Models.APIRequests;
+using DFC.FindACourseClientV2.Models.APIResponses.CourseGet;
+using DFC.FindACourseClientV2.Models.APIResponses.CourseSearch;
 using System.Threading.Tasks;
 
 namespace DFC.FindACourseClientV2.Contracts

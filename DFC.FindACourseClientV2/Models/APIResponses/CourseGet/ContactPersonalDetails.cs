@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DFC.FindACourseClientV2.Models.APIResponses
+namespace DFC.FindACourseClientV2.Models.APIResponses.CourseGet
 {
     public class ContactPersonalDetails
     {

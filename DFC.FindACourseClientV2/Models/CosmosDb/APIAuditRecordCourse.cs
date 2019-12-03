@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DFC.FindACourseClientV2.Models.CosmosDb
 {
-    public class APIAuditRecordCourse : IDataModel
+    public class ApiAuditRecordCourse : IDataModel
     {
         public static DateTime AuditDateTime => DateTime.UtcNow;
 

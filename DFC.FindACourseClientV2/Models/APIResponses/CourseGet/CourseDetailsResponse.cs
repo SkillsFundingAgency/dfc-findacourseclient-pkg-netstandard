@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DFC.FindACourseClientV2.Models.APIResponses
+namespace DFC.FindACourseClientV2.Models.APIResponses.CourseGet
 {
     public class CourseDetailsResponse
     {

@@ -1,6 +1,6 @@
 ﻿using DFC.FindACourseClientV2.Contracts.CosmosDb;
 using DFC.FindACourseClientV2.Models.CosmosDb;
-using DFC.FindACourseClientV2.Repository.CosmosDb;
+using DFC.FindACourseClientV2.Repositories;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,13 +12,14 @@ namespace DFC.FindACourseClientV2.Models.Configuration
         {
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
             {
-                services.AddSingleton<ICosmosRepository<APIAuditRecordCourse>, CosmosRepository<APIAuditRecordCourse>>(s =>
+                services.AddSingleton<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>
                 {
                     var cosmosDbAuditConnection = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings;
                     var documentClient = new DocumentClient(cosmosDbAuditConnection.EndpointUrl, cosmosDbAuditConnection.AccessKey);
-                    return new CosmosRepository<APIAuditRecordCourse>(cosmosDbAuditConnection, documentClient);
+                    return new CosmosRepository<ApiAuditRecordCourse>(cosmosDbAuditConnection, documentClient);
                 });
             }
+
             return services;
         }
     }

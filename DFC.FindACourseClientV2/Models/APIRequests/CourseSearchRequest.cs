@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DFC.FindACourseClientV2.Models.APIRequests
 {
@@ -34,5 +32,4 @@ namespace DFC.FindACourseClientV2.Models.APIRequests
 
         public int Start { get; set; }
     }
-
 }
