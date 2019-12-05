@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DFC.FindACourseClientV2.Models.APIResponses.CourseGet.Enums;
+using System.Collections.Generic;
 
 namespace DFC.FindACourseClientV2.Models.APIRequests
 {
@@ -12,9 +13,9 @@ namespace DFC.FindACourseClientV2.Models.APIRequests
 
         public List<int> QualificationLevels { get; set; }
 
-        public List<int> StudyModes { get; set; }
+        public List<StudyMode> StudyModes { get; set; }
 
-        public List<int> AttendanceModes { get; set; }
+        public List<DeliveryMode> DeliveryModes { get; set; } // List of enum
 
         public List<int> AttendancePatterns { get; set; }
 

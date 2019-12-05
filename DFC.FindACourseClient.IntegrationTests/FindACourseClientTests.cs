@@ -30,6 +30,7 @@ namespace DFC.FindACourse.IntegrationTests
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton(courseSearchClientSettings)
+                .AddSingleton<ICourseSearchClient, CourseSearchClient>()
                 .AddFindACourseServices(courseSearchClientSettings)
                 .BuildServiceProvider();
 

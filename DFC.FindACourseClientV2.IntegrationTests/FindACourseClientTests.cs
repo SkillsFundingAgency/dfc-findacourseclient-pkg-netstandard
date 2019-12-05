@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FindACourseClientV2.IntegrationTests
@@ -14,7 +15,7 @@ namespace DFC.FindACourseClientV2.IntegrationTests
     public class FindACourseClientTests
     {
         [Fact]
-        public void GetCoursesAsync()
+        public async Task GetCoursesAsync()
         {
             var configuration = new ConfigurationBuilder()
                       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -42,11 +43,11 @@ namespace DFC.FindACourseClientV2.IntegrationTests
                 Start = 0,
                 Limit = 5,
             };
-            var searchResponse = findACourseClient.CourseSearchAsync(courseSearchRequest);
+            var searchResponse = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
 
-            searchResponse.Result.Total.Should().BeGreaterThan(0);
+            searchResponse.Total.Should().BeGreaterThan(0);
 
-            var course = searchResponse.Result.Results.FirstOrDefault();
+            var course = searchResponse.Results.FirstOrDefault();
 
             //Get Details for a course
             var courseGetRequest = new CourseGetRequest()
@@ -55,9 +56,9 @@ namespace DFC.FindACourseClientV2.IntegrationTests
                 RunId = course.CourseRunId,
             };
 
-            var detailsResponse = findACourseClient.CourseGetAsync(courseGetRequest).Result;
+            var detailsResponse = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
 
-            detailsResponse.Id.Should().Be(course.CourseId);
+            detailsResponse.Course.CourseId.Should().Be(course.CourseId);
         }
     }
 }

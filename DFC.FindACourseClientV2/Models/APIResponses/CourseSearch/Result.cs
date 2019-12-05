@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DFC.FindACourseClientV2.Models.APIResponses.CourseGet.Enums;
+using System;
 
 namespace DFC.FindACourseClientV2.Models.APIResponses.CourseSearch
 {
@@ -56,6 +57,12 @@ namespace DFC.FindACourseClientV2.Models.APIResponses.CourseSearch
 
         public object CourseDescription { get; set; }
 
-        public object CourseName { get; set; }
+        public string CourseName { get; set; }
+
+        public string QualificationLevel { get; set; }
+
+        public DurationUnit DurationUnit { get; set; }
+
+        public int? DurationValue { get; set; }
     }
 }

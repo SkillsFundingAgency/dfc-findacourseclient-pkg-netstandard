@@ -4,6 +4,6 @@
     {
         Relevance,
         Distance,
-        StartDate
+        StartDate,
     }
 }

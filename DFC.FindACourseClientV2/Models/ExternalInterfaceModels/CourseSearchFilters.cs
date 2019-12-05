@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DFC.FindACourseClientV2.Models.ExternalInterfaceModels.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels
 {
@@ -20,9 +22,9 @@ namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels
 
         public StartDate StartDate { get; set; } = StartDate.Anytime;
 
-        public CourseHours CourseHours { get; set; } = CourseHours.All;
+        public List<CourseHours> CourseHours { get; set; }
 
-        public CourseType CourseType { get; set; } = CourseType.All;
+        public List<CourseType> CourseTypes { get; set; }
 
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels.Enums
 {
     public enum CourseType
     {

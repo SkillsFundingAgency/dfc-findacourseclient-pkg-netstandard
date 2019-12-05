@@ -9,6 +9,6 @@ namespace DFC.FindACourseClientV2.Contracts
     {
         Task<CourseSearchResponse> CourseSearchAsync(CourseSearchRequest courseSearchRequest);
 
-        Task<CourseDetailsResponse> CourseGetAsync(CourseGetRequest courseGetRequest);
+        Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest);
     }
 }

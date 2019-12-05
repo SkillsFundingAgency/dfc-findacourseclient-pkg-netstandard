@@ -4,11 +4,13 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace DFC.FindACourseClientV2.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class CosmosRepository<T> : ICosmosRepository<T>
     where T : IDataModel
     {

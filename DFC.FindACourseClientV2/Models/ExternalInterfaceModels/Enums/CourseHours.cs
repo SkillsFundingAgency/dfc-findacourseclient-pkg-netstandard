@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels.Enums
 {
     public enum CourseHours
     {
@@ -14,6 +14,6 @@ namespace DFC.FindACourseClientV2.Models.ExternalInterfaceModels
         PartTime,
 
         [Display(Name = "Flexible", Order = 4)]
-        Flexible
+        Flexible,
     }
 }
