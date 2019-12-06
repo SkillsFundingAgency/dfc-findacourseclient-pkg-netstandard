@@ -7,8 +7,6 @@ namespace DFC.FindACourseClientV2.Models.CosmosDb
 {
     public class ApiAuditRecordCourse : IDataModel
     {
-        public static DateTime AuditDateTime => DateTime.UtcNow;
-
         [Required]
         [JsonProperty(PropertyName = "id")]
         public Guid DocumentId { get; set; }
@@ -23,5 +21,7 @@ namespace DFC.FindACourseClientV2.Models.CosmosDb
         public object Response { get; set; }
 
         public string PartitionKey => $"{AuditDateTime.Year}{AuditDateTime.Month}";
+
+        private static DateTime AuditDateTime => DateTime.UtcNow;
     }
 }

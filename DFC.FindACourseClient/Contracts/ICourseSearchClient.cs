@@ -6,6 +6,6 @@ namespace DFC.FindACourseClient.Contracts
 {
     public interface ICourseSearchClient
     {
-        Task<IEnumerable<CourseSumary>> GetCoursesAsync(string jobProfileKeywords);
+        Task<IEnumerable<CourseSumary>> GetCoursesAsync(string courseSearchKeywords);
     }
 }

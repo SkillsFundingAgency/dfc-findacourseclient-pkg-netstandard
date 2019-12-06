@@ -1,16 +1,12 @@
-﻿using DFC.FindACourseClient;
-using DFC.FindACourseClient.Contracts;
+﻿using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
-namespace DFC.FindACourse.IntegrationTests
+namespace DFC.FindACourseClient.IntegrationTests
 {
     [Trait("Course Search Client", "Intergration Tests")]
     public class FindACourseClientTests

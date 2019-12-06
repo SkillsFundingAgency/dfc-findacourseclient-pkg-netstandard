@@ -23,7 +23,7 @@ namespace DFC.FindACourseClientV2.Services
 
         public async Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords)
         {
-            if (jobProfileKeywords == null)
+            if (string.IsNullOrWhiteSpace(jobProfileKeywords))
             {
                 return await Task.FromResult<IEnumerable<Course>>(null);
             }
@@ -40,16 +40,15 @@ namespace DFC.FindACourseClientV2.Services
                 {
                     ResultProperties =
                     {
-                        TotalPages = (apiResult?.Total).GetValueOrDefault(),
+                        TotalPages = GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                         TotalResultCount = (apiResult?.Total).GetValueOrDefault(),
-                        Page = (apiResult?.Start).GetValueOrDefault(),
+                        Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                         OrderedBy = requestSortBy.GetCourseSearchOrderBy(),
                     },
                     Courses = apiResult?.ConvertToSearchCourse(),
                 };
 
-                var filteredResult = response.Courses.SelectCoursesForJobProfile();
-                return filteredResult;
+                return response.Courses.SelectCoursesForJobProfile();
             }
             catch (Exception ex)
             {
@@ -68,7 +67,7 @@ namespace DFC.FindACourseClientV2.Services
             var request = BuildCourseSearchRequest(courseSearchProperties);
             var apiResult = await findACourseClient.CourseSearchAsync(request);
 
-            var response = new CourseSearchResult
+            return new CourseSearchResult
             {
                 ResultProperties =
                 {
@@ -79,8 +78,6 @@ namespace DFC.FindACourseClientV2.Services
                 },
                 Courses = apiResult?.ConvertToSearchCourse(),
             };
-
-            return response;
         }
 
         public async Task<CourseDetails> GetCourseDetailsAsync(string courseId, string oppurtunityId)
@@ -93,8 +90,7 @@ namespace DFC.FindACourseClientV2.Services
             var request = BuildCourseGetRequest(courseId, oppurtunityId);
             var apiResult = await findACourseClient.CourseGetAsync(request);
 
-            var response = apiResult?.ConvertToCourseDetails();
-            return response;
+            return apiResult?.ConvertToCourseDetails();
         }
 
         private static int GetTotalPages(int totalResults, int pageSize)

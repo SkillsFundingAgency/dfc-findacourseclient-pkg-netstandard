@@ -14,13 +14,13 @@ namespace DFC.FindACourseClientV2
 {
     public class FindACourseClient : IFindACourseClient
     {
-        private readonly ILogger<FindACourseClient> logger;
+        private readonly ILogger logger;
         private readonly CourseSearchClientSettings courseSearchClientSettings;
         private readonly Guid correlationId;
         private readonly IAuditService auditService;
         private readonly HttpClient httpClient;
 
-        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger<FindACourseClient> logger = null)
+        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
         {
             correlationId = Guid.NewGuid();
             this.logger = logger;
@@ -34,7 +34,8 @@ namespace DFC.FindACourseClientV2
 
         public async Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest)
         {
-            var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courseget", courseGetRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+            var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
+            var response = await httpClient.GetAsync(url).ConfigureAwait(false);
             var responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
             await auditService.CreateAudit(courseGetRequest, responseContent, correlationId).ConfigureAwait(false);

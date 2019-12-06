@@ -20,7 +20,7 @@ namespace DFC.FindACourseClientV2.Extensions
                     Title = c.QualificationCourseTitle,
                     LocationDetails = new LocationDetails
                     {
-                        Distance = float.Parse(c.Distance),
+                        Distance = float.Parse(c.Distance ?? "0"),
                         LocationAddress = c.VenueAddress,
                     },
                     ProviderName = c.ProviderName,
@@ -28,7 +28,7 @@ namespace DFC.FindACourseClientV2.Extensions
                     StartDateLabel = "Start date:",
                     AttendanceMode = c.DeliveryModeDescription,
                     AttendancePattern = c.VenueAttendancePatternDescription,
-                    QualificationLevel = Enum.Parse(typeof(QualificationLevel), c.QualificationLevel).ToString(),
+                    QualificationLevel = !string.IsNullOrWhiteSpace(c.QualificationLevel) ? Enum.Parse(typeof(QualificationLevel), c.QualificationLevel).ToString() : string.Empty,
                     StudyMode = c.VenueStudyModeDescription,
                     Location = c.VenueTown,
                     CourseLink = $"{CourseDetailsPage}?{nameof(CourseDetails.CourseId)}={c.CourseId}",

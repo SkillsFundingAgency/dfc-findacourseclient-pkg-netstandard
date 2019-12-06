@@ -5,7 +5,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,12 +14,14 @@ namespace DFC.FindACourseClientV2.IntegrationTests
     [Trait("Course Search Client", "Integration Tests")]
     public class FindACourseClientTests
     {
-        [Fact]
-        public async Task GetCoursesAsync()
+        private readonly IConfiguration configuration;
+        private readonly IFindACourseClient findACourseClient;
+
+        public FindACourseClientTests()
         {
-            var configuration = new ConfigurationBuilder()
-                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                      .Build();
+            configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
             var courseSearchClientSettings = new CourseSearchClientSettings
             {
@@ -29,14 +31,17 @@ namespace DFC.FindACourseClientV2.IntegrationTests
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton(courseSearchClientSettings)
-                .AddSingleton<IFindACourseClient, FindACourseClient>()
                 .AddFindACourseServices(courseSearchClientSettings);
-
             serviceProvider.AddHttpClient<IFindACourseClient, FindACourseClient>().AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync(2));
 
             var services = serviceProvider.BuildServiceProvider();
 
-            var findACourseClient = services.GetService<IFindACourseClient>();
+            findACourseClient = services.GetService<IFindACourseClient>();
+        }
+
+        [Fact]
+        public async Task CourseSearch()
+        {
             var courseSearchRequest = new CourseSearchRequest()
             {
                 SubjectKeyword = configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>(),
@@ -46,19 +51,21 @@ namespace DFC.FindACourseClientV2.IntegrationTests
             var searchResponse = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
 
             searchResponse.Total.Should().BeGreaterThan(0);
+        }
 
-            var course = searchResponse.Results.FirstOrDefault();
-
+        [Fact]
+        public async Task CourseGet()
+        {
             //Get Details for a course
             var courseGetRequest = new CourseGetRequest()
             {
-                CourseId = course.CourseId,
-                RunId = course.CourseRunId,
+                CourseId = Guid.Parse("a4dcc053-67e7-462c-b3c1-52c3add949b4"),
+                RunId = Guid.Parse("052f98d6-d294-4d8c-801b-33bb80fe60f9"),
             };
 
             var detailsResponse = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
 
-            detailsResponse.Course.CourseId.Should().Be(course.CourseId);
+            detailsResponse.Course.CourseId.Should().Be("a4dcc053-67e7-462c-b3c1-52c3add949b4");
         }
     }
 }

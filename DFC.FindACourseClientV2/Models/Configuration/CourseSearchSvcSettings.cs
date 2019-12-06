@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.FindACourseClientV2.Models.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class CourseSearchSvcSettings
     {
         public Uri ServiceEndpoint { get; set; }

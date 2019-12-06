@@ -14,10 +14,10 @@ namespace DFC.FindACourseClientV2.Extensions
             const string CourseDetailsPage = "/find-a-course/course-details";
             var address = new Dictionary<string, string>
             {
-                [nameof(input.Venue.AddressLine1)] = input.Venue.AddressLine1,
-                [nameof(input.Venue.AddressLine2)] = input.Venue.AddressLine2,
-                [nameof(input.Venue.Town)] = input.Venue.Town,
-                [nameof(input.Venue.Postcode)] = input.Venue.Postcode,
+                [nameof(input.Venue.AddressLine1)] = input?.Venue?.AddressLine1,
+                [nameof(input.Venue.AddressLine2)] = input?.Venue?.AddressLine2,
+                [nameof(input.Venue.Town)] = input?.Venue?.Town,
+                [nameof(input.Venue.Postcode)] = input?.Venue?.Postcode,
             };
 
             return new CourseDetails
@@ -55,8 +55,8 @@ namespace DFC.FindACourseClientV2.Extensions
                     EmployerSatisfaction = double.Parse(input.Provider.EmployerSatisfaction.ToString()),
                     LearnerSatisfactionSpecified = input.Provider.LearnerSatisfaction.HasValue,
                     LearnerSatisfaction = double.Parse(input.Provider.LearnerSatisfaction.ToString()),
-                    Latitude = input.Venue.Latitude.ToString(),
-                    Longitude = input.Venue.Longitude.ToString(),
+                    Latitude = input.Venue?.Latitude.ToString(),
+                    Longitude = input.Venue?.Longitude.ToString(),
                     Name = input.Provider.ProviderName,
                     PhoneNumber = input.Provider.Telephone,
                     PostCode = input.Provider.Postcode,
@@ -70,13 +70,13 @@ namespace DFC.FindACourseClientV2.Extensions
                 {
                     Location = new Address
                     {
-                        Town = input.Venue.Town,
-                        AddressLine1 = input.Venue.AddressLine1,
-                        AddressLine2 = input.Venue.AddressLine2,
-                        Postcode = input.Venue.Postcode,
-                        County = input.Venue.County,
-                        Longitude = input.Venue.Longitude.ToString(),
-                        Latitude = input.Venue.Latitude.ToString(),
+                        Town = input.Venue?.Town,
+                        AddressLine1 = input.Venue?.AddressLine1,
+                        AddressLine2 = input.Venue?.AddressLine2,
+                        Postcode = input.Venue?.Postcode,
+                        County = input.Venue?.County,
+                        Longitude = input.Venue?.Longitude.ToString(),
+                        Latitude = input.Venue?.Latitude.ToString(),
                     },
                 },
                 SubjectCategory = input.Qualification.SectorSubjectAreaTier2Desc,
@@ -85,7 +85,7 @@ namespace DFC.FindACourseClientV2.Extensions
                     //Distance = dont have this cos Details doesnt take the postcode so cant work out the distance to venue
                     LocationAddress = string.Join(", ", address.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(add => add.Value)),
                 },
-                Location = input.Venue.VenueName,
+                Location = input.Venue?.VenueName,
                 AdditionalPrice = input.CostDescription,
                 AdvancedLearnerLoansOffered = input.Course.AdvancedLearnerLoan,
                 AssessmentMethod = input.Course.HowYoullBeAssessed,
