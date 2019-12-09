@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.FindACourseClient.Models.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class CourseSearchClientSettings
     {
         public CourseSearchSvcSettings CourseSearchSvcSettings { get; set; }

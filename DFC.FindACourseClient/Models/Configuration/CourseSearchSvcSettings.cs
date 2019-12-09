@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.FindACourseClient.Models.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class CourseSearchSvcSettings
     {
-        public Uri CourseSearchUrl { get; set; }
-
         public Uri ServiceEndpoint { get; set; }
 
         public string ApiKey { get; set; }
@@ -16,8 +16,6 @@ namespace DFC.FindACourseClient.Models.Configuration
 
         public int RequestTimeOutSeconds { get; set; }
 
-        public int MaxReceivedMessageSize { get; set; }
-
-        public int MaxBufferSize { get; set; }
+        public int TransintErrorsNumberOfRetries { get; set; }
     }
 }
