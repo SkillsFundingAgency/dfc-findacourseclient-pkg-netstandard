@@ -1,6 +1,9 @@
-﻿using DFC.FindACourseClient.Contracts;
+﻿using AutoMapper;
+using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.Configuration;
+using DFC.FindACourseClient.Models.ExternalInterfaceModels;
+using DFC.FindACourseClient.Services;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,13 +13,14 @@ using Xunit;
 
 namespace DFC.FindACourseClient.IntegrationTests
 {
-    [Trait("Course Search Client", "Integration Tests")]
-    public class FindACourseClientTests
+    public class CourseSearchServiceTests
     {
         private readonly IConfiguration configuration;
         private readonly IFindACourseClient findACourseClient;
+        private readonly IAuditService auditService;
+        private readonly IMapper mapper;
 
-        public FindACourseClientTests()
+        public CourseSearchServiceTests()
         {
             configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -35,20 +39,8 @@ namespace DFC.FindACourseClient.IntegrationTests
             var services = serviceProvider.BuildServiceProvider();
 
             findACourseClient = services.GetService<IFindACourseClient>();
-        }
-
-        [Fact]
-        public async Task CourseSearch()
-        {
-            var courseSearchRequest = new CourseSearchRequest()
-            {
-                SubjectKeyword = configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>(),
-                Start = 0,
-                Limit = 5,
-            };
-            var searchResponse = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
-
-            searchResponse.Total.Should().BeGreaterThan(0);
+            auditService = services.GetService<IAuditService>();
+            mapper = services.GetService<IMapper>();
         }
 
         [Fact]
@@ -60,10 +52,22 @@ namespace DFC.FindACourseClient.IntegrationTests
                 CourseId = Guid.Parse("a4dcc053-67e7-462c-b3c1-52c3add949b4"),
                 RunId = Guid.Parse("052f98d6-d294-4d8c-801b-33bb80fe60f9"),
             };
+            var courseSearchService = new CourseSearchService(findACourseClient, auditService, mapper);
+            var detailResponse = await courseSearchService.GetCourseDetailsAsync(courseGetRequest.CourseId.ToString(), courseGetRequest.RunId.ToString()).ConfigureAwait(false);
 
-            var detailsResponse = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
+            detailResponse.CourseId.Should().Be("a4dcc053-67e7-462c-b3c1-52c3add949b4");
+        }
 
-            detailsResponse.Course.CourseId.Should().Be("a4dcc053-67e7-462c-b3c1-52c3add949b4");
+        [Fact]
+        public async Task CourseSearch()
+        {
+            var courseSearchRequest = new CourseSearchProperties()
+            {
+                Filters = new CourseSearchFilters { SearchTerm = "biology" },
+            };
+
+            var courseSearchService = new CourseSearchService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
         }
     }
 }

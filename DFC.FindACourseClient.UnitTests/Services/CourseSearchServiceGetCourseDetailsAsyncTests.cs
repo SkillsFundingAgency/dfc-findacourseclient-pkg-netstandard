@@ -1,4 +1,5 @@
-﻿using DFC.FindACourseClient.Contracts;
+﻿using AutoMapper;
+using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.APIResponses.CourseGet;
 using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
@@ -17,6 +18,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
 
         private readonly IAuditService defaultAuditService;
         private readonly ICourseSearchService defaultCourseSearchService;
+        private readonly IMapper defaultMapper;
         private readonly Guid courseId = Guid.NewGuid();
         private readonly Guid courseRunId = Guid.NewGuid();
 
@@ -24,15 +26,15 @@ namespace DFC.FindACourseClient.UnitTests.Services
         {
             var defaultFindACourseClient = A.Fake<IFindACourseClient>();
             defaultAuditService = A.Fake<IAuditService>();
-            defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService);
+            defaultMapper = A.Fake<IMapper>();
+            defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService, defaultMapper);
         }
 
         [Fact]
         public async Task GetCourseDetailsAsyncWhenEmptyStringKeywordsSentThenNullIsReturned()
         {
             // Act
-            var result = await defaultCourseSearchService.GetCourseDetailsAsync(string.Empty, string.Empty)
-                .ConfigureAwait(false);
+            var result = await defaultCourseSearchService.GetCourseDetailsAsync(string.Empty, string.Empty).ConfigureAwait(false);
 
             // Assert
             Assert.Null(result);
@@ -47,7 +49,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var findACourseClient = A.Fake<IFindACourseClient>();
             A.CallTo(() => findACourseClient.CourseGetAsync(A<CourseGetRequest>.Ignored)).Returns(dummyApiResponse);
 
-            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
+            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
             var result = await courseSearchService.GetCourseDetailsAsync(courseId.ToString(), courseRunId.ToString()).ConfigureAwait(false);

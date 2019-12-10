@@ -1,4 +1,5 @@
-﻿using DFC.FindACourseClient.Contracts;
+﻿using AutoMapper;
+using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
 using DFC.FindACourseClient.Services;
@@ -18,12 +19,14 @@ namespace DFC.FindACourseClient.UnitTests.Services
 
         private readonly IAuditService defaultAuditService;
         private readonly ICourseSearchService defaultCourseSearchService;
+        private readonly IMapper defaultMapper;
 
         public CourseSearchServiceGetCoursesAsyncTests()
         {
             var defaultFindACourseClient = A.Fake<IFindACourseClient>();
             defaultAuditService = A.Fake<IAuditService>();
-            defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService);
+            defaultMapper = A.Fake<IMapper>();
+            defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService, defaultMapper);
         }
 
         [Fact]
@@ -44,7 +47,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var findACourseClient = A.Fake<IFindACourseClient>();
             A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Returns(dummyApiResponse);
 
-            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
+            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
             var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
@@ -62,7 +65,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var findACourseClient = A.Fake<IFindACourseClient>();
             A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Throws<Exception>();
 
-            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
+            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
             var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);

@@ -1,4 +1,5 @@
-﻿using DFC.FindACourseClient.Contracts;
+﻿using AutoMapper;
+using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Extensions;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
@@ -14,11 +15,13 @@ namespace DFC.FindACourseClient.Services
     {
         private readonly IFindACourseClient findACourseClient;
         private readonly IAuditService auditService;
+        private readonly IMapper mapper;
 
-        public CourseSearchService(IFindACourseClient findACourseClient, IAuditService auditService)
+        public CourseSearchService(IFindACourseClient findACourseClient, IAuditService auditService, IMapper mapper)
         {
             this.findACourseClient = findACourseClient;
             this.auditService = auditService;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords)
@@ -45,7 +48,7 @@ namespace DFC.FindACourseClient.Services
                         Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                         OrderedBy = requestSortBy.GetCourseSearchOrderBy(),
                     },
-                    Courses = apiResult?.ConvertToSearchCourse(),
+                    Courses = mapper.Map<List<Course>>(apiResult?.Results),
                 };
 
                 return response.Courses.SelectCoursesForJobProfile();
@@ -76,7 +79,7 @@ namespace DFC.FindACourseClient.Services
                     Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
-                Courses = apiResult?.ConvertToSearchCourse(),
+                Courses = mapper.Map<List<Course>>(apiResult?.Results),
             };
         }
 
@@ -90,7 +93,7 @@ namespace DFC.FindACourseClient.Services
             var request = BuildCourseGetRequest(courseId, oppurtunityId);
             var apiResult = await findACourseClient.CourseGetAsync(request);
 
-            return apiResult?.ConvertToCourseDetails();
+            return mapper.Map<CourseDetails>(apiResult);
         }
 
         private static int GetTotalPages(int totalResults, int pageSize)
@@ -131,17 +134,14 @@ namespace DFC.FindACourseClient.Services
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
-                DeliveryModes = input.Filters.CourseTypes.MapToDeliveryModes(),
-                StudyModes = input.Filters.CourseHours.MapToStudyModes(),
+                DeliveryModes = input.Filters.CourseTypes?.MapToDeliveryModes(),
+                StudyModes = input.Filters.CourseHours?.MapToStudyModes(),
                 DfE1619Funded = input.Filters.Only1619Courses ? "Y" : null,
-                Town = input.Filters.Location,
-                Postcode = input.Filters.Location,
+                Town = input.Filters?.Location,
+                Postcode = input.Filters?.Location,
                 SortBy = input.OrderedBy.GetSortType(),
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
-                StartDateTo = DateTime.UtcNow.ToShortDateString(),
                 SubjectKeyword = input.Filters.SearchTerm,
-                //QualificationLevels =
-                //AttendancePatterns = input.Filters.
             };
         }
     }

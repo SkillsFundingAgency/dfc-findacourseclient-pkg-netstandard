@@ -15,5 +15,7 @@ namespace DFC.FindACourseClient.Models.Configuration
         public string CollectionId { get; set; }
 
         public string PartitionKey { get; set; }
+
+        public string Environment { get; set; }
     }
 }

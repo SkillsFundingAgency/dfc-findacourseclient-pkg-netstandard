@@ -37,6 +37,12 @@ namespace DFC.FindACourseClient.Repositories
             return result.StatusCode;
         }
 
+        public async Task InitialiseDatabaseAsync(bool isDevelopment)
+        {
+            await CreateDatabaseIfNotExistsAsync();
+            await CreateCollectionIfNotExistsAsync();
+        }
+
         private async Task CreateDatabaseIfNotExistsAsync()
         {
             try

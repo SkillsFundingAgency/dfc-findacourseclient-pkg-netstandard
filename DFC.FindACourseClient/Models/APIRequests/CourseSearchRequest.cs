@@ -15,7 +15,7 @@ namespace DFC.FindACourseClient.Models.APIRequests
 
         public List<StudyMode> StudyModes { get; set; }
 
-        public List<DeliveryMode> DeliveryModes { get; set; } // List of enum
+        public List<DeliveryMode> DeliveryModes { get; set; }
 
         public List<int> AttendancePatterns { get; set; }
 

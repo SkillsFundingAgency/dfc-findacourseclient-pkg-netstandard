@@ -25,44 +25,55 @@ namespace DFC.FindACourseClient
             correlationId = Guid.NewGuid();
             this.logger = logger;
             this.auditService = auditService;
-            this.courseSearchClientSettings = courseSearchClientSettings ?? throw new ArgumentException(nameof(courseSearchClientSettings));
-
-            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            this.httpClient.Timeout = TimeSpan.FromSeconds(courseSearchClientSettings.CourseSearchSvcSettings.RequestTimeOutSeconds);
-            this.httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", courseSearchClientSettings.CourseSearchSvcSettings.ApiKey);
+            this.courseSearchClientSettings = courseSearchClientSettings;
+            this.httpClient = httpClient;
         }
 
         public async Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest)
         {
-            var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
-            var response = await httpClient.GetAsync(url).ConfigureAwait(false);
-            var responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
-
-            await auditService.CreateAudit(courseGetRequest, responseContent, correlationId).ConfigureAwait(false);
-
-            if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+            var responseContent = string.Empty;
+            try
             {
-                logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseGetRequest}' \nResponse : {responseContent}");
-                response?.EnsureSuccessStatusCode();
-            }
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
+                var response = await httpClient.GetAsync(url).ConfigureAwait(false);
+                responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<CourseRunDetailResponse>(responseContent);
+                if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+                {
+                    logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseGetRequest}' \nResponse : {responseContent}");
+                    response?.EnsureSuccessStatusCode();
+                }
+
+                return JsonConvert.DeserializeObject<CourseRunDetailResponse>(responseContent);
+            }
+            finally
+            {
+                await auditService.CreateAudit(courseGetRequest, responseContent, correlationId).ConfigureAwait(false);
+            }
         }
 
         public async Task<CourseSearchResponse> CourseSearchAsync(CourseSearchRequest courseSearchRequest)
         {
-            var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
-            var responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
-
-            await auditService.CreateAudit(courseSearchRequest, responseContent, correlationId).ConfigureAwait(false);
-
-            if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+            var responseContent = string.Empty;
+            try
             {
-                logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
-                response?.EnsureSuccessStatusCode();
-            }
+                var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+                responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
-            return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent);
+                await auditService.CreateAudit(courseSearchRequest, responseContent, correlationId).ConfigureAwait(false);
+
+                if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+                {
+                    logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
+                    response?.EnsureSuccessStatusCode();
+                }
+
+                return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent);
+            }
+            finally
+            {
+                await auditService.CreateAudit(courseSearchRequest, responseContent, correlationId).ConfigureAwait(false);
+            }
         }
     }
 }
