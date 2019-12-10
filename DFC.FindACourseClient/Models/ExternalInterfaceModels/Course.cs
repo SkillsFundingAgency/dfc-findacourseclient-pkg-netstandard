@@ -28,7 +28,7 @@ namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
 
         public string StartDateLabel { get; set; }
 
-        public string CourseLink { get; set; }
+        //public string CourseLink { get; set; }
 
         public bool AdvancedLearnerLoansOffered { get; set; }
     }

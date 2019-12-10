@@ -10,8 +10,6 @@ namespace DFC.FindACourseClient.Models.Configuration
 
         public string ApiKey { get; set; }
 
-        public string AttendanceModes { get; set; }
-
         public string SearchPageSize { get; set; }
 
         public int RequestTimeOutSeconds { get; set; }

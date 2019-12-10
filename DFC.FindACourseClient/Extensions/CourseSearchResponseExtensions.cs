@@ -1,7 +1,5 @@
 ﻿using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,8 +9,6 @@ namespace DFC.FindACourseClient.Extensions
     {
         public static IEnumerable<Course> ConvertToSearchCourse(this CourseSearchResponse apiResult)
         {
-            const string CourseDetailsPage = "/find-a-course/course-details";
-
             var result = apiResult?.Results?.Select(c =>
                 new Course
                 {
@@ -28,10 +24,9 @@ namespace DFC.FindACourseClient.Extensions
                     StartDateLabel = "Start date:",
                     AttendanceMode = c.DeliveryModeDescription,
                     AttendancePattern = c.VenueAttendancePatternDescription,
-                    QualificationLevel = !string.IsNullOrWhiteSpace(c.QualificationLevel) ? Enum.Parse(typeof(QualificationLevel), c.QualificationLevel).ToString() : string.Empty,
+                    QualificationLevel = c.QualificationLevel,
                     StudyMode = c.VenueStudyModeDescription,
                     Location = c.VenueTown,
-                    CourseLink = $"{CourseDetailsPage}?{nameof(CourseDetails.CourseId)}={c.CourseId}",
                     Duration = $"{c.DurationValue} {c.DurationUnit.ToString()}",
                 });
 

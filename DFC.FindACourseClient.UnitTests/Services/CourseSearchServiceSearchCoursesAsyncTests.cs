@@ -17,6 +17,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
     {
         private const string ProviderName1 = "Provider1";
         private const string ProviderName2 = "Provider2";
+        private const string CourseLinkPrefix = "somePrefix";
 
         private readonly IAuditService defaultAuditService;
         private readonly ICourseSearchService defaultCourseSearchService;
@@ -38,7 +39,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             };
 
             // Act
-            var result = await defaultCourseSearchService.SearchCoursesAsync(courseSearchProperties).ConfigureAwait(false);
+            var result = await defaultCourseSearchService.SearchCoursesAsync(courseSearchProperties, CourseLinkPrefix).ConfigureAwait(false);
 
             // Assert
             Assert.Null(result);
@@ -56,7 +57,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
 
             // Act
-            var result = await courseSearchService.SearchCoursesAsync(request).ConfigureAwait(false);
+            var result = await courseSearchService.SearchCoursesAsync(request, CourseLinkPrefix).ConfigureAwait(false);
 
             // Assert
             Assert.True(result.Courses.Count() == 4);
@@ -80,7 +81,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
 
             // Act
-            var result = await courseSearchService.SearchCoursesAsync(request).ConfigureAwait(false);
+            var result = await courseSearchService.SearchCoursesAsync(request, CourseLinkPrefix).ConfigureAwait(false);
 
             // Assert
             Assert.Equal(totalResults, result.ResultProperties.TotalResultCount);

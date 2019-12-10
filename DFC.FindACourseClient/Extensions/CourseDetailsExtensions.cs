@@ -1,7 +1,5 @@
 ﻿using DFC.FindACourseClient.Models.APIResponses.CourseGet;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +9,6 @@ namespace DFC.FindACourseClient.Extensions
     {
         public static CourseDetails ConvertToCourseDetails(this CourseRunDetailResponse input)
         {
-            const string CourseDetailsPage = "/find-a-course/course-details";
             var address = new Dictionary<string, string>
             {
                 [nameof(input.Venue.AddressLine1)] = input?.Venue?.AddressLine1,
@@ -29,7 +26,7 @@ namespace DFC.FindACourseClient.Extensions
                 AttendanceMode = input.DeliveryMode.ToString(),
                 AttendancePattern = input.AttendancePattern.ToString(),
                 AwardingOrganisation = input.Course.AwardOrgCode,
-                CourseLink = $"{CourseDetailsPage}?{nameof(CourseDetails.CourseId)}={input.Course.CourseId}",
+
                 Description = input.Course.CourseDescription,
                 CourseWebpageLink = input.CourseURL,
                 Duration = $"{input.DurationValue} {input.DurationUnit.ToString()}",
@@ -62,7 +59,7 @@ namespace DFC.FindACourseClient.Extensions
                     PostCode = input.Provider.Postcode,
                 },
                 ProviderName = input.Provider.ProviderName,
-                QualificationLevel = Enum.Parse(typeof(QualificationLevel), input.Qualification.QualificationLevel.ToString()).ToString(),
+                QualificationLevel = input.Qualification.QualificationLevel.ToString(),
                 QualificationName = input.Qualification.LearnAimRefTitle,
                 StartDateLabel = "Course start date",
                 StudyMode = input.StudyMode.ToString(),

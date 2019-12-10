@@ -15,6 +15,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
     {
         private const string ProviderName1 = "Provider1";
         private const string ProviderName2 = "Provider2";
+        private const string CourseLinkPrefix = "somePrefix";
 
         private readonly IAuditService defaultAuditService;
         private readonly ICourseSearchService defaultCourseSearchService;
@@ -30,7 +31,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
         public async Task GetCoursesAsyncWhenEmptyStringKeywordsSentThenNullIsReturned()
         {
             // Act
-            var result = await defaultCourseSearchService.GetCoursesAsync(string.Empty).ConfigureAwait(false);
+            var result = await defaultCourseSearchService.GetCoursesAsync(string.Empty, CourseLinkPrefix).ConfigureAwait(false);
 
             // Assert
             Assert.Null(result);
@@ -47,7 +48,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
 
             // Act
-            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword", CourseLinkPrefix).ConfigureAwait(false);
             var resultList = result.ToList();
 
             // Assert
@@ -65,7 +66,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService);
 
             // Act
-            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword", CourseLinkPrefix).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => defaultAuditService.CreateAudit(null, null, null)).WithAnyArguments().MustHaveHappenedOnceExactly();
