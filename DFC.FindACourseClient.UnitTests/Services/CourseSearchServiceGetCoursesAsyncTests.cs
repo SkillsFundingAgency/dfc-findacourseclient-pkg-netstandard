@@ -53,7 +53,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
 
             // Assert
             Assert.Equal(dummyApiResponse.Results?.FirstOrDefault()?.CourseId.ToString(), resultList.FirstOrDefault()?.CourseId);
-            Assert.True(resultList.Count == 2);
+            Assert.True(resultList.Count() == 2);
         }
 
         [Fact]

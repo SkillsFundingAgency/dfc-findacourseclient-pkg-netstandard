@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Contracts.CosmosDb;
 using DFC.FindACourseClient.Models.Configuration;
@@ -8,14 +9,20 @@ using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DFC.FindACourseClient
 {
-    [ExcludeFromCodeCoverage]
-    public static class IServiceCollectionExtension
+    public static class DIExtensions
     {
+        public static void RegisterAutofac(this ContainerBuilder builder)
+        {
+            builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+        }
+
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
         {
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
@@ -31,22 +38,13 @@ namespace DFC.FindACourseClient
                 });
             }
 
-            services.AddSingleton<IFindACourseClient, FindACourseClient>();
-            services.AddSingleton<IAuditService, AuditService>();
-            services.AddTransient(provider =>
-            {
-                var httpClient = new HttpClient
-                {
-                    Timeout = TimeSpan.FromSeconds(courseSearchClientSettings.CourseSearchSvcSettings.RequestTimeOutSeconds),
-                };
-                httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", courseSearchClientSettings.CourseSearchSvcSettings.ApiKey);
-                return httpClient;
-            });
+            services.AddScoped<IFindACourseClient, FindACourseClient>();
+            services.AddScoped<IAuditService, AuditService>();
+            services.AddScoped<IHttpClientService, HttpClientService>();
+            services.AddAutoMapper(typeof(DIExtensions).Assembly);
 
-            services.AddAutoMapper(typeof(IServiceCollectionExtension).Assembly);
-
-            return services;
             return services;
         }
+
     }
 }

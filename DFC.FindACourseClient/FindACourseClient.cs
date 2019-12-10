@@ -18,15 +18,15 @@ namespace DFC.FindACourseClient
         private readonly CourseSearchClientSettings courseSearchClientSettings;
         private readonly Guid correlationId;
         private readonly IAuditService auditService;
-        private readonly HttpClient httpClient;
+        private readonly IHttpClientService httpClientService;
 
-        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
+        public FindACourseClient(IHttpClientService httpClientService, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
         {
             correlationId = Guid.NewGuid();
             this.logger = logger;
             this.auditService = auditService;
             this.courseSearchClientSettings = courseSearchClientSettings;
-            this.httpClient = httpClient;
+            this.httpClientService = httpClientService;
         }
 
         public async Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest)
@@ -34,6 +34,7 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
+                var httpClient = httpClientService.GetClient();
                 var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
                 var response = await httpClient.GetAsync(url).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
@@ -57,6 +58,7 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
+                var httpClient = httpClientService.GetClient();
                 var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
