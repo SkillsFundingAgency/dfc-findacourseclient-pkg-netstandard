@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using DFC.FindACourseClient.Models.APIResponses.CourseGet;
 using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
@@ -72,9 +71,6 @@ namespace DFC.FindACourseClient.AutoMapperProfiles
                 .ForMember(d => d.Latitude, s => s.MapFrom(f => f.Latitude.ToString()));
 
             // Course Search
-            //CreateMap<CourseSearchResponse, List<Course>>()
-            //    .ForMember(d => d, s => s.MapFrom(f => f.Results));
-
             CreateMap<Result, Course>()
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.CourseId.ToString()))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.QualificationCourseTitle))

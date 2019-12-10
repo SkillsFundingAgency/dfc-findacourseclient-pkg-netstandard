@@ -49,7 +49,6 @@ namespace DFC.FindACourseClient.Services
                         OrderedBy = requestSortBy.GetCourseSearchOrderBy(),
                     },
                     Courses = mapper.Map<List<Course>>(apiResult?.Results),
-                    //apiResult?.ConvertToSearchCourse(),
                 };
 
                 return response.Courses.SelectCoursesForJobProfile();
@@ -80,7 +79,7 @@ namespace DFC.FindACourseClient.Services
                     Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
-                Courses = mapper.Map<List<Course>>(apiResult?.Results), //apiResult?.ConvertToSearchCourse(),
+                Courses = mapper.Map<List<Course>>(apiResult?.Results),
             };
         }
 
@@ -142,10 +141,7 @@ namespace DFC.FindACourseClient.Services
                 Postcode = input.Filters?.Location,
                 SortBy = input.OrderedBy.GetSortType(),
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
-                //StartDateTo = DateTime.UtcNow.ToShortDateString(),
                 SubjectKeyword = input.Filters.SearchTerm,
-                //QualificationLevels =
-                //AttendancePatterns = input.Filters.
             };
         }
     }
