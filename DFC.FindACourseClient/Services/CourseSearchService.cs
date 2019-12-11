@@ -37,7 +37,6 @@ namespace DFC.FindACourseClient.Services
             try
             {
                 var apiResult = await findACourseClient.CourseSearchAsync(request);
-                var requestSortBy = (SortType)Enum.Parse(typeof(SortType), request.SortBy.ToString());
 
                 var response = new CourseSearchResult
                 {
@@ -46,7 +45,7 @@ namespace DFC.FindACourseClient.Services
                         TotalPages = GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                         TotalResultCount = (apiResult?.Total).GetValueOrDefault(),
                         Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
-                        OrderedBy = requestSortBy.GetCourseSearchOrderBy(),
+                        OrderedBy = (CourseSearchOrderBy)Enum.Parse(typeof(CourseSearchOrderBy), request.SortBy.ToString()),
                     },
                     Courses = mapper.Map<List<Course>>(apiResult?.Results),
                 };
@@ -115,7 +114,7 @@ namespace DFC.FindACourseClient.Services
                 DeliveryModes = new List<CourseType> { CourseType.All }.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 1,
-                SortBy = (int)SortType.A,
+                SortBy = (int)CourseSearchOrderBy.Relevance,
             };
         }
 
@@ -139,7 +138,7 @@ namespace DFC.FindACourseClient.Services
                 DfE1619Funded = input.Filters.Only1619Courses ? "Y" : null,
                 Town = input.Filters?.Location,
                 Postcode = input.Filters?.Location,
-                SortBy = input.OrderedBy.GetSortType(),
+                SortBy = (int)input.OrderedBy,
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
             };

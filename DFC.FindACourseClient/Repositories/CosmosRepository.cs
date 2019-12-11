@@ -21,9 +21,6 @@ namespace DFC.FindACourseClient.Repositories
         {
             this.cosmosDbConnection = cosmosDbConnection;
             this.documentClient = documentClient;
-
-            CreateDatabaseIfNotExistsAsync().GetAwaiter().GetResult();
-            CreateCollectionIfNotExistsAsync().GetAwaiter().GetResult();
         }
 
         private Uri DocumentCollectionUri => UriFactory.CreateDocumentCollectionUri(cosmosDbConnection.DatabaseId, cosmosDbConnection.CollectionId);

@@ -4,6 +4,7 @@ using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.APIResponses.CourseGet;
 using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
 using DFC.FindACourseClient.Services;
+using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
         {
             var defaultFindACourseClient = A.Fake<IFindACourseClient>();
             defaultAuditService = A.Fake<IAuditService>();
-            defaultMapper = A.Fake<IMapper>();
+            defaultMapper = AutomapperSingleton.Mapper;
             defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService, defaultMapper);
         }
 
@@ -44,7 +45,6 @@ namespace DFC.FindACourseClient.UnitTests.Services
         public async Task GetCourseDetailsAsyncReturnsGroupedCourseList()
         {
             // Arrange
-
             var dummyApiResponse = BuildCourseRunDetailResponse();
             var findACourseClient = A.Fake<IFindACourseClient>();
             A.CallTo(() => findACourseClient.CourseGetAsync(A<CourseGetRequest>.Ignored)).Returns(dummyApiResponse);

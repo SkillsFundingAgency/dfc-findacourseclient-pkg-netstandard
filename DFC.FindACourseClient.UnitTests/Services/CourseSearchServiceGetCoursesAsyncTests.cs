@@ -3,6 +3,7 @@ using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
 using DFC.FindACourseClient.Services;
+using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,6 @@ namespace DFC.FindACourseClient.UnitTests.Services
     {
         private const string ProviderName1 = "Provider1";
         private const string ProviderName2 = "Provider2";
-        private const string CourseLinkPrefix = "somePrefix";
 
         private readonly IAuditService defaultAuditService;
         private readonly ICourseSearchService defaultCourseSearchService;
@@ -26,7 +26,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
         {
             var defaultFindACourseClient = A.Fake<IFindACourseClient>();
             defaultAuditService = A.Fake<IAuditService>();
-            defaultMapper = A.Fake<IMapper>();
+            defaultMapper = AutomapperSingleton.Mapper;
             defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService, defaultMapper);
         }
 
@@ -34,7 +34,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
         public async Task GetCoursesAsyncWhenEmptyStringKeywordsSentThenNullIsReturned()
         {
             // Act
-            var result = await defaultCourseSearchService.GetCoursesAsync(string.Empty, CourseLinkPrefix).ConfigureAwait(false);
+            var result = await defaultCourseSearchService.GetCoursesAsync(string.Empty).ConfigureAwait(false);
 
             // Assert
             Assert.Null(result);
@@ -51,7 +51,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
-            var result = await courseSearchService.GetCoursesAsync("SomeKeyword", CourseLinkPrefix).ConfigureAwait(false);
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
             var resultList = result.ToList();
 
             // Assert
@@ -69,7 +69,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
-            var result = await courseSearchService.GetCoursesAsync("SomeKeyword", CourseLinkPrefix).ConfigureAwait(false);
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => defaultAuditService.CreateAudit(null, null, null)).WithAnyArguments().MustHaveHappenedOnceExactly();

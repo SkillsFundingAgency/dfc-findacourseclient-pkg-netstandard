@@ -8,19 +8,18 @@ using DFC.FindACourseClient.Repositories;
 using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DFC.FindACourseClient
 {
     public static class DIExtensions
     {
-        public static void RegisterAutofac(this ContainerBuilder builder)
+        public static ContainerBuilder RegisterFindACourse(this ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+
+            return builder;
         }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
@@ -45,6 +44,5 @@ namespace DFC.FindACourseClient
 
             return services;
         }
-
     }
 }
