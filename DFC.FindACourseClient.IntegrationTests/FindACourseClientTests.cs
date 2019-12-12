@@ -13,7 +13,7 @@ namespace DFC.FindACourseClient.IntegrationTests
     [Trait("Course Search Client", "Integration Tests")]
     public class FindACourseClientTests
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfigurationRoot configuration;
         private readonly IFindACourseClient findACourseClient;
 
         public FindACourseClientTests()
@@ -22,15 +22,8 @@ namespace DFC.FindACourseClient.IntegrationTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var courseSearchClientSettings = new CourseSearchClientSettings
-            {
-                CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>() ?? new CourseSearchSvcSettings(),
-                CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>() ?? new CourseSearchAuditCosmosDbSettings(),
-            };
-
             var serviceProvider = new ServiceCollection()
-                .AddSingleton(courseSearchClientSettings)
-                .AddFindACourseServices(courseSearchClientSettings);
+                .AddFindACourseServices(configuration);
 
             var services = serviceProvider.BuildServiceProvider();
 

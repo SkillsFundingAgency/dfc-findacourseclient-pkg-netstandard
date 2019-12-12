@@ -9,18 +9,35 @@ using DFC.FindACourseClient.Models.CosmosDb;
 using DFC.FindACourseClient.Repositories;
 using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DFC.FindACourseClient
 {
     public static class DIExtensions
     {
-        public static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> RegisterFindACourseClientSdk(this ContainerBuilder builder) => builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
+        public static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> RegisterFindACourseClientSdk(this ContainerBuilder builder)
+        {
+            builder.Register(b => new CourseSearchClientSettings
+            {
+                CourseSearchSvcSettings = b.Resolve<IConfigurationRoot>().GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>(),
+                CourseSearchAuditCosmosDbSettings = b.Resolve<IConfigurationRoot>().GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>(),
+            });
+
+            return builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+        }
 
-        public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
+        public static IServiceCollection AddFindACourseServices(this IServiceCollection services, IConfigurationRoot configuration)
         {
+            var courseSearchClientSettings = new CourseSearchClientSettings
+            {
+                CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>(),
+                CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>(),
+            };
+            services.AddSingleton(courseSearchClientSettings);
+
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
             {
                 services.AddSingleton<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>

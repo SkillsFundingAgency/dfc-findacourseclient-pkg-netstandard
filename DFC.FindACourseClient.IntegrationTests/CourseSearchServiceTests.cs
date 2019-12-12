@@ -15,7 +15,7 @@ namespace DFC.FindACourseClient.IntegrationTests
 {
     public class CourseSearchServiceTests
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfigurationRoot configuration;
         private readonly IFindACourseClient findACourseClient;
         private readonly IAuditService auditService;
         private readonly IMapper mapper;
@@ -33,8 +33,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             };
 
             var serviceProvider = new ServiceCollection()
-                .AddSingleton(courseSearchClientSettings)
-                .AddFindACourseServices(courseSearchClientSettings);
+                .AddFindACourseServices(configuration);
 
             var services = serviceProvider.BuildServiceProvider();
 
