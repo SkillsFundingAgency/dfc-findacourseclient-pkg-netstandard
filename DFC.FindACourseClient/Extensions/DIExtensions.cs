@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Autofac.Builder;
+using Autofac.Features.Scanning;
 using AutoMapper;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Contracts.CosmosDb;
@@ -13,14 +15,9 @@ namespace DFC.FindACourseClient
 {
     public static class DIExtensions
     {
-        public static ContainerBuilder RegisterFindACourse(this ContainerBuilder builder)
-        {
-            builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
+        public static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> RegisterFindACourseClientSdk(this ContainerBuilder builder) => builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
-
-            return builder;
-        }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
         {
