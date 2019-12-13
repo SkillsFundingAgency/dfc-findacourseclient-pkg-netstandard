@@ -4,6 +4,8 @@ using Autofac.Features.Scanning;
 using AutoMapper;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Contracts.CosmosDb;
+using DFC.FindACourseClient.Extensions;
+using DFC.FindACourseClient.HttpClientPolicies;
 using DFC.FindACourseClient.Models.Configuration;
 using DFC.FindACourseClient.Models.CosmosDb;
 using DFC.FindACourseClient.Repositories;
@@ -55,6 +57,14 @@ namespace DFC.FindACourseClient
             services.AddScoped<IAuditService, AuditService>();
             services.AddScoped<IHttpClientService, HttpClientService>();
             services.AddAutoMapper(typeof(DIExtensions).Assembly);
+
+            const string AppSettingsPolicies = "Policies";
+            var policyOptions = configuration.GetSection(AppSettingsPolicies).Get<PolicyOptions>();
+            var policyRegistry = services.AddPolicyRegistry();
+
+            services
+                .AddPolicies(policyRegistry, nameof(CourseSearchSvcSettings), policyOptions)
+                .AddHttpClient<IHttpClientService, HttpClientService, CourseSearchSvcSettings>(configuration, nameof(CourseSearchSvcSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
 
             return services;
         }
