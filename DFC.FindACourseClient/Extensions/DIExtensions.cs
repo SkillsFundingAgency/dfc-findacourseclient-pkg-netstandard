@@ -24,6 +24,8 @@ namespace DFC.FindACourseClient
                 CourseSearchAuditCosmosDbSettings = b.Resolve<IConfigurationRoot>().GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>(),
             });
 
+            builder.RegisterGeneric(typeof(CosmosRepository<>)).As(typeof(ICosmosRepository<>));
+
             return builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
