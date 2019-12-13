@@ -33,7 +33,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             };
 
             var serviceProvider = new ServiceCollection()
-                .AddFindACourseServices(configuration);
+                .AddFindACourseServices(courseSearchClientSettings);
 
             var services = serviceProvider.BuildServiceProvider();
 

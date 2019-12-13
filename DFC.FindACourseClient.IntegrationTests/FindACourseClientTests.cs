@@ -22,8 +22,14 @@ namespace DFC.FindACourseClient.IntegrationTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
+            var courseSearchClientSettings = new CourseSearchClientSettings
+            {
+                CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>() ?? new CourseSearchSvcSettings(),
+                CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>() ?? new CourseSearchAuditCosmosDbSettings(),
+            };
+
             var serviceProvider = new ServiceCollection()
-                .AddFindACourseServices(configuration);
+                .AddFindACourseServices(courseSearchClientSettings);
 
             var services = serviceProvider.BuildServiceProvider();
 

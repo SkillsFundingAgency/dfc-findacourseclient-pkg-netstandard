@@ -11,33 +11,25 @@ using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace DFC.FindACourseClient
 {
     public static class DIExtensions
     {
-        public static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> RegisterFindACourseClientSdk(this ContainerBuilder builder)
+        public static void RegisterFindACourseClientSdk(this ContainerBuilder builder)
         {
-            builder.Register(b => new CourseSearchClientSettings
-            {
-                CourseSearchSvcSettings = b.Resolve<IConfigurationRoot>().GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>(),
-                CourseSearchAuditCosmosDbSettings = b.Resolve<IConfigurationRoot>().GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>(),
-            });
+            builder.RegisterGeneric(typeof(CosmosRepository<>))
+                .As(typeof(ICosmosRepository<>))
+                .InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(CosmosRepository<>)).As(typeof(ICosmosRepository<>));
-
-            return builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
+            builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
         }
 
-        public static IServiceCollection AddFindACourseServices(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
         {
-            var courseSearchClientSettings = new CourseSearchClientSettings
-            {
-                CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>(),
-                CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>(),
-            };
             services.AddSingleton(courseSearchClientSettings);
 
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
