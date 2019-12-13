@@ -19,10 +19,6 @@ namespace DFC.FindACourseClient.Extensions
                         result.Add(DeliveryMode.ClassroomBased);
                         break;
 
-                    case CourseType.DistanceLearning: // Equivalent doesnt exist in DeliveryMode
-                        result.Add(DeliveryMode.Undefined);
-                        break;
-
                     case CourseType.Online:
                         result.Add(DeliveryMode.Online);
                         break;

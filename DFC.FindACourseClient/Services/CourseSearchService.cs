@@ -135,7 +135,6 @@ namespace DFC.FindACourseClient.Services
                 Limit = input.Count,
                 DeliveryModes = input.Filters.CourseTypes?.MapToDeliveryModes(),
                 StudyModes = input.Filters.CourseHours?.MapToStudyModes(),
-                DfE1619Funded = input.Filters.Only1619Courses ? "Y" : null,
                 Town = input.Filters?.Location,
                 Postcode = input.Filters?.Location,
                 SortBy = (int)input.OrderedBy,

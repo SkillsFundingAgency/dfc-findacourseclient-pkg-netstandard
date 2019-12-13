@@ -7,8 +7,6 @@ namespace DFC.FindACourseClient.Models.APIRequests
     {
         public string SubjectKeyword { get; set; }
 
-        public string DfE1619Funded { get; set; }
-
         public double Distance { get; set; }
 
         public List<int> QualificationLevels { get; set; }
