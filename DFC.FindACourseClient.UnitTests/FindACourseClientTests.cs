@@ -60,10 +60,8 @@ namespace DFC.FindACourseClient.UnitTests
 
             var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
             var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
-            var httpClientService = A.Fake<IHttpClientService>();
-            A.CallTo(() => httpClientService.GetClient()).Returns(httpClient);
 
-            var findACourseClient = new FindACourseClient(httpClientService, defaultSettings, auditService, defaultLogger);
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
             var result = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
@@ -94,9 +92,7 @@ namespace DFC.FindACourseClient.UnitTests
 
             var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
             var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
-            var httpClientService = A.Fake<IHttpClientService>();
-            A.CallTo(() => httpClientService.GetClient()).Returns(httpClient);
-            var findACourseClient = new FindACourseClient(httpClientService, defaultSettings, auditService, defaultLogger);
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
             await Assert.ThrowsAsync<HttpRequestException>(async () => await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false)).ConfigureAwait(false);
@@ -134,9 +130,7 @@ namespace DFC.FindACourseClient.UnitTests
 
             var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
             var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
-            var httpClientService = A.Fake<IHttpClientService>();
-            A.CallTo(() => httpClientService.GetClient()).Returns(httpClient);
-            var findACourseClient = new FindACourseClient(httpClientService, defaultSettings, auditService, defaultLogger);
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
             var result = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
@@ -167,9 +161,7 @@ namespace DFC.FindACourseClient.UnitTests
 
             var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
             var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
-            var httpClientService = A.Fake<IHttpClientService>();
-            A.CallTo(() => httpClientService.GetClient()).Returns(httpClient);
-            var findACourseClient = new FindACourseClient(httpClientService, defaultSettings, auditService, defaultLogger);
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
             await Assert.ThrowsAsync<HttpRequestException>(async () => await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false)).ConfigureAwait(false);

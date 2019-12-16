@@ -1,20 +1,19 @@
 ﻿using DFC.FindACourseClient.HttpClientPolicies;
 using DFC.FindACourseClient.Models.Configuration;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Registry;
 using System;
 using System.Net.Http;
-using System.Net.Mime;
 
 namespace DFC.FindACourseClient.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        private const string ApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
+
         public static IServiceCollection AddPolicies(
             this IServiceCollection services,
             IPolicyRegistry<string> policyRegistry,
@@ -40,27 +39,23 @@ namespace DFC.FindACourseClient.Extensions
             return services;
         }
 
-        public static IServiceCollection AddHttpClient<TClient, TImplementation, TClientOptions>(
+        public static IServiceCollection AddHttpClient<TClient, TImplementation>(
                     this IServiceCollection services,
-                    IConfiguration configuration,
+                    CourseSearchSvcSettings courseSearchSvcSettings,
                     string configurationSectionName,
                     string retryPolicyName,
                     string circuitBreakerPolicyName)
                     where TClient : class
-                    where TImplementation : class, TClient
-                    where TClientOptions : CourseSearchSvcSettings, new() =>
+                    where TImplementation : class, TClient =>
                     services
-                        .Configure<TClientOptions>(configuration.GetSection(configurationSectionName))
                         .AddHttpClient<TClient, TImplementation>()
                         .ConfigureHttpClient((sp, options) =>
                         {
-                            var httpClientOptions = sp
-                                .GetRequiredService<IOptions<TClientOptions>>()
-                                .Value;
-                            options.BaseAddress = httpClientOptions.ServiceEndpoint;
-                            options.Timeout = new TimeSpan(0, 0, 0, httpClientOptions.RequestTimeOutSeconds);
+                            options.BaseAddress = courseSearchSvcSettings.ServiceEndpoint;
+                            options.Timeout = new TimeSpan(0, 0, 0, courseSearchSvcSettings.RequestTimeOutSeconds);
                             options.DefaultRequestHeaders.Clear();
                             options.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                            options.DefaultRequestHeaders.Add(ApimSubscriptionKey, courseSearchSvcSettings.ApiKey);
                         })
                         .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
                         {

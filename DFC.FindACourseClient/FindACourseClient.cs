@@ -18,15 +18,15 @@ namespace DFC.FindACourseClient
         private readonly CourseSearchClientSettings courseSearchClientSettings;
         private readonly Guid correlationId;
         private readonly IAuditService auditService;
-        private readonly IHttpClientService httpClientService;
+        private readonly HttpClient httpClient;
 
-        public FindACourseClient(IHttpClientService httpClientService, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
+        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
         {
             correlationId = Guid.NewGuid();
             this.logger = logger;
             this.auditService = auditService;
             this.courseSearchClientSettings = courseSearchClientSettings;
-            this.httpClientService = httpClientService;
+            this.httpClient = httpClient;
         }
 
         public async Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest)
@@ -34,14 +34,13 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
-                var httpClient = httpClientService.GetClient();
                 var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
                 var response = await httpClient.GetAsync(url).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
-                    logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseGetRequest}' \nResponse : {responseContent}");
+                    logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseGetRequest}' \nResponse : {responseContent}");
                     response?.EnsureSuccessStatusCode();
                 }
 
@@ -58,7 +57,6 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
-                var httpClient = httpClientService.GetClient();
                 var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
@@ -66,7 +64,7 @@ namespace DFC.FindACourseClient
 
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
-                    logger.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
+                    logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
                     response?.EnsureSuccessStatusCode();
                 }
 

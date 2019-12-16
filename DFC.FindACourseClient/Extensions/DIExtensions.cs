@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
-using Autofac.Features.Scanning;
 using AutoMapper;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Contracts.CosmosDb;
@@ -11,9 +9,7 @@ using DFC.FindACourseClient.Models.CosmosDb;
 using DFC.FindACourseClient.Repositories;
 using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents.Client;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 
 namespace DFC.FindACourseClient
 {
@@ -49,16 +45,14 @@ namespace DFC.FindACourseClient
 
             services.AddScoped<IFindACourseClient, FindACourseClient>();
             services.AddScoped<IAuditService, AuditService>();
-            services.AddScoped<IHttpClientService, HttpClientService>();
             services.AddAutoMapper(typeof(DIExtensions).Assembly);
 
-            const string AppSettingsPolicies = "Policies";
-            var policyOptions = configuration.GetSection(AppSettingsPolicies).Get<PolicyOptions>();
+            var policyOptions = courseSearchClientSettings.PolicyOptions;
             var policyRegistry = services.AddPolicyRegistry();
 
             services
-                .AddPolicies(policyRegistry, nameof(CourseSearchSvcSettings), policyOptions)
-                .AddHttpClient<IHttpClientService, HttpClientService, CourseSearchSvcSettings>(configuration, nameof(CourseSearchSvcSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
+                .AddPolicies(policyRegistry, nameof(CourseSearchClientSettings), policyOptions)
+                .AddHttpClient<IFindACourseClient, FindACourseClient>(courseSearchClientSettings.CourseSearchSvcSettings, nameof(CourseSearchClientSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
 
             return services;
         }

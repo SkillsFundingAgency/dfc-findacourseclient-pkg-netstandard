@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using DFC.FindACourseClient.HttpClientPolicies;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DFC.FindACourseClient.Models.Configuration
 {
@@ -8,5 +9,7 @@ namespace DFC.FindACourseClient.Models.Configuration
         public CourseSearchSvcSettings CourseSearchSvcSettings { get; set; }
 
         public CourseSearchAuditCosmosDbSettings CourseSearchAuditCosmosDbSettings { get; set; }
+
+        public PolicyOptions PolicyOptions { get; set; }
     }
 }
