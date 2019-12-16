@@ -34,9 +34,9 @@ namespace DFC.FindACourseClient.Repositories
             return result.StatusCode;
         }
 
-        public async Task InitialiseDatabaseAsync(bool isDevelopment)
+        public async Task InitialiseDatabaseAsync(bool? isDevelopment)
         {
-            if (isDevelopment)
+            if (isDevelopment.GetValueOrDefault())
             {
                 await CreateDatabaseIfNotExistsAsync();
                 await CreateCollectionIfNotExistsAsync();

@@ -8,6 +8,6 @@ namespace DFC.FindACourseClient.Contracts.CosmosDb
     {
         Task<HttpStatusCode> UpsertAsync(T model);
 
-        Task InitialiseDatabaseAsync(bool isDevelopment);
+        Task InitialiseDatabaseAsync(bool? isDevelopment);
     }
 }

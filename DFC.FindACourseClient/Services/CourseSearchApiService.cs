@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient.Services
 {
-    public class CourseSearchService : ICourseSearchService
+    public class CourseSearchApiService : ICourseSearchApiService
     {
         private readonly IFindACourseClient findACourseClient;
         private readonly IAuditService auditService;
         private readonly IMapper mapper;
 
-        public CourseSearchService(IFindACourseClient findACourseClient, IAuditService auditService, IMapper mapper)
+        public CourseSearchApiService(IFindACourseClient findACourseClient, IAuditService auditService, IMapper mapper)
         {
             this.findACourseClient = findACourseClient;
             this.auditService = auditService;

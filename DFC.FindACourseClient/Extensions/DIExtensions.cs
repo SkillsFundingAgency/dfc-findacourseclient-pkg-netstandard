@@ -8,8 +8,13 @@ using DFC.FindACourseClient.Models.Configuration;
 using DFC.FindACourseClient.Models.CosmosDb;
 using DFC.FindACourseClient.Repositories;
 using DFC.FindACourseClient.Services;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
+using System;
+using System.Net.Http;
 
 namespace DFC.FindACourseClient
 {
@@ -17,13 +22,53 @@ namespace DFC.FindACourseClient
     {
         public static void RegisterFindACourseClientSdk(this ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(CosmosRepository<>))
-                .As(typeof(ICosmosRepository<>))
-                .InstancePerLifetimeScope();
-
             builder.RegisterAssemblyTypes(typeof(DIExtensions).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+
+            builder.Register(c =>
+                {
+                    var courseSearchClientSettings = c.Resolve<CourseSearchClientSettings>();
+                    var client = new HttpClient
+                    {
+                        BaseAddress = courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint,
+                        Timeout = new TimeSpan(0, 0, 0, courseSearchClientSettings.CourseSearchSvcSettings.RequestTimeOutSeconds),
+                    };
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+                    client.DefaultRequestHeaders.Add(Constants.ApimSubscriptionKey, courseSearchClientSettings.CourseSearchSvcSettings.ApiKey);
+
+                    return client;
+                })
+                .Named<HttpClient>(nameof(IFindACourseClient))
+                .InstancePerLifetimeScope();
+
+            builder.Register(c => new FindACourseClient(
+                c.ResolveNamed<HttpClient>(nameof(IFindACourseClient)),
+                c.Resolve<CourseSearchClientSettings>(),
+                c.Resolve<IAuditService>(),
+                c.Resolve<ILogger>()))
+            .As<IFindACourseClient>()
+            .InstancePerLifetimeScope();
+
+            builder.Register(c =>
+            {
+                var courseSearchClientSettings = c.Resolve<CourseSearchClientSettings>();
+                return new DocumentClient(courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.EndpointUrl, courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.AccessKey);
+            })
+            .Named<IDocumentClient>(nameof(IFindACourseClient))
+            .InstancePerLifetimeScope();
+
+            builder.Register(c => new CosmosRepository<ApiAuditRecordCourse>(
+                c.Resolve<CourseSearchClientSettings>().CourseSearchAuditCosmosDbSettings,
+                c.ResolveNamed<IDocumentClient>(nameof(IFindACourseClient))))
+            .As<ICosmosRepository<ApiAuditRecordCourse>>()
+            .InstancePerLifetimeScope()
+            .OnActivated(async ctx => await ctx.Instance.InitialiseDatabaseAsync(ctx.Context.Resolve<CourseSearchClientSettings>()
+                .CourseSearchAuditCosmosDbSettings
+                .Environment?
+                .ToLowerInvariant()
+                .Contains("development")));
         }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
