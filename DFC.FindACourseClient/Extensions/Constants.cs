@@ -4,9 +4,10 @@ using System.Text;
 
 namespace DFC.FindACourseClient.Extensions
 {
-    public static class Constants
+    internal static class Constants
     {
-        public const string FindACourseClientKey = "FaC";
-        public const string ApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
+        internal const string FindACourseClientKey = "FaC";
+        internal const string ApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
+        internal static string LocalEnvironment = "local";
     }
 }

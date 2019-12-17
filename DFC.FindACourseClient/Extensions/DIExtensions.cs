@@ -68,7 +68,7 @@ namespace DFC.FindACourseClient
                 .CourseSearchAuditCosmosDbSettings
                 .Environment?
                 .ToLowerInvariant()
-                .Contains("development")));
+                .Contains(Constants.LocalEnvironment)));
         }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
@@ -81,7 +81,7 @@ namespace DFC.FindACourseClient
                 {
                     var cosmosDbAuditConnection = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings;
                     var documentClient = new DocumentClient(cosmosDbAuditConnection.EndpointUrl, cosmosDbAuditConnection.AccessKey);
-                    var isDevelopmentEnvironment = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.Environment?.ToLowerInvariant().Contains("development");
+                    var isDevelopmentEnvironment = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.Environment?.ToLowerInvariant().Contains(Constants.LocalEnvironment);
                     var repository = new CosmosRepository<ApiAuditRecordCourse>(cosmosDbAuditConnection, documentClient);
                     repository.InitialiseDatabaseAsync(isDevelopmentEnvironment.GetValueOrDefault()).GetAwaiter().GetResult();
                     return repository;
