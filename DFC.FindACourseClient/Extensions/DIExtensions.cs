@@ -41,7 +41,7 @@ namespace DFC.FindACourseClient
                     return client;
                 })
                 .Named<HttpClient>(nameof(IFindACourseClient))
-                .InstancePerLifetimeScope();
+                .SingleInstance();
 
             builder.Register(c => new FindACourseClient(
                 c.ResolveNamed<HttpClient>(nameof(IFindACourseClient)),
@@ -57,7 +57,7 @@ namespace DFC.FindACourseClient
                 return new DocumentClient(courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.EndpointUrl, courseSearchClientSettings.CourseSearchAuditCosmosDbSettings.AccessKey);
             })
             .Named<IDocumentClient>(nameof(IFindACourseClient))
-            .InstancePerLifetimeScope();
+            .SingleInstance();
 
             builder.Register(c => new CosmosRepository<ApiAuditRecordCourse>(
                 c.Resolve<CourseSearchClientSettings>().CourseSearchAuditCosmosDbSettings,
