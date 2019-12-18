@@ -47,7 +47,7 @@ namespace DFC.FindACourseClient
                 c.ResolveNamed<HttpClient>(nameof(IFindACourseClient)),
                 c.Resolve<CourseSearchClientSettings>(),
                 c.Resolve<IAuditService>(),
-                c.Resolve<ILogger>()))
+                c.ResolveOptional<ILogger>()))
             .As<IFindACourseClient>()
             .InstancePerLifetimeScope();
 
@@ -64,11 +64,11 @@ namespace DFC.FindACourseClient
                 c.ResolveNamed<IDocumentClient>(nameof(IFindACourseClient))))
             .As<ICosmosRepository<ApiAuditRecordCourse>>()
             .InstancePerLifetimeScope()
-            .OnActivated(async ctx => await ctx.Instance.InitialiseDatabaseAsync(ctx.Context.Resolve<CourseSearchClientSettings>()
+            .OnActivated(ctx => ctx.Instance.InitialiseDatabaseAsync(ctx.Context.Resolve<CourseSearchClientSettings>()
                 .CourseSearchAuditCosmosDbSettings
                 .Environment?
                 .ToLowerInvariant()
-                .Contains(Constants.LocalEnvironment)));
+                .Contains(Constants.LocalEnvironment)).GetAwaiter().GetResult());
         }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
