@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using DFC.FindACourseClient.AutoMapperProfiles;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Contracts.CosmosDb;
 using DFC.FindACourseClient.Extensions;
@@ -69,6 +70,13 @@ namespace DFC.FindACourseClient
                 .Environment?
                 .ToLowerInvariant()
                 .Contains(Constants.LocalEnvironment)).GetAwaiter().GetResult());
+
+            builder.Register(ctx => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<FindACourseProfile>();
+            }));
+
+            builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
         }
 
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
