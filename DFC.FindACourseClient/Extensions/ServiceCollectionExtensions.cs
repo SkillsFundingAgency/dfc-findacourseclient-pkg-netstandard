@@ -6,7 +6,6 @@ using Polly;
 using Polly.Extensions.Http;
 using Polly.Registry;
 using System;
-using System.Net.Http;
 
 namespace DFC.FindACourseClient.Extensions
 {
@@ -54,10 +53,6 @@ namespace DFC.FindACourseClient.Extensions
                             options.DefaultRequestHeaders.Clear();
                             options.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
                             options.DefaultRequestHeaders.Add(Constants.ApimSubscriptionKey, courseSearchSvcSettings.ApiKey);
-                        })
-                        .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
-                        {
-                            AllowAutoRedirect = false,
                         })
                         .AddPolicyHandlerFromRegistry($"{configurationSectionName}_{retryPolicyName}")
                         .AddPolicyHandlerFromRegistry($"{configurationSectionName}_{circuitBreakerPolicyName}")

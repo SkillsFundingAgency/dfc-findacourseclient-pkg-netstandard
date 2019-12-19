@@ -85,7 +85,7 @@ namespace DFC.FindACourseClient
 
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
             {
-                services.AddSingleton<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>
+                services.AddScoped<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>
                 {
                     var cosmosDbAuditConnection = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings;
                     var documentClient = new DocumentClient(cosmosDbAuditConnection.EndpointUrl, cosmosDbAuditConnection.AccessKey);
@@ -100,12 +100,12 @@ namespace DFC.FindACourseClient
             services.AddScoped<IAuditService, AuditService>();
             services.AddAutoMapper(typeof(DIExtensions).Assembly);
 
-            var policyOptions = courseSearchClientSettings.PolicyOptions;
+            var policyOptions = courseSearchClientSettings?.PolicyOptions;
             var policyRegistry = services.AddPolicyRegistry();
 
             services
                 .AddPolicies(policyRegistry, nameof(CourseSearchClientSettings), policyOptions)
-                .AddHttpClient<IFindACourseClient, FindACourseClient>(courseSearchClientSettings.CourseSearchSvcSettings, nameof(CourseSearchClientSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
+                .AddHttpClient<IFindACourseClient, FindACourseClient>(courseSearchClientSettings?.CourseSearchSvcSettings, nameof(CourseSearchClientSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
 
             return services;
         }
