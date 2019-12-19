@@ -110,7 +110,7 @@ namespace DFC.FindACourseClient.Services
             return new CourseSearchRequest
             {
                 SubjectKeyword = request,
-                StartDateFrom = DateTime.Now.ToString("yyyy-MM-dd"),
+                StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
                 DeliveryModes = new List<CourseType> { CourseType.All }.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 1,

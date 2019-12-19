@@ -302,7 +302,7 @@
       <Name>DFC.FindACourseClient</Name>
     </ProjectReference>
     <AdditionalFiles Include="..\stylecop.json">
-      <Link>stylecop.json</Link>
+      <Link>../stylecop.json</Link>
     </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
