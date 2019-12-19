@@ -18,7 +18,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
         private const string ProviderName1 = "Provider1";
 
         private readonly IAuditService defaultAuditService;
-        private readonly ICourseSearchService defaultCourseSearchService;
+        private readonly ICourseSearchApiService defaultCourseSearchService;
         private readonly IMapper defaultMapper;
         private readonly Guid courseId = Guid.NewGuid();
         private readonly Guid courseRunId = Guid.NewGuid();
@@ -28,7 +28,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var defaultFindACourseClient = A.Fake<IFindACourseClient>();
             defaultAuditService = A.Fake<IAuditService>();
             defaultMapper = AutomapperSingleton.Mapper;
-            defaultCourseSearchService = new CourseSearchService(defaultFindACourseClient, defaultAuditService, defaultMapper);
+            defaultCourseSearchService = new CourseSearchApiService(defaultFindACourseClient, defaultAuditService, defaultMapper);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var findACourseClient = A.Fake<IFindACourseClient>();
             A.CallTo(() => findACourseClient.CourseGetAsync(A<CourseGetRequest>.Ignored)).Returns(dummyApiResponse);
 
-            var courseSearchService = new CourseSearchService(findACourseClient, defaultAuditService, defaultMapper);
+            var courseSearchService = new CourseSearchApiService(findACourseClient, defaultAuditService, defaultMapper);
 
             // Act
             var result = await courseSearchService.GetCourseDetailsAsync(courseId.ToString(), courseRunId.ToString()).ConfigureAwait(false);

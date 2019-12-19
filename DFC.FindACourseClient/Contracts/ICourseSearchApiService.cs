@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient.Contracts
 {
-    public interface ICourseSearchService
+    public interface ICourseSearchApiService
     {
         Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords);
 

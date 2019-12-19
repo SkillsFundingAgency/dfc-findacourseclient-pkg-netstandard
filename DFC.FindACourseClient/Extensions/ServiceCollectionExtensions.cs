@@ -12,8 +12,6 @@ namespace DFC.FindACourseClient.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        private const string ApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
-
         public static IServiceCollection AddPolicies(
             this IServiceCollection services,
             IPolicyRegistry<string> policyRegistry,
@@ -55,7 +53,7 @@ namespace DFC.FindACourseClient.Extensions
                             options.Timeout = new TimeSpan(0, 0, 0, courseSearchSvcSettings.RequestTimeOutSeconds);
                             options.DefaultRequestHeaders.Clear();
                             options.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-                            options.DefaultRequestHeaders.Add(ApimSubscriptionKey, courseSearchSvcSettings.ApiKey);
+                            options.DefaultRequestHeaders.Add(Constants.ApimSubscriptionKey, courseSearchSvcSettings.ApiKey);
                         })
                         .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
                         {

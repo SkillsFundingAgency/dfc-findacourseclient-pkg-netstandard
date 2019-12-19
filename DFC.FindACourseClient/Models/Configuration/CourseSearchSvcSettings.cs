@@ -10,10 +10,10 @@ namespace DFC.FindACourseClient.Models.Configuration
 
         public string ApiKey { get; set; }
 
-        public string SearchPageSize { get; set; }
+        public string SearchPageSize { get; set; } = "20";
 
-        public int RequestTimeOutSeconds { get; set; }
+        public int RequestTimeOutSeconds { get; set; } = 10;
 
-        public int TransintErrorsNumberOfRetries { get; set; }
+        public int TransintErrorsNumberOfRetries { get; set; } = 3;
     }
 }

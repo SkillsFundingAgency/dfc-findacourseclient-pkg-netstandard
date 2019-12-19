@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient.Services
 {
-    public class CourseSearchService : ICourseSearchService
+    public class CourseSearchApiService : ICourseSearchApiService
     {
         private readonly IFindACourseClient findACourseClient;
         private readonly IAuditService auditService;
         private readonly IMapper mapper;
 
-        public CourseSearchService(IFindACourseClient findACourseClient, IAuditService auditService, IMapper mapper)
+        public CourseSearchApiService(IFindACourseClient findACourseClient, IAuditService auditService, IMapper mapper)
         {
             this.findACourseClient = findACourseClient;
             this.auditService = auditService;
@@ -67,7 +67,7 @@ namespace DFC.FindACourseClient.Services
             }
 
             var request = BuildCourseSearchRequest(courseSearchProperties);
-            var apiResult = await findACourseClient.CourseSearchAsync(request);
+            var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
 
             return new CourseSearchResult
             {
