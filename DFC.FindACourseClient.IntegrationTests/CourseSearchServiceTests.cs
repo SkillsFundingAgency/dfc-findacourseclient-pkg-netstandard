@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DFC.FindACourseClient.Contracts;
+using DFC.FindACourseClient.HttpClientPolicies;
 using DFC.FindACourseClient.Models.APIRequests;
 using DFC.FindACourseClient.Models.Configuration;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
@@ -30,6 +31,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             {
                 CourseSearchSvcSettings = configuration.GetSection("Configuration:CourseSearchClient:CourseSearchSvc").Get<CourseSearchSvcSettings>() ?? new CourseSearchSvcSettings(),
                 CourseSearchAuditCosmosDbSettings = configuration.GetSection("Configuration:CourseSearchClient:CosmosAuditConnection").Get<CourseSearchAuditCosmosDbSettings>() ?? new CourseSearchAuditCosmosDbSettings(),
+                PolicyOptions = configuration.GetSection("Configuration:CourseSearchClient:Policies").Get<PolicyOptions>() ?? new PolicyOptions(),
             };
 
             var serviceProvider = new ServiceCollection()
