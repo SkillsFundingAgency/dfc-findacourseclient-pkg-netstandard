@@ -22,9 +22,9 @@ namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
 
         public StartDate StartDate { get; set; } = StartDate.Anytime;
 
-        public List<CourseHours> CourseHours { get; set; }
+        public CourseHours CourseHours { get; set; }
 
-        public List<CourseType> CourseTypes { get; set; }
+        public CourseType CourseTypes { get; set; }
 
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);

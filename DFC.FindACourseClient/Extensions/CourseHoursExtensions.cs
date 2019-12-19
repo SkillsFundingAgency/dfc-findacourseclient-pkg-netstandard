@@ -7,34 +7,31 @@ namespace DFC.FindACourseClient.Extensions
 {
     public static class CourseHoursExtensions
     {
-        public static List<StudyMode> MapToStudyModes(this List<CourseHours> courseHours)
+        public static List<StudyMode> MapToStudyModes(this CourseHours courseHours)
         {
             var result = new List<StudyMode>();
 
-            foreach (var courseHour in courseHours)
+            switch (courseHours)
             {
-                switch (courseHour)
-                {
-                    case CourseHours.Fulltime:
-                        result.Add(StudyMode.FullTime);
-                        break;
+                case CourseHours.Fulltime:
+                    result.Add(StudyMode.FullTime);
+                    break;
 
-                    case CourseHours.PartTime:
-                        result.Add(StudyMode.PartTime);
-                        break;
+                case CourseHours.PartTime:
+                    result.Add(StudyMode.PartTime);
+                    break;
 
-                    case CourseHours.Flexible:
-                        result.Add(StudyMode.Flexible);
-                        break;
+                case CourseHours.Flexible:
+                    result.Add(StudyMode.Flexible);
+                    break;
 
-                    case CourseHours.All:
-                    default:
-                        result.Add(StudyMode.Flexible);
-                        result.Add(StudyMode.PartTime);
-                        result.Add(StudyMode.FullTime);
-                        result.Add(StudyMode.Undefined);
-                        break;
-                }
+                case CourseHours.All:
+                default:
+                    result.Add(StudyMode.Flexible);
+                    result.Add(StudyMode.PartTime);
+                    result.Add(StudyMode.FullTime);
+                    result.Add(StudyMode.Undefined);
+                    break;
             }
 
             return result.Distinct().ToList();
