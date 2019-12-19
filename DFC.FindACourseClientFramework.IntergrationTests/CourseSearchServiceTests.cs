@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using DFC.FindACourseClient;
+using DFC.FindACourseClient.AutoMapperProfiles;
 using DFC.FindACourseClient.Contracts;
 using DFC.FindACourseClient.Models.Configuration;
 using DFC.FindACourseClient.Models.ExternalInterfaceModels;
@@ -52,6 +53,12 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
             });
 
             builder.RegisterFindACourseClientSdk();
+            builder.Register(ctx => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<FindACourseProfile>();
+            }));
+
+            builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
             this.container = builder.Build();
             this.findACourseClient = this.container.Resolve<IFindACourseClient>();
             this.auditService = this.container.Resolve<IAuditService>();
