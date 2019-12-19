@@ -38,8 +38,8 @@ namespace DFC.FindACourseClient.Repositories
         {
             if (isDevelopment.GetValueOrDefault())
             {
-                await CreateDatabaseIfNotExistsAsync();
-                await CreateCollectionIfNotExistsAsync();
+                await CreateDatabaseIfNotExistsAsync().ConfigureAwait(false);
+                await CreateCollectionIfNotExistsAsync().ConfigureAwait(false);
             }
         }
 
@@ -80,7 +80,7 @@ namespace DFC.FindACourseClient.Repositories
                     await documentClient.CreateDocumentCollectionAsync(
                         UriFactory.CreateDatabaseUri(cosmosDbConnection.DatabaseId),
                         new DocumentCollection { Id = cosmosDbConnection.CollectionId, PartitionKey = pkDef },
-                        new RequestOptions { OfferThroughput = 1000 }).ConfigureAwait(false);
+                        new RequestOptions { OfferThroughput = 400 }).ConfigureAwait(false);
                 }
                 else
                 {

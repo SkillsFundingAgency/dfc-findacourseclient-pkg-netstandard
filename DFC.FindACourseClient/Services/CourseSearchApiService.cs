@@ -67,7 +67,7 @@ namespace DFC.FindACourseClient.Services
             }
 
             var request = BuildCourseSearchRequest(courseSearchProperties);
-            var apiResult = await findACourseClient.CourseSearchAsync(request);
+            var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
 
             return new CourseSearchResult
             {
