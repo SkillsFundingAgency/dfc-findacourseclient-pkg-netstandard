@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DFC.FindACourseClient.Models.APIRequests
+namespace DFC.FindACourseClient
 {
     public class CourseGetRequest
     {

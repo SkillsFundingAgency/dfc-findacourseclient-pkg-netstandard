@@ -1,8 +1,6 @@
-﻿using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
-namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClient
 {
     public class CourseSearchFilters
     {

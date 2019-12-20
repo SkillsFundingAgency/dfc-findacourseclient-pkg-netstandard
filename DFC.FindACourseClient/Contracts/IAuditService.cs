@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Contracts
+namespace DFC.FindACourseClient
 {
     public interface IAuditService
     {

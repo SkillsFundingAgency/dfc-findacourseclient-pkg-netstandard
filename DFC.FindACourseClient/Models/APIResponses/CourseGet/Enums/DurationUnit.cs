@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums
+namespace DFC.FindACourseClient
 {
     public enum DurationUnit
     {

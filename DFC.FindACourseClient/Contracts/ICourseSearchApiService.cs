@@ -1,8 +1,7 @@
-﻿using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Contracts
+namespace DFC.FindACourseClient
 {
     public interface ICourseSearchApiService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClient
 {
     public class Course
     {

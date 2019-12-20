@@ -1,8 +1,4 @@
 ﻿using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet;
-using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
-using DFC.FindACourseClient.Models.Configuration;
 using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using Microsoft.Extensions.Logging;

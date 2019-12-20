@@ -1,9 +1,9 @@
-﻿using DFC.FindACourseClient.Contracts.CosmosDb;
+﻿using DFC.FindACourseClient.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClient.Models.CosmosDb
+namespace DFC.FindACourseClient
 {
     public class ApiAuditRecordCourse : IDataModel
     {

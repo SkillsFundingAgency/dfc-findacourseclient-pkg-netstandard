@@ -1,12 +1,9 @@
-﻿using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Contracts.CosmosDb;
-using DFC.FindACourseClient.Models.CosmosDb;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Services
+namespace DFC.FindACourseClient
 {
-    public class AuditService : IAuditService
+    internal class AuditService : IAuditService
     {
         private readonly ICosmosRepository<ApiAuditRecordCourse> auditRepository;
 

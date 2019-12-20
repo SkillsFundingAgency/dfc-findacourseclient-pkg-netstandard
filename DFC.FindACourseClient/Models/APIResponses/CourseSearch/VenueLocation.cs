@@ -1,4 +1,4 @@
-﻿namespace DFC.FindACourseClient.Models.APIResponses.CourseSearch
+﻿namespace DFC.FindACourseClient
 {
     public class VenueLocation
     {

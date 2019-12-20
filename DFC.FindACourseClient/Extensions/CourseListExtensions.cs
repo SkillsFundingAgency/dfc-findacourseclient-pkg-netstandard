@@ -1,12 +1,11 @@
-﻿using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DFC.FindACourseClient.Extensions
+namespace DFC.FindACourseClient
 {
-    public static class CourseListExtensions
+    internal static class CourseListExtensions
     {
-        public static IEnumerable<Course> SelectCoursesForJobProfile(this IEnumerable<Course> courses)
+        internal static IEnumerable<Course> SelectCoursesForJobProfile(this IEnumerable<Course> courses)
         {
             if (courses == null)
             {

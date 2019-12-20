@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DFC.FindACourseClient.HttpClientPolicies
+namespace DFC.FindACourseClient
 {
     public class CircuitBreakerPolicyOptions
     {

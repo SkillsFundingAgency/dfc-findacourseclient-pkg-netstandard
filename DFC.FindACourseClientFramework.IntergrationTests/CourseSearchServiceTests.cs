@@ -1,11 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
 using DFC.FindACourseClient;
-using DFC.FindACourseClient.AutoMapperProfiles;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.Configuration;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using DFC.FindACourseClient.Services;
 using System;
 using System.Configuration;
 using System.Net;

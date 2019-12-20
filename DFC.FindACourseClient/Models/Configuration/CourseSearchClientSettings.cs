@@ -1,7 +1,6 @@
-﻿using DFC.FindACourseClient.HttpClientPolicies;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DFC.FindACourseClient.Models.Configuration
+namespace DFC.FindACourseClient
 {
     [ExcludeFromCodeCoverage]
     public class CourseSearchClientSettings

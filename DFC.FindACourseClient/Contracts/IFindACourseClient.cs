@@ -1,9 +1,6 @@
-﻿using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet;
-using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Contracts
+namespace DFC.FindACourseClient
 {
     public interface IFindACourseClient
     {

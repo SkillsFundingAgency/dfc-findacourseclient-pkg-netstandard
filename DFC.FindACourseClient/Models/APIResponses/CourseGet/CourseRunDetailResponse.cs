@@ -1,8 +1,7 @@
-﻿using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace DFC.FindACourseClient.Models.APIResponses.CourseGet
+namespace DFC.FindACourseClient
 {
     public class CourseRunDetailResponse
     {

@@ -1,9 +1,4 @@
-﻿using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet;
-using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
-using DFC.FindACourseClient.Models.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;

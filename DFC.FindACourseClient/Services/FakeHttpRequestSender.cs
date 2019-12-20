@@ -2,11 +2,11 @@
 using System;
 using System.Net.Http;
 
-namespace DFC.FindACourseClient.Services
+namespace DFC.FindACourseClient
 {
-    public class FakeHttpRequestSender : IFakeHttpRequestSender
+    internal class FakeHttpRequestSender : IFakeHttpRequestSender
     {
-        public HttpResponseMessage Send(HttpRequestMessage request)
+        HttpResponseMessage IFakeHttpRequestSender.Send(HttpRequestMessage request)
         {
             throw new NotImplementedException("Now we can setup this method with our mocking framework");
         }

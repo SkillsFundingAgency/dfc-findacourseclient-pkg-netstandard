@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClient
 {
     public enum StartDate
     {

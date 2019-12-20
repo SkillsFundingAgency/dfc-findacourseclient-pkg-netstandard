@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DFC.FindACourseClient.AutoMapperProfiles;
 
 namespace DFC.FindACourseClient.UnitTests.ClientHandlers
 {

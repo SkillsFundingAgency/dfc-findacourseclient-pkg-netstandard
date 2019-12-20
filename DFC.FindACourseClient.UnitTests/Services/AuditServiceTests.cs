@@ -1,6 +1,3 @@
-using DFC.FindACourseClient.Contracts.CosmosDb;
-using DFC.FindACourseClient.Models.CosmosDb;
-using DFC.FindACourseClient.Services;
 using FakeItEasy;
 using System;
 using System.Threading.Tasks;

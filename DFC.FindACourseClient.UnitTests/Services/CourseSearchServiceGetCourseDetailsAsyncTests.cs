@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
-using DFC.FindACourseClient.Services;
 using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using System;
