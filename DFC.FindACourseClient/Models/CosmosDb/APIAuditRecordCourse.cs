@@ -1,14 +1,12 @@
-﻿using DFC.FindACourseClient.Contracts.CosmosDb;
+﻿using DFC.FindACourseClient.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClient.Models.CosmosDb
+namespace DFC.FindACourseClient
 {
-    public class APIAuditRecordCourse : IDataModel
+    public class ApiAuditRecordCourse : IDataModel
     {
-        public static DateTime AuditDateTime => DateTime.UtcNow;
-
         [Required]
         [JsonProperty(PropertyName = "id")]
         public Guid DocumentId { get; set; }
@@ -23,5 +21,7 @@ namespace DFC.FindACourseClient.Models.CosmosDb
         public object Response { get; set; }
 
         public string PartitionKey => $"{AuditDateTime.Year}{AuditDateTime.Month}";
+
+        private static DateTime AuditDateTime => DateTime.UtcNow;
     }
 }
