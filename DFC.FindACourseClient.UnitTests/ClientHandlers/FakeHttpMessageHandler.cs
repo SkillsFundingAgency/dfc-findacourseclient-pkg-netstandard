@@ -1,11 +1,14 @@
 ﻿using DFC.FindACourseClient.Contracts;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("DFC.FindACourseClient.UnitTests")]
+
 namespace DFC.FindACourseClient.UnitTests.ClientHandlers
 {
-    public class FakeHttpMessageHandler : HttpMessageHandler
+    internal class FakeHttpMessageHandler : HttpMessageHandler
     {
         private readonly IFakeHttpRequestSender fakeHttpRequestSender;
 

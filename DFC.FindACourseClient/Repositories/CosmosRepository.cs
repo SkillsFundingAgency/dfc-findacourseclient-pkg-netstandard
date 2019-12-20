@@ -1,6 +1,4 @@
-﻿using DFC.FindACourseClient.Contracts.CosmosDb;
-using DFC.FindACourseClient.Models.Configuration;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using System;
 using System.Collections.ObjectModel;
@@ -8,10 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Repositories
+namespace DFC.FindACourseClient
 {
     [ExcludeFromCodeCoverage]
-    public class CosmosRepository<T> : ICosmosRepository<T>
+    internal class CosmosRepository<T> : ICosmosRepository<T>
     where T : IDataModel
     {
         private readonly CourseSearchAuditCosmosDbSettings cosmosDbConnection;

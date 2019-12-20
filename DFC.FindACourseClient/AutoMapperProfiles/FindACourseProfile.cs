@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using DFC.FindACourseClient.Models.APIResponses.CourseGet;
-using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels;
+using System.Runtime.CompilerServices;
 
-namespace DFC.FindACourseClient.AutoMapperProfiles
+[assembly: InternalsVisibleTo("DFC.FindACourseClientFramework.IntergrationTests")]
+
+namespace DFC.FindACourseClient
 {
-    public class FindACourseProfile : Profile
+    internal class FindACourseProfile : Profile
     {
         public FindACourseProfile()
         {

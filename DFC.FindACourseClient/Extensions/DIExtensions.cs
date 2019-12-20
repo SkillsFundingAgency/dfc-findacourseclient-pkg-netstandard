@@ -1,14 +1,5 @@
 ﻿using Autofac;
 using AutoMapper;
-using DFC.FindACourseClient.AutoMapperProfiles;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Contracts.CosmosDb;
-using DFC.FindACourseClient.Extensions;
-using DFC.FindACourseClient.HttpClientPolicies;
-using DFC.FindACourseClient.Models.Configuration;
-using DFC.FindACourseClient.Models.CosmosDb;
-using DFC.FindACourseClient.Repositories;
-using DFC.FindACourseClient.Services;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;

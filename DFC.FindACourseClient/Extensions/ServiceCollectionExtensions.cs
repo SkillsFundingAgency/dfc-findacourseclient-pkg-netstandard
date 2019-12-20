@@ -1,17 +1,15 @@
-﻿using DFC.FindACourseClient.HttpClientPolicies;
-using DFC.FindACourseClient.Models.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Registry;
 using System;
 
-namespace DFC.FindACourseClient.Extensions
+namespace DFC.FindACourseClient
 {
-    public static class ServiceCollectionExtensions
+    internal static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddPolicies(
+        internal static IServiceCollection AddPolicies(
             this IServiceCollection services,
             IPolicyRegistry<string> policyRegistry,
             string keyPrefix,
@@ -36,7 +34,7 @@ namespace DFC.FindACourseClient.Extensions
             return services;
         }
 
-        public static IServiceCollection AddHttpClient<TClient, TImplementation>(
+        internal static IServiceCollection AddHttpClient<TClient, TImplementation>(
                     this IServiceCollection services,
                     CourseSearchSvcSettings courseSearchSvcSettings,
                     string configurationSectionName,

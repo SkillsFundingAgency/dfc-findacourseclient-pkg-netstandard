@@ -1,4 +1,4 @@
-﻿namespace DFC.FindACourseClient.HttpClientPolicies
+﻿namespace DFC.FindACourseClient
 {
     public class PolicyOptions
     {

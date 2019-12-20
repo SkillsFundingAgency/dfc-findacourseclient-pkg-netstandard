@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DFC.FindACourseClient.Extensions
+﻿namespace DFC.FindACourseClient
 {
     internal static class Constants
     {

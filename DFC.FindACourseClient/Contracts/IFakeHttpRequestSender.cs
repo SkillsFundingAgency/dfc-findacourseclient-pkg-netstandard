@@ -2,7 +2,7 @@
 
 namespace DFC.FindACourseClient.Contracts
 {
-    public interface IFakeHttpRequestSender
+    internal interface IFakeHttpRequestSender
     {
         HttpResponseMessage Send(HttpRequestMessage request);
     }

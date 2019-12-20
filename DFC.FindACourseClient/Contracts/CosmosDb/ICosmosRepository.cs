@@ -1,9 +1,12 @@
 ﻿using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Contracts.CosmosDb
+[assembly: InternalsVisibleTo("DFC.FindACourseClient.UnitTests")]
+
+namespace DFC.FindACourseClient
 {
-    public interface ICosmosRepository<T>
+    internal interface ICosmosRepository<T>
         where T : IDataModel
     {
         Task<HttpStatusCode> UpsertAsync(T model);

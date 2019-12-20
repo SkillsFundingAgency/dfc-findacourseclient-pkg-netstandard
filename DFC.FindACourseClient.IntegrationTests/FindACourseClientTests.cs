@@ -1,8 +1,4 @@
-﻿using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.HttpClientPolicies;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.Configuration;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;

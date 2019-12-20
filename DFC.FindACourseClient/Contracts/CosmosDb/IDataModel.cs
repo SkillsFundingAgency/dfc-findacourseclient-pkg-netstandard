@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClient.Contracts.CosmosDb
+namespace DFC.FindACourseClient
 {
-    public interface IDataModel
+    internal interface IDataModel
     {
         [Required]
         [JsonProperty(PropertyName = "id")]

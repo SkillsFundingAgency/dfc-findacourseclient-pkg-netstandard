@@ -1,10 +1,4 @@
 ﻿using AutoMapper;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.APIResponses.CourseSearch;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using DFC.FindACourseClient.Services;
 using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using System;
@@ -107,7 +101,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
                     SearchTerm = "Keyword",
                     DistanceSpecified = true,
                     Only1619Courses = false,
-                    CourseHours = CourseHours.Fulltime,
+                    CourseHours = CourseHours.Flexible,
                     CourseTypes = CourseType.All,
                 },
                 Page = 3,

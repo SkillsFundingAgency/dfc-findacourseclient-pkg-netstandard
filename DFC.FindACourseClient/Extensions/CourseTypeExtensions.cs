@@ -1,13 +1,11 @@
-﻿using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DFC.FindACourseClient.Extensions
+namespace DFC.FindACourseClient
 {
-    public static class CourseTypeExtensions
+    internal static class CourseTypeExtensions
     {
-        public static List<DeliveryMode> MapToDeliveryModes(this CourseType courseTypes)
+        internal static List<DeliveryMode> MapToDeliveryModes(this CourseType courseTypes)
         {
             var result = new List<DeliveryMode>();
             switch (courseTypes)

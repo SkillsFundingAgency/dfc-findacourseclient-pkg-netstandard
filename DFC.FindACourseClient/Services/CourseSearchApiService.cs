@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
-using DFC.FindACourseClient.Contracts;
-using DFC.FindACourseClient.Extensions;
-using DFC.FindACourseClient.Models.APIRequests;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DFC.FindACourseClient.Services
+namespace DFC.FindACourseClient
 {
     public class CourseSearchApiService : ICourseSearchApiService
     {

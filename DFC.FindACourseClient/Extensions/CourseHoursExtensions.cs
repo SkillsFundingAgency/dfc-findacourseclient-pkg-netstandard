@@ -1,13 +1,11 @@
-﻿using DFC.FindACourseClient.Models.APIResponses.CourseGet.Enums;
-using DFC.FindACourseClient.Models.ExternalInterfaceModels.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DFC.FindACourseClient.Extensions
+namespace DFC.FindACourseClient
 {
-    public static class CourseHoursExtensions
+    internal static class CourseHoursExtensions
     {
-        public static List<StudyMode> MapToStudyModes(this CourseHours courseHours)
+        internal static List<StudyMode> MapToStudyModes(this CourseHours courseHours)
         {
             var result = new List<StudyMode>();
 

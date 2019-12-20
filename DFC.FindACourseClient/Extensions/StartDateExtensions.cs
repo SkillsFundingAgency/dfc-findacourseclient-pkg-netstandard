@@ -1,11 +1,10 @@
-﻿using DFC.FindACourseClient.Models.ExternalInterfaceModels;
-using System;
+﻿using System;
 
-namespace DFC.FindACourseClient.Extensions
+namespace DFC.FindACourseClient
 {
-    public static class StartDateExtensions
+    internal static class StartDateExtensions
     {
-        public static string GetEarliestStartDate(this StartDate startDate, DateTime earliestStartDate)
+        internal static string GetEarliestStartDate(this StartDate startDate, DateTime earliestStartDate)
         {
             const string CourseApiDateFormat = "yyyy-MM-dd";
             switch (startDate)

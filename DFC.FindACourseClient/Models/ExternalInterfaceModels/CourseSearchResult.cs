@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DFC.FindACourseClient.Models.ExternalInterfaceModels
+namespace DFC.FindACourseClient
 {
     public class CourseSearchResult
     {

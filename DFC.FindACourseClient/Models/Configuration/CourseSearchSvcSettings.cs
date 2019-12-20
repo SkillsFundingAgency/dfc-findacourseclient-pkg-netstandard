@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DFC.FindACourseClient.Models.Configuration
+namespace DFC.FindACourseClient
 {
     [ExcludeFromCodeCoverage]
     public class CourseSearchSvcSettings
