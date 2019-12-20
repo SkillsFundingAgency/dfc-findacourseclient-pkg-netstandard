@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DFC.FindACourseClient.Models.Configuration
+namespace DFC.FindACourseClient
 {
+    [ExcludeFromCodeCoverage]
     public class CourseSearchClientSettings
     {
         public CourseSearchSvcSettings CourseSearchSvcSettings { get; set; }
 
         public CourseSearchAuditCosmosDbSettings CourseSearchAuditCosmosDbSettings { get; set; }
+
+        public PolicyOptions PolicyOptions { get; set; }
     }
 }
