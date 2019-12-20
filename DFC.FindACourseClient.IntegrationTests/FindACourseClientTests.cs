@@ -37,7 +37,7 @@ namespace DFC.FindACourseClient.IntegrationTests
         [Fact]
         public async Task CourseSearch()
         {
-            var courseSearchRequest = new CourseSearchRequest()
+            var courseSearchRequest = new CourseSearchRequest
             {
                 SubjectKeyword = configuration.GetSection("CourseSearch:KeyWordsForTest").Get<string>(),
                 Start = 0,
@@ -52,15 +52,15 @@ namespace DFC.FindACourseClient.IntegrationTests
         public async Task CourseGet()
         {
             //Get Details for a course
-            var courseGetRequest = new CourseGetRequest()
+            var courseGetRequest = new CourseGetRequest
             {
-                CourseId = Guid.Parse("a4dcc053-67e7-462c-b3c1-52c3add949b4"),
-                RunId = Guid.Parse("052f98d6-d294-4d8c-801b-33bb80fe60f9"),
+                CourseId = Guid.Parse("36d9dfb8-7fa9-4779-beae-ca65ba429bfd"),
+                RunId = Guid.Parse("4776fd59-f313-47c9-8fea-5f9cbc58bcd4"),
             };
 
             var detailsResponse = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
 
-            detailsResponse.Course.CourseId.Should().Be("a4dcc053-67e7-462c-b3c1-52c3add949b4");
+            detailsResponse.Course.CourseId.Should().Be(courseGetRequest.CourseId.ToString());
         }
     }
 }

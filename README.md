@@ -40,13 +40,15 @@ In addition -
 
 |File                                       |Setting                        |Example value                      |
 |------------------------------------------|------------------------------|----------------------------------|
+| appsettings.json     | CourseSearchSvc.ServiceEndpoint      | https://dev.api.nationalcareersservice.org.uk/coursedirectory/findacourse/ |
 | appsettings.json     | CourseSearchSvc.APIKey      | 55e116d6-2f64-47ae-b753-468ed36d7827 |
+| appsettings.json     | Configuration.CourseSearchClient.CosmosAuditConnection.EndpointUrl      | https://localhost:8081 |
 
 
 ## Deployments
 
 This package can be used as part of a larger solution that need to search for courses.
-Using this package will simplify the interactions with the backend WCF service that is provided by the find a course service.
+Using this package will simplify the interactions with the backend API that is provided by the find a course service.
 
 To use this package you will need to supply configuration settings from the hosting app.
 For a example of how to do this please take a look at the Intergration Test that is part of this solution.
@@ -78,7 +80,22 @@ If settings for the Cosmos auditing container are not supplied then there will b
             results.Result.Count().Should().BeGreaterThan(0);
         }
 
+## Using this package
 
+In your application startup, if you are adding a new IMapper instance, you must instead manually add your Automapper profiles:
+
+			services.AddSingleton(serviceProvider =>
+                 return new MapperConfiguration(cfg =>
+                 {
+                     cfg.AddProfiles(
+                         new List<Profile>
+                         {
+                            new SomeProfile1(),
+                            new SomeProfile2(),
+                            new SomeProfile3(),
+                         });
+                 }).CreateMapper();
+             });
 
 ## Built With
 
