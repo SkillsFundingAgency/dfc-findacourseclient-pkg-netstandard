@@ -40,5 +40,7 @@ namespace DFC.FindACourseClient
         public DateTime? StartDate { get; set; }
 
         public StudyMode StudyMode { get; set; }
+
+        public List<CourseDetailResponseSubRegion> SubRegions { get; set; }
     }
 }
