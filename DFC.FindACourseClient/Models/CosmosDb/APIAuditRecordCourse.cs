@@ -1,5 +1,4 @@
-﻿using DFC.FindACourseClient.Contracts;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
