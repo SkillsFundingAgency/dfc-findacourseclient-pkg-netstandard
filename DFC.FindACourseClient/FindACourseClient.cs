@@ -60,8 +60,6 @@ namespace DFC.FindACourseClient
                 var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
-                await auditService.CreateAudit(courseSearchRequest, responseContent, correlationId).ConfigureAwait(false);
-
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
                     logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
