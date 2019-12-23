@@ -56,7 +56,7 @@ jobs:
     inputs:      
       targetType: inline
       script: |
-        dotnet pack DFC.FindACourseClient/DFC.FindACourseClient.csproj --no-build -c Release -o $(build.artifactstagingdirectory)\\packages /p:Version=$(Build.BuildNumber)
+        dotnet pack DFC.FindACourseClient/DFC.FindACourseClient.csproj --no-build -c Release -o $(build.artifactstagingdirectory)\\packages /p:Version=$(GitVersion.MajorMinorPatch)
 
   # And publish it so we can release it in a separate release definition
   - task: PublishBuildArtifacts@1
