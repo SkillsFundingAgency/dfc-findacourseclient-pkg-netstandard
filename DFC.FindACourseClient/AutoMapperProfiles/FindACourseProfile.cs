@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace DFC.FindACourseClient
 {
-    internal class FindACourseProfile : Profile
+    public class FindACourseProfile : Profile
     {
         public FindACourseProfile()
         {

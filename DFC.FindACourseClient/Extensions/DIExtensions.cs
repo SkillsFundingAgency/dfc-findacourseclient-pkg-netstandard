@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using AutoMapper;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,7 +81,6 @@ namespace DFC.FindACourseClient
 
             services.AddScoped<IFindACourseClient, FindACourseClient>();
             services.AddScoped<IAuditService, AuditService>();
-            services.AddAutoMapper(typeof(DIExtensions).Assembly);
 
             var policyOptions = courseSearchClientSettings?.PolicyOptions;
             var policyRegistry = services.AddPolicyRegistry();

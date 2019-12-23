@@ -82,7 +82,7 @@ If settings for the Cosmos auditing container are not supplied then there will b
 
 ## Using this package
 
-In your application startup, if you are adding a new IMapper instance, you must instead manually add your Automapper profiles:
+In your application startup, you must instead manually add your Automapper profiles **as well as the FindACourseProfile()**:
 
 			services.AddSingleton(serviceProvider =>
                  return new MapperConfiguration(cfg =>
@@ -93,6 +93,7 @@ In your application startup, if you are adding a new IMapper instance, you must 
                             new SomeProfile1(),
                             new SomeProfile2(),
                             new SomeProfile3(),
+							new FindACourseProfile(),
                          });
                  }).CreateMapper();
              });
