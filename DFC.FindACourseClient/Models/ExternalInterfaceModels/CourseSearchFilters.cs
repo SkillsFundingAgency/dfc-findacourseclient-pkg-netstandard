@@ -10,7 +10,9 @@ namespace DFC.FindACourseClient
 
         public string Provider { get; set; }
 
-        public string Location { get; set; }
+        public string Town { get; set; }
+
+        public string Postcode { get; set; }
 
         public float Distance { get; set; } = 10f;
 

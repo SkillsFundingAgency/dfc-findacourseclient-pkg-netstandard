@@ -28,8 +28,15 @@ namespace DFC.FindACourseClient.IntegrationTests
                 PolicyOptions = configuration.GetSection("Configuration:CourseSearchClient:Policies").Get<PolicyOptions>() ?? new PolicyOptions(),
             };
 
-            var serviceProvider = new ServiceCollection()
-                .AddFindACourseServices(courseSearchClientSettings);
+            var serviceProvider = new ServiceCollection().AddFindACourseServices(courseSearchClientSettings);
+
+            serviceProvider.AddSingleton(sp =>
+            {
+                return new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(typeof(FindACourseProfile));
+                }).CreateMapper();
+            });
 
             var services = serviceProvider.BuildServiceProvider();
 
