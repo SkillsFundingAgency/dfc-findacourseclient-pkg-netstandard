@@ -65,7 +65,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
         {
             var courseSearchRequest = new CourseSearchProperties()
             {
-                Filters = new CourseSearchFilters { SearchTerm = "biology", StartDate = StartDate.FromToday, StartDateFrom = DateTime.Today},
+                Filters = new CourseSearchFilters { SearchTerm = "maths", StartDate = StartDate.FromToday, StartDateFrom = DateTime.Today},
             };
 
             var courseSearchService = new CourseSearchApiService(this.findACourseClient, this.auditService, this.mapper);
