@@ -10,19 +10,19 @@ namespace DFC.FindACourseClient
 
         public string Provider { get; set; }
 
-        public string Location { get; set; }
+        public string PostCode { get; set; }
 
         public float Distance { get; set; } = 10f;
 
-        public bool DistanceSpecified { get; set; }
+        public string Town { get; set; }
 
-        public bool Only1619Courses { get; set; }
+        public bool DistanceSpecified { get; set; }
 
         public StartDate StartDate { get; set; } = StartDate.Anytime;
 
         public CourseHours CourseHours { get; set; }
 
-        public CourseType CourseTypes { get; set; }
+        public CourseType CourseType { get; set; }
 
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
