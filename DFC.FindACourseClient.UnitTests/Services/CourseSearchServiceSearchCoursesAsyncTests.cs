@@ -67,7 +67,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             const int pageSize = 50;
             const int startItem = 201;
             const int expectedNumberOfPages = 11;
-            const int expectedPageNumber = 5;
+            const int expectedPageNumber = 6;
 
             var request = BuildCourseSearchProperties();
             var dummyApiResponse = BuildCourseSearchResponse(startItem, totalResults, pageSize);
