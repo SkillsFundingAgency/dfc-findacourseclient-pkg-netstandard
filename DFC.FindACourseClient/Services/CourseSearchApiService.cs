@@ -97,7 +97,7 @@ namespace DFC.FindACourseClient
 
         private static int GetCurrentPageNumber(int startingItem, int pageSize)
         {
-            return (int)Math.Ceiling((decimal)startingItem / pageSize);
+            return (int)Math.Ceiling((decimal)startingItem / pageSize) + 1;
         }
 
         private static CourseSearchRequest BuildCourseListRequest(string request)
