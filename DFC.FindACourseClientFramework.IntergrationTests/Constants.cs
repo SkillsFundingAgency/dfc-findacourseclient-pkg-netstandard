@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DFC.FindACourseClientFramework.IntergrationTests
+﻿namespace DFC.FindACourseClientFramework.IntergrationTests
 {
     public static class Constants
     {
@@ -18,6 +12,6 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
         public const string CourseSearchClientCourseSearchSvcAPIKey = "DFC.Digital.CourseSearchClient.CourseSearchSvc.APIKey";
         public const string CourseSearchClientCourseSearchSvcSearchPageSize = "DFC.Digital.CourseSearchClient.CourseSearchSvc.SearchPageSize";
         public const string CourseSearchClientCourseSearchSvcRequestTimeOutSeconds = "DFC.Digital.CourseSearchClient.CourseSearchSvc.RequestTimeOutSeconds";
-        public const string CourseSearchClientCourseSearchSvcTransintErrorsNumberOfRetries = "DFC.Digital.CourseSearchClient.CourseSearchSvc.TransintErrorsNumberOfRetries";
+        public const string CourseSearchClientCourseSearchSvcTransientErrorsNumberOfRetries = "DFC.Digital.CourseSearchClient.CourseSearchSvc.TransientErrorsNumberOfRetries";
     }
 }

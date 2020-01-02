@@ -33,7 +33,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
                         ApiKey = this.GetConfig<string>(Constants.CourseSearchClientCourseSearchSvcAPIKey),
                         SearchPageSize = this.GetConfig<string>(Constants.CourseSearchClientCourseSearchSvcSearchPageSize),
                         RequestTimeOutSeconds = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcRequestTimeOutSeconds),
-                        TransintErrorsNumberOfRetries = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcTransintErrorsNumberOfRetries),
+                        TransientErrorsNumberOfRetries = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcTransientErrorsNumberOfRetries),
                     },
                     CourseSearchAuditCosmosDbSettings = new CourseSearchAuditCosmosDbSettings()
                     {
