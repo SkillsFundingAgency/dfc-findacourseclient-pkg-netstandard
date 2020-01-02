@@ -14,6 +14,6 @@ namespace DFC.FindACourseClient
 
         public int RequestTimeOutSeconds { get; set; } = 10;
 
-        public int TransintErrorsNumberOfRetries { get; set; } = 3;
+        public int TransientErrorsNumberOfRetries { get; set; } = 3;
     }
 }
