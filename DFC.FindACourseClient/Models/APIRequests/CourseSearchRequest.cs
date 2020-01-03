@@ -8,6 +8,8 @@ namespace DFC.FindACourseClient
 
         public double Distance { get; set; }
 
+        public string ProviderName { get; set; }
+
         public List<int> QualificationLevels { get; set; }
 
         public List<StudyMode> StudyModes { get; set; }
