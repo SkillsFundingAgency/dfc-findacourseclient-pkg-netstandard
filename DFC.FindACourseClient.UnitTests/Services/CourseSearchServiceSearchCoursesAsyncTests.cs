@@ -102,7 +102,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             var result = await courseSearchService.SearchCoursesAsync(request).ConfigureAwait(false);
 
             // Assert
-            Assert.Equal(DateTime.UtcNow.ToString("D"), result.Courses.ElementAt(0).StartDateLabel);
+            Assert.Equal(DateTime.UtcNow.ToString("dd MMMM yyyy", CultureInfo.InvariantCulture), result.Courses.ElementAt(0).StartDateLabel);
             Assert.Equal("Flexible", result.Courses.ElementAt(1).StartDateLabel);
             Assert.Null(result.Courses.ElementAt(2).StartDateLabel);
         }
