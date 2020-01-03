@@ -4,9 +4,9 @@ namespace DFC.FindACourseClient.AutoMapperProfiles
 {
     public class StartDateValueConverter : IValueConverter<Result, string>
     {
-        public string Convert(Result f, ResolutionContext context)
+        public string Convert(Result sourceMember, ResolutionContext context)
         {
-            return f.FlexibleStartDate.GetValueOrDefault() ? "Flexible" : f.StartDate?.ToString("D");
+            return sourceMember.FlexibleStartDate.GetValueOrDefault() ? "Flexible" : sourceMember.StartDate?.ToString("dd MMMM yyyy");
         }
     }
 }
