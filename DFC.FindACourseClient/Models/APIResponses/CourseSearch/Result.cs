@@ -63,5 +63,7 @@ namespace DFC.FindACourseClient
         public DurationUnit DurationUnit { get; set; }
 
         public int? DurationValue { get; set; }
+
+        public bool? FlexibleStartDate { get; set; }
     }
 }
