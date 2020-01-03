@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using System.Runtime.CompilerServices;
 using DFC.FindACourseClient.AutoMapperProfiles;
+using DFC.FindACourseClient.Extensions;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("DFC.FindACourseClientFramework.IntergrationTests")]
 
@@ -16,8 +17,8 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Cost, s => s.MapFrom(f => f.Cost))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
-                .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryMode.ToString()))
-                .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.ToString()))
+                .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
+                .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
                 .ForMember(d => d.Description, s => s.MapFrom(f => f.Course.CourseDescription))
                 .ForMember(d => d.CourseWebpageLink, s => s.MapFrom(f => f.CourseURL))
                 .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
@@ -79,6 +80,7 @@ namespace DFC.FindACourseClient
             // Course Search
             CreateMap<Result, Course>()
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.CourseId.ToString()))
+                .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.QualificationCourseTitle))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate.ToString()))
