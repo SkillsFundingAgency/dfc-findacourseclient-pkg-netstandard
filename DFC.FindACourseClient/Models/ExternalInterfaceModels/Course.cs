@@ -8,6 +8,8 @@ namespace DFC.FindACourseClient
 
         public string CourseId { get; set; }
 
+        public string RunId { get; set; }
+
         public string ProviderName { get; set; }
 
         public DateTime StartDate { get; set; }
