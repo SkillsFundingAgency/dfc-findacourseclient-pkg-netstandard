@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Runtime.CompilerServices;
+using DFC.FindACourseClient.AutoMapperProfiles;
 
 [assembly: InternalsVisibleTo("DFC.FindACourseClientFramework.IntergrationTests")]
 
@@ -81,7 +82,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.QualificationCourseTitle))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate.ToString()))
-                .ForMember(d => d.StartDateLabel, s => s.MapFrom(f => "Start date:"))
+                .ForMember(d => d.StartDateLabel, s => s.ConvertUsing(new StartDateValueConverter(), f => f))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryModeDescription))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.VenueAttendancePatternDescription))
                 .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.VenueStudyModeDescription))
@@ -90,7 +91,7 @@ namespace DFC.FindACourseClient
 
             CreateMap<Result, LocationDetails>()
                 .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
-                .ForMember(d => d.LocationAddress, s => s.MapFrom(f => f.VenueAddress));
+                .ForMember(d => d.LocationAddress, s => s.MapFrom(f => string.IsNullOrWhiteSpace(f.VenueAddress) ? f.Region : f.VenueAddress));
         }
     }
 }

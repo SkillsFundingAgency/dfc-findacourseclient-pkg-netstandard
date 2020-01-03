@@ -3,6 +3,7 @@ using DFC.FindACourseClient.UnitTests.ClientHandlers;
 using FakeItEasy;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -86,6 +87,26 @@ namespace DFC.FindACourseClient.UnitTests.Services
             Assert.Equal(expectedPageNumber, result.ResultProperties.Page);
         }
 
+        [Fact]
+        public async Task SearchCoursesAsyncReturnsCorrectStartDateLabel()
+        {
+            var request = BuildCourseSearchProperties();
+            var dummyApiResponse = BuildCourseSearchResponse();
+
+            var findACourseClient = A.Fake<IFindACourseClient>();
+            A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Returns(dummyApiResponse);
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, defaultAuditService, defaultMapper);
+
+            // Act
+            var result = await courseSearchService.SearchCoursesAsync(request).ConfigureAwait(false);
+
+            // Assert
+            Assert.Equal(DateTime.UtcNow.ToString("D"), result.Courses.ElementAt(0).StartDateLabel);
+            Assert.Equal("Flexible", result.Courses.ElementAt(1).StartDateLabel);
+            Assert.Null(result.Courses.ElementAt(2).StartDateLabel);
+        }
+
         private CourseSearchProperties BuildCourseSearchProperties()
         {
             return new CourseSearchProperties
@@ -134,6 +155,8 @@ namespace DFC.FindACourseClient.UnitTests.Services
                         CourseId = Guid.NewGuid(),
                         CourseRunId = Guid.NewGuid(),
                         ProviderName = ProviderName1,
+                        FlexibleStartDate = false,
+                        StartDate = DateTime.UtcNow,
                     },
                     new Result
                     {
@@ -141,6 +164,8 @@ namespace DFC.FindACourseClient.UnitTests.Services
                         CourseId = Guid.NewGuid(),
                         CourseRunId = Guid.NewGuid(),
                         ProviderName = ProviderName1,
+                        FlexibleStartDate = true,
+                        StartDate = DateTime.UtcNow,
                     },
                     new Result
                     {
