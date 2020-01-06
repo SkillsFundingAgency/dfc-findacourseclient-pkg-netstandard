@@ -19,11 +19,11 @@ namespace DFC.FindACourseClient.UnitTests
         private readonly Guid courseId = Guid.NewGuid();
 
         private readonly CourseSearchClientSettings defaultSettings;
-        private readonly ILogger defaultLogger;
+        private readonly ILogger<IFindACourseClient> defaultLogger;
 
         public FindACourseClientTests()
         {
-            defaultLogger = A.Fake<ILogger>();
+            defaultLogger = A.Fake<ILogger<IFindACourseClient>>();
             defaultSettings = new CourseSearchClientSettings
             {
                 CourseSearchSvcSettings = new CourseSearchSvcSettings

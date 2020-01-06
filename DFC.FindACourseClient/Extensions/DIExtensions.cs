@@ -38,7 +38,7 @@ namespace DFC.FindACourseClient
                 c.ResolveNamed<HttpClient>(nameof(IFindACourseClient)),
                 c.Resolve<CourseSearchClientSettings>(),
                 c.Resolve<IAuditService>(),
-                c.ResolveOptional<ILogger>()))
+                c.ResolveOptional<ILogger<IFindACourseClient>>()))
             .As<IFindACourseClient>()
             .InstancePerLifetimeScope();
 
