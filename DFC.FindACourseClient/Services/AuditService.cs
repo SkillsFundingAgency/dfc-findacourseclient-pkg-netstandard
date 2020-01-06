@@ -1,15 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient
 {
     internal class AuditService : IAuditService
     {
         private readonly ICosmosRepository<ApiAuditRecordCourse> auditRepository;
-        private readonly ILogger logger;
+        private readonly ILogger<AuditService> logger;
 
-        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository, ILogger logger)
+        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository, ILogger<AuditService> logger)
         {
             this.auditRepository = auditRepository;
             this.logger = logger;

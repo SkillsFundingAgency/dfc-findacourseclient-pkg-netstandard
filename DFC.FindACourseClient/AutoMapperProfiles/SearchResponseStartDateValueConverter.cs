@@ -2,7 +2,7 @@
 
 namespace DFC.FindACourseClient.AutoMapperProfiles
 {
-    public class StartDateValueConverter : IValueConverter<Result, string>
+    public class SearchResponseStartDateValueConverter : IValueConverter<Result, string>
     {
         public string Convert(Result sourceMember, ResolutionContext context)
         {

@@ -25,15 +25,9 @@ namespace DFC.FindACourseClient
             }
 
             var task = Task.Run(action);
-            var taskContinuationOptions = TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnFaulted;
-            if (handler is null)
-            {
-                task.ContinueWith(SwallowError, taskContinuationOptions);
-            }
-            else
-            {
-                task.ContinueWith(t => handler(t.Exception.GetBaseException()), taskContinuationOptions);
-            }
+            const TaskContinuationOptions taskContinuationOptions = TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnFaulted;
+
+            task.ContinueWith(handler is null ? SwallowError : t => handler(t.Exception.GetBaseException()), taskContinuationOptions);
         }
     }
 }
