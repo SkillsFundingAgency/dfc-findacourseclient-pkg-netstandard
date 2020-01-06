@@ -30,9 +30,12 @@ namespace DFC.FindACourseClient
             try
             {
                 var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}courserundetail?CourseId={courseGetRequest.CourseId}&CourseRunId={courseGetRequest.RunId}";
+                logger.LogDebug($"Get course called using url : {url}");
+
                 var response = await httpClient.GetAsync(url).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
+                logger.LogDebug($"Received response {response?.StatusCode} for url : {url}");
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
                     logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseGetRequest}' \nResponse : {responseContent}");
@@ -52,9 +55,13 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
-                var response = await httpClient.PostAsync($"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch", courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch";
+                logger.LogDebug($"Search for courses POST : {url}, using properties: {JsonConvert.SerializeObject(courseSearchRequest)}");
+
+                var response = await httpClient.PostAsync(url, courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
 
+                logger.LogDebug($"Received response {response?.StatusCode} for url : {url}, using properties: {JsonConvert.SerializeObject(courseSearchRequest)}");
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
                     logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
