@@ -6,9 +6,9 @@ namespace DFC.FindACourseClient
     internal class AuditService : IAuditService
     {
         private readonly ICosmosRepository<ApiAuditRecordCourse> auditRepository;
-        private readonly ILogger<AuditService> logger;
+        private readonly ILogger<IAuditService> logger;
 
-        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository, ILogger<AuditService> logger)
+        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository, ILogger<IAuditService> logger)
         {
             this.auditRepository = auditRepository;
             this.logger = logger;

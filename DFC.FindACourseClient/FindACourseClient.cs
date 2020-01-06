@@ -9,13 +9,13 @@ namespace DFC.FindACourseClient
 {
     public class FindACourseClient : IFindACourseClient
     {
-        private readonly ILogger logger;
+        private readonly ILogger<IFindACourseClient> logger;
         private readonly CourseSearchClientSettings courseSearchClientSettings;
         private readonly Guid correlationId;
         private readonly IAuditService auditService;
         private readonly HttpClient httpClient;
 
-        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger logger = null)
+        public FindACourseClient(HttpClient httpClient, CourseSearchClientSettings courseSearchClientSettings, IAuditService auditService, ILogger<IFindACourseClient> logger = null)
         {
             correlationId = Guid.NewGuid();
             this.logger = logger;
