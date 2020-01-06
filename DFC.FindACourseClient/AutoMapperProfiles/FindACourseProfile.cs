@@ -38,7 +38,11 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.AdditionalPrice, s => s.MapFrom(f => f.CostDescription))
                 .ForMember(d => d.AdvancedLearnerLoansOffered, s => s.MapFrom(f => f.Course.AdvancedLearnerLoan))
                 .ForMember(d => d.AssessmentMethod, s => s.MapFrom(f => f.Course.HowYoullBeAssessed))
-                .ForMember(d => d.SubRegions, s => s.MapFrom(f => f.SubRegions));
+                .ForMember(d => d.SubRegions, s => s.MapFrom(f => f.SubRegions))
+                .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId))
+                .ForMember(d => d.LanguageOfInstruction, s => s.Ignore())
+                .ForMember(d => d.SupportingFacilities, s => s.Ignore())
+                .ForMember(d => d.AwardingOrganisation, s => s.Ignore());
 
             CreateMap<CourseDetailResponseAlternativeCourseRun, Oppurtunity>()
                 .ForMember(d => d.OppurtunityId, s => s.MapFrom(f => f.CourseRunId.ToString()))
@@ -64,10 +68,15 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.PostCode, s => s.MapFrom(f => f.Provider.Postcode));
 
             CreateMap<CourseDetailResponseVenue, Venue>()
-                .ForMember(d => d.Location, s => s.MapFrom(f => f));
+                .ForMember(d => d.Location, s => s.MapFrom(f => f))
+                .ForMember(d => d.EmailAddress, s => s.MapFrom(f => f.Email))
+                .ForMember(d => d.PhoneNumber, s => s.MapFrom(f => f.Telephone))
+                .ForMember(d => d.Fax, s => s.Ignore())
+                .ForMember(d => d.Facilities, s => s.Ignore());
 
             CreateMap<CourseDetailResponseVenue, LocationDetails>()
-                .ForMember(d => d.LocationAddress, s => s.MapFrom(f => $"{f.AddressLine1}, {f.AddressLine2}, {f.Town}, {f.Postcode}"));
+                .ForMember(d => d.LocationAddress, s => s.MapFrom(f => $"{f.AddressLine1}, {f.AddressLine2}, {f.Town}, {f.Postcode}"))
+                .ForMember(d => d.Distance, s => s.Ignore());
 
             CreateMap<CourseDetailResponseVenue, Address>()
                 .ForMember(d => d.Longitude, s => s.MapFrom(f => f.Longitude.ToString()))
@@ -89,7 +98,8 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.VenueAttendancePatternDescription))
                 .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.VenueStudyModeDescription))
                 .ForMember(d => d.Location, s => s.MapFrom(f => f.VenueTown))
-                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"));
+                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
+                .ForMember(d => d.AdvancedLearnerLoansOffered, s => s.Ignore());
 
             CreateMap<Result, LocationDetails>()
                 .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
