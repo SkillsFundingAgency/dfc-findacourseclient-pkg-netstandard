@@ -33,7 +33,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
                         ApiKey = this.GetConfig<string>(Constants.CourseSearchClientCourseSearchSvcAPIKey),
                         SearchPageSize = this.GetConfig<string>(Constants.CourseSearchClientCourseSearchSvcSearchPageSize),
                         RequestTimeOutSeconds = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcRequestTimeOutSeconds),
-                        TransintErrorsNumberOfRetries = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcTransintErrorsNumberOfRetries),
+                        TransientErrorsNumberOfRetries = this.GetConfig<int>(Constants.CourseSearchClientCourseSearchSvcTransientErrorsNumberOfRetries),
                     },
                     CourseSearchAuditCosmosDbSettings = new CourseSearchAuditCosmosDbSettings()
                     {
@@ -65,7 +65,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
         {
             var courseSearchRequest = new CourseSearchProperties()
             {
-                Filters = new CourseSearchFilters { SearchTerm = "biology" },
+                Filters = new CourseSearchFilters { SearchTerm = "maths", StartDate = StartDate.FromToday, StartDateFrom = DateTime.Today},
             };
 
             var courseSearchService = new CourseSearchApiService(this.findACourseClient, this.auditService, this.mapper);

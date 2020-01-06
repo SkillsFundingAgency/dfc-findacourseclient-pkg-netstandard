@@ -97,7 +97,7 @@ namespace DFC.FindACourseClient
 
         private static int GetCurrentPageNumber(int startingItem, int pageSize)
         {
-            return (int)Math.Ceiling((decimal)startingItem / pageSize);
+            return (int)Math.Ceiling((decimal)startingItem / pageSize) + 1;
         }
 
         private static CourseSearchRequest BuildCourseListRequest(string request)
@@ -128,10 +128,10 @@ namespace DFC.FindACourseClient
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
-                DeliveryModes = input.Filters.CourseTypes.MapToDeliveryModes(),
+                DeliveryModes = input.Filters.CourseType.MapToDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToStudyModes(),
-                Town = input.Filters?.Location,
-                Postcode = input.Filters?.Location,
+                Town = input.Filters?.Town,
+                Postcode = input.Filters?.PostCode,
                 SortBy = (int)input.OrderedBy,
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,

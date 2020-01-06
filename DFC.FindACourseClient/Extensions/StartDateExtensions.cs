@@ -6,7 +6,7 @@ namespace DFC.FindACourseClient
     {
         internal static string GetEarliestStartDate(this StartDate startDate, DateTime earliestStartDate)
         {
-            const string CourseApiDateFormat = "yyyy-MM-dd";
+            const string CourseApiDateFormat = "yyyy-MM-ddTHH:mm:ssZ";
             switch (startDate)
             {
                 case StartDate.FromToday:

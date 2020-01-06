@@ -31,6 +31,14 @@ namespace DFC.FindACourseClient.IntegrationTests
             var serviceProvider = new ServiceCollection()
                 .AddFindACourseServices(courseSearchClientSettings);
 
+            serviceProvider.AddSingleton(sp =>
+            {
+                return new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(typeof(FindACourseProfile));
+                }).CreateMapper();
+            });
+            
             var services = serviceProvider.BuildServiceProvider();
 
             findACourseClient = services.GetService<IFindACourseClient>();
