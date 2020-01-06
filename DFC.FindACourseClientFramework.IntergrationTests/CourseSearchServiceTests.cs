@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using DFC.FindACourseClient;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Configuration;
 using System.Net;
@@ -47,6 +48,9 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
                 };
             });
 
+            builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().SingleInstance();
+            builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>)).SingleInstance();
+
             builder.RegisterFindACourseClientSdk();
             builder.Register(ctx => new MapperConfiguration(cfg =>
             {
@@ -54,6 +58,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
             }));
 
             builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
+
             this.container = builder.Build();
             this.findACourseClient = this.container.Resolve<IFindACourseClient>();
             this.auditService = this.container.Resolve<IAuditService>();
@@ -65,7 +70,7 @@ namespace DFC.FindACourseClientFramework.IntergrationTests
         {
             var courseSearchRequest = new CourseSearchProperties()
             {
-                Filters = new CourseSearchFilters { SearchTerm = "maths", StartDate = StartDate.FromToday, StartDateFrom = DateTime.Today},
+                Filters = new CourseSearchFilters { SearchTerm = "maths", StartDate = StartDate.FromToday, StartDateFrom = DateTime.Today },
             };
 
             var courseSearchService = new CourseSearchApiService(this.findACourseClient, this.auditService, this.mapper);

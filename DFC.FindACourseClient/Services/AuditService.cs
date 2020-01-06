@@ -1,18 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using System;
 
 namespace DFC.FindACourseClient
 {
     internal class AuditService : IAuditService
     {
         private readonly ICosmosRepository<ApiAuditRecordCourse> auditRepository;
+        private readonly ILogger<AuditService> logger;
 
-        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository)
+        public AuditService(ICosmosRepository<ApiAuditRecordCourse> auditRepository, ILogger<AuditService> logger)
         {
             this.auditRepository = auditRepository;
+            this.logger = logger;
         }
 
-        public async Task CreateAudit(object request, object response, Guid? correlationId = null)
+        public void CreateAudit(object request, object response, Guid? correlationId = null)
         {
             var auditRecord = new ApiAuditRecordCourse
             {
@@ -22,7 +24,7 @@ namespace DFC.FindACourseClient
                 Response = response,
             };
 
-            await auditRepository.UpsertAsync(auditRecord).ConfigureAwait(false);
+            TaskHelper.ExecuteNoWait(() => auditRepository.UpsertAsync(auditRecord).ConfigureAwait(false), ex => logger.LogError(ex, $"Failed to create audit message"));
         }
     }
 }

@@ -49,7 +49,7 @@ namespace DFC.FindACourseClient
             }
             catch (Exception ex)
             {
-                await auditService.CreateAudit(request, ex);
+                auditService.CreateAudit(request, ex);
                 return Enumerable.Empty<Course>();
             }
         }

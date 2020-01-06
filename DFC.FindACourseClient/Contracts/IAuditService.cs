@@ -5,6 +5,7 @@ namespace DFC.FindACourseClient
 {
     public interface IAuditService
     {
-        Task CreateAudit(object request, object response, Guid? correlationId = null);
+        //Fire and forget audit
+        void CreateAudit(object request, object response, Guid? correlationId = null);
     }
 }

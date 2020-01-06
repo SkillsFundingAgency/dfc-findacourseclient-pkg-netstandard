@@ -43,7 +43,7 @@ namespace DFC.FindACourseClient
             }
             finally
             {
-                await auditService.CreateAudit(courseGetRequest, responseContent, correlationId).ConfigureAwait(false);
+                auditService.CreateAudit(courseGetRequest, responseContent, correlationId);
             }
         }
 
@@ -65,7 +65,7 @@ namespace DFC.FindACourseClient
             }
             finally
             {
-                await auditService.CreateAudit(courseSearchRequest, responseContent, correlationId).ConfigureAwait(false);
+                auditService.CreateAudit(courseSearchRequest, responseContent, correlationId);
             }
         }
     }
