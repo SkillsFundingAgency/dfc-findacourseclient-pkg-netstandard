@@ -135,6 +135,7 @@ namespace DFC.FindACourseClient
                 SortBy = (int)input.OrderedBy,
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
+                ProviderName = input.Filters?.Provider,
             };
         }
     }
