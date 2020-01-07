@@ -35,5 +35,11 @@ namespace DFC.FindACourseClient
         public string LanguageOfInstruction { get; set; }
 
         public List<SubRegion> SubRegions { get; set; }
+
+        public string NextSteps { get; set; }
+
+        public string WhatYoullLearn { get; set; }
+
+        public string HowYoullLearn { get; set; }
     }
 }
