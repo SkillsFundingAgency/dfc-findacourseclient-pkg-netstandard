@@ -93,7 +93,7 @@ namespace DFC.FindACourseClient
             CreateMap<Result, Course>()
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.CourseId.ToString()))
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
-                .ForMember(d => d.Title, s => s.MapFrom(f => f.QualificationCourseTitle))
+                .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate.ToString()))
                 .ForMember(d => d.StartDateLabel, s => s.ConvertUsing(new SearchResponseStartDateValueConverter(), f => f))
