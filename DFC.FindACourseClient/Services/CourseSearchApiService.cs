@@ -132,7 +132,7 @@ namespace DFC.FindACourseClient
                 StudyModes = input.Filters.CourseHours.MapToStudyModes(),
                 Town = input.Filters?.Town,
                 Postcode = input.Filters?.PostCode,
-                SortBy = (int)input.OrderedBy,
+                SortBy = input.OrderedBy.MapToSortBy(),
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,

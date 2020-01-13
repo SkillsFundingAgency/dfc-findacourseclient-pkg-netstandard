@@ -38,7 +38,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                     cfg.AddProfile(typeof(FindACourseProfile));
                 }).CreateMapper();
             });
-            
+
             var services = serviceProvider.BuildServiceProvider();
 
             findACourseClient = services.GetService<IFindACourseClient>();
@@ -49,11 +49,10 @@ namespace DFC.FindACourseClient.IntegrationTests
         [Fact]
         public async Task CourseGet()
         {
-            //Get Details for a course
             var courseGetRequest = new CourseGetRequest
             {
-                CourseId = Guid.Parse("36d9dfb8-7fa9-4779-beae-ca65ba429bfd"),
-                RunId = Guid.Parse("4776fd59-f313-47c9-8fea-5f9cbc58bcd4"),
+                CourseId = Guid.Parse("3fcf6b69-7020-47d0-91de-afb4ada43f74"),
+                RunId = Guid.Parse("8130ccd3-5fe8-407c-9a5c-910a19c744b7"),
             };
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var detailResponse = await courseSearchService.GetCourseDetailsAsync(courseGetRequest.CourseId.ToString(), courseGetRequest.RunId.ToString()).ConfigureAwait(false);
