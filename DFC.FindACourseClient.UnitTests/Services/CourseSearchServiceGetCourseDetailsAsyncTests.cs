@@ -101,7 +101,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
                 },
                 Qualification = new CourseDetailResponseQualification
                 {
-                    QualificationLevel = 2,
+                    QualificationLevel = "2",
                     SectorSubjectAreaTier1Desc = "SectorSubjectAreaTier1Desc",
                     SectorSubjectAreaTier2Desc = "SectorSubjectAreaTier2Desc",
                     LearnAimRefTitle = "LearnAimRefTitle",

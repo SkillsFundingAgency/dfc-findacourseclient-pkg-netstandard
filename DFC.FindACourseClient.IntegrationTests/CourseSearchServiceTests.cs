@@ -38,7 +38,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                     cfg.AddProfile(typeof(FindACourseProfile));
                 }).CreateMapper();
             });
-            
+
             var services = serviceProvider.BuildServiceProvider();
 
             findACourseClient = services.GetService<IFindACourseClient>();
