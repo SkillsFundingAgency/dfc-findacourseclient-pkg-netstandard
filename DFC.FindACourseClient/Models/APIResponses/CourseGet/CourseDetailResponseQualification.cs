@@ -8,7 +8,7 @@
 
         public string LearnAimRefTypeDesc { get; set; }
 
-        public int? QualificationLevel { get; set; }
+        public string QualificationLevel { get; set; }
 
         public string AwardOrgCode { get; set; }
 
