@@ -16,7 +16,7 @@ namespace DFC.FindACourseClient
                     result = SortBy.Relevance;
                     break;
                 case CourseSearchOrderBy.StartDate:
-                    result = SortBy.StartDateDescending;
+                    result = SortBy.StartDateAscending;
                     break;
                 case CourseSearchOrderBy.Distance:
                     result = SortBy.Distance;
