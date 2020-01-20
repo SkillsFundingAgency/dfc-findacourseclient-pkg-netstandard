@@ -108,7 +108,7 @@ namespace DFC.FindACourseClient
                 StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
                 DeliveryModes = CourseType.All.MapToDeliveryModes(),
                 Limit = 20,
-                Start = 1,
+                Start = 0,
                 SortBy = (int)CourseSearchOrderBy.Relevance,
             };
         }

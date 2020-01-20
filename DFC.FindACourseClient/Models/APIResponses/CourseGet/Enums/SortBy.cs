@@ -18,6 +18,5 @@ namespace DFC.FindACourseClient
 
         [Description("Distance")]
         Distance = 4,
-
     }
 }
