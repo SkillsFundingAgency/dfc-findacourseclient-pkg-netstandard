@@ -10,11 +10,11 @@ namespace DFC.FindACourseClient
         [Description("Relevance")]
         Relevance = 1,
 
-        [Description("StartDateDescending")]
-        StartDateDescending = 2,
+        [Description("DescendingStartDate")]
+        DescendingStartDate = 2,
 
-        [Description("StartDateAscending")]
-        StartDateAscending = 3,
+        [Description("AscendingStartDate")]
+        AscendingStartDate = 3,
 
         [Description("Distance")]
         Distance = 4,
