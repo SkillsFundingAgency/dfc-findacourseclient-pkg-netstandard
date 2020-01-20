@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
@@ -65,6 +66,12 @@ namespace DFC.FindACourseClient
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
                     logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        return new CourseSearchResponse() { Total = 0, Limit = 0, Results = Enumerable.Empty<Result>() };
+                    }
+
                     response?.EnsureSuccessStatusCode();
                 }
 

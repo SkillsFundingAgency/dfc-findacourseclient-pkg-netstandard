@@ -51,8 +51,8 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseGetRequest = new CourseGetRequest
             {
-                CourseId = Guid.Parse("3fcf6b69-7020-47d0-91de-afb4ada43f74"),
-                RunId = Guid.Parse("8130ccd3-5fe8-407c-9a5c-910a19c744b7"),
+                CourseId = Guid.Parse("a7533f3a-4feb-4b91-bc1d-2a9d69ff12d3"),
+                RunId = Guid.Parse("ffba6c5b-2155-45e8-a376-9f6d790ed99f"),
             };
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var detailResponse = await courseSearchService.GetCourseDetailsAsync(courseGetRequest.CourseId.ToString(), courseGetRequest.RunId.ToString()).ConfigureAwait(false);
@@ -66,6 +66,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             var courseSearchRequest = new CourseSearchProperties
             {
                 Filters = new CourseSearchFilters { SearchTerm = "biology" },
+                OrderedBy = CourseSearchOrderBy.Distance,
             };
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);

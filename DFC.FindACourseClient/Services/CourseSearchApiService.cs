@@ -68,9 +68,9 @@ namespace DFC.FindACourseClient
             {
                 ResultProperties =
                 {
-                    TotalPages = GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    TotalPages = apiResult?.Total == 0 ? 0 : GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                     TotalResultCount = (apiResult?.Total).GetValueOrDefault(),
-                    Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    Page = apiResult?.Start == 0 ? 0 : GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Course>>(apiResult?.Results),
@@ -108,7 +108,7 @@ namespace DFC.FindACourseClient
                 StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
                 DeliveryModes = CourseType.All.MapToDeliveryModes(),
                 Limit = 20,
-                Start = 1,
+                Start = 0,
                 SortBy = (int)CourseSearchOrderBy.Relevance,
             };
         }
