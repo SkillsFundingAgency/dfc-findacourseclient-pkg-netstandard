@@ -148,7 +148,7 @@ namespace DFC.FindACourseClient.UnitTests
             // Arrange
             var courseSearchRequest = new CourseSearchRequest { SubjectKeyword = "Somekeyword" };
 
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
+            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.ServiceUnavailable, Content = new StringContent("{}") };
 
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
             A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
@@ -166,6 +166,34 @@ namespace DFC.FindACourseClient.UnitTests
             httpResponse.Dispose();
             httpClient.Dispose();
             fakeHttpMessageHandler.Dispose();
+        }
+
+        [Fact]
+        public async Task CourseSearchAsyncReturnsBlankResultsWhenApiReturnsBadRequest()
+        {
+            // Arrange
+            var courseSearchRequest = new CourseSearchRequest { SubjectKeyword = "Somekeyword" };
+
+            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
+
+            var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
+            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
+
+            var auditService = A.Fake<IAuditService>();
+
+            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
+
+            var result = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result.Results);
+            httpResponse.Dispose();
+            httpClient.Dispose();
+            fakeHttpMessageHandler.Dispose();
+
         }
     }
 }
