@@ -42,7 +42,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId))
                 .ForMember(d => d.LanguageOfInstruction, s => s.Ignore())
                 .ForMember(d => d.SupportingFacilities, s => s.Ignore())
-                .ForMember(d => d.AwardingOrganisation, s => s.Ignore())
+                .ForMember(d => d.AwardingOrganisation, s => s.MapFrom(f => f.Qualification.AwardOrgName))
                 .ForMember(d => d.NextSteps, s => s.MapFrom(f => f.Course.WhereNext))
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
                 .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn));
