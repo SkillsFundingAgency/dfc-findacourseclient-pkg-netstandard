@@ -42,6 +42,6 @@ namespace DFC.FindACourseClient
 
         public string HowYoullLearn { get; set; }
 
-        public bool National { get; set; }
+        public bool? National { get; set; }
     }
 }
