@@ -51,8 +51,8 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseGetRequest = new CourseGetRequest
             {
-                CourseId = Guid.Parse("a7533f3a-4feb-4b91-bc1d-2a9d69ff12d3"),
-                RunId = Guid.Parse("ffba6c5b-2155-45e8-a376-9f6d790ed99f"),
+                CourseId = Guid.Parse("2ed8b2f9-da49-4432-963b-5842746aef5c"),
+                RunId = Guid.Parse("f6f0036f-5cdf-486c-8b3e-1bb102940cd1"),
             };
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var detailResponse = await courseSearchService.GetCourseDetailsAsync(courseGetRequest.CourseId.ToString(), courseGetRequest.RunId.ToString()).ConfigureAwait(false);

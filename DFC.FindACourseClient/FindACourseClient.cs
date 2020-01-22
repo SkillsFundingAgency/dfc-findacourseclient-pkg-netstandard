@@ -43,7 +43,7 @@ namespace DFC.FindACourseClient
                     response?.EnsureSuccessStatusCode();
                 }
 
-                return JsonConvert.DeserializeObject<CourseRunDetailResponse>(responseContent);
+                return JsonConvert.DeserializeObject<CourseRunDetailResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             }
             finally
             {
@@ -75,7 +75,7 @@ namespace DFC.FindACourseClient
                     response?.EnsureSuccessStatusCode();
                 }
 
-                return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent);
+                return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             }
             finally
             {
