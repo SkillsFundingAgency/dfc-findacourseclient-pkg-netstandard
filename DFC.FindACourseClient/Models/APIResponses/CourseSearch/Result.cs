@@ -46,7 +46,7 @@ namespace DFC.FindACourseClient
 
         public string VenueTown { get; set; }
 
-        public object Cost { get; set; }
+        public string Cost { get; set; }
 
         public string CostDescription { get; set; }
 
@@ -54,7 +54,7 @@ namespace DFC.FindACourseClient
 
         public string UKprn { get; set; }
 
-        public object CourseDescription { get; set; }
+        public string CourseDescription { get; set; }
 
         public string CourseName { get; set; }
 
