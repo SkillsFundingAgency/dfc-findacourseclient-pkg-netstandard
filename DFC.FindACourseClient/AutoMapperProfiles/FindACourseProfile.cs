@@ -95,7 +95,6 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
-                .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate.ToString()))
                 .ForMember(d => d.StartDateLabel, s => s.ConvertUsing(new SearchResponseStartDateValueConverter(), f => f))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryModeDescription))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.VenueAttendancePatternDescription))

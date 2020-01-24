@@ -12,7 +12,7 @@ namespace DFC.FindACourseClient
 
         public string ProviderName { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public string Location { get; set; }
 
