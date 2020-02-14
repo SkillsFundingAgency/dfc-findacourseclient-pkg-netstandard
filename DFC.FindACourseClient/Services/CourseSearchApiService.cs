@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -74,6 +75,30 @@ namespace DFC.FindACourseClient
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Course>>(apiResult?.Results),
+            };
+        }
+
+        public async Task<Comp.CourseSearchResult> SearchCoursesAsync(Comp.CourseSearchProperties courseSearchProperties)
+        {
+            if (string.IsNullOrWhiteSpace(courseSearchProperties.Filters.SearchTerm))
+            {
+                return await Task.FromResult<Comp.CourseSearchResult>(null);
+            }
+
+            var mappedCourseSearchProperties = mapper.Map<Comp.CourseSearchProperties, CourseSearchProperties>(courseSearchProperties);
+            var request = BuildCourseSearchRequest(mappedCourseSearchProperties);
+            var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
+
+            return new Comp.CourseSearchResult
+            {
+                ResultProperties =
+                {
+                    TotalPages = apiResult?.Total == 0 ? 0 : GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    TotalResultCount = (apiResult?.Total).GetValueOrDefault(),
+                    Page = apiResult?.Start == 0 ? 0 : GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    OrderedBy = courseSearchProperties.OrderedBy,
+                },
+                Courses = mapper.Map<List<Comp.Course>>(apiResult?.Results),
             };
         }
 
