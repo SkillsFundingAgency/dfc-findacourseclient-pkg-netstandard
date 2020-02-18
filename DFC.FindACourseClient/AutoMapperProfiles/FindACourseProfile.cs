@@ -49,7 +49,6 @@ namespace DFC.FindACourseClient
 
             CreateMap<CourseDetailResponseAlternativeCourseRun, Oppurtunity>()
                 .ForMember(d => d.OppurtunityId, s => s.MapFrom(f => f.CourseRunId.ToString()))
-                .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate.ToString()))
                 .ForMember(d => d.VenueName, s => s.MapFrom(f => f.Venue.VenueName))
                 .ForMember(d => d.VenueUrl, s => s.MapFrom(f => f.Venue.Website));
 
