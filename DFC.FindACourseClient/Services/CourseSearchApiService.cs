@@ -80,12 +80,13 @@ namespace DFC.FindACourseClient
 
         public async Task<Comp.CourseSearchResult> SearchCoursesAsync(Comp.CourseSearchProperties courseSearchProperties)
         {
-            if (string.IsNullOrWhiteSpace(courseSearchProperties.Filters.SearchTerm))
+            if (courseSearchProperties.Filters.SearchTerm == null)
             {
-                return await Task.FromResult<Comp.CourseSearchResult>(null);
+                courseSearchProperties.Filters.SearchTerm = string.Empty;
             }
 
-            var mappedCourseSearchProperties = mapper.Map<Comp.CourseSearchProperties, CourseSearchProperties>(courseSearchProperties);
+            var mappedCourseSearchProperties = mapper.Map<CourseSearchProperties>(courseSearchProperties);
+
             var request = BuildCourseSearchRequest(mappedCourseSearchProperties);
             var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
 
@@ -113,6 +114,19 @@ namespace DFC.FindACourseClient
             var apiResult = await findACourseClient.CourseGetAsync(request);
 
             return mapper.Map<CourseDetails>(apiResult);
+        }
+
+        public async Task<Comp.CourseDetails> GetCompositeCourseDetailsAsync(string courseId, string oppurtunityId)
+        {
+            if (string.IsNullOrWhiteSpace(courseId))
+            {
+                return await Task.FromResult<Comp.CourseDetails>(null);
+            }
+
+            var request = BuildCourseGetRequest(courseId, oppurtunityId);
+            var apiResult = await findACourseClient.CourseGetAsync(request);
+
+            return mapper.Map<Comp.CourseDetails>(apiResult);
         }
 
         private static int GetTotalPages(int totalResults, int pageSize)

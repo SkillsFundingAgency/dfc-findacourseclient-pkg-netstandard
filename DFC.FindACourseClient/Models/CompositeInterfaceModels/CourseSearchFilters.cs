@@ -1,9 +1,18 @@
-﻿using System;
+﻿using DFC.FindACourseClient;
+using System;
+using System.Collections.Generic;
 
 namespace DFC.CompositeInterfaceModels.FindACourseClient
 {
     public class CourseSearchFilters
     {
+        public CourseSearchFilters()
+        {
+            this.StartDate = new List<StartDate>();
+            this.CourseHours = new List<CourseHours>();
+            this.CourseType = new List<CourseType>();
+        }
+
         public string SearchTerm { get; set; }
 
         public DateTime StartDateFrom { get; set; }
@@ -18,13 +27,16 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public bool DistanceSpecified { get; set; }
 
-        public StartDate StartDate { get; set; } = StartDate.Anytime;
+        public IList<StartDate> StartDate { get; set; } //= StartDate.Anytime;
 
-        public CourseHours CourseHours { get; set; }
+        public IList<CourseHours> CourseHours { get; set; }
 
-        public CourseType CourseType { get; set; }
+        public IList<CourseType> CourseType { get; set; }
 
-        public bool IsValidStartDateFrom =>
-            StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
+        public IList<StudyMode> CourseStudyMode { get; set; }
+
+        //public bool IsValidStartDateFrom =>
+        //    StartDate == StartDateSelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
+        public bool IsValidStartDateFrom = false;
     }
 }
