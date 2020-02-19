@@ -4,11 +4,14 @@ using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Polly.Registry;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 
 namespace DFC.FindACourseClient
 {
+    [ExcludeFromCodeCoverage]
     public static class DIExtensions
     {
         public static void RegisterFindACourseClientSdk(this ContainerBuilder builder)
@@ -62,7 +65,40 @@ namespace DFC.FindACourseClient
                 .Contains(Constants.LocalEnvironment)).GetAwaiter().GetResult());
         }
 
+        //Use this method to configure all serivice for the client, including tranisent fault handling.
+        //This will not work if you have other policies that need to be added to the policy registry, then use the split method AddFindACourseServicesWithoutFaultHandling below
+        //Create your own shared services.AddPolicyRegistry() and pass it into the AddFindACourseTransientFaultHandlingPolicies.
         public static IServiceCollection AddFindACourseServices(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
+        {
+            AddCoreServices(services, courseSearchClientSettings);
+
+            AddFindACourseTransientFaultHandlingPolicies(services, courseSearchClientSettings);
+
+            return services;
+        }
+
+        public static IServiceCollection AddFindACourseServicesWithoutFaultHandling(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
+        {
+            AddCoreServices(services, courseSearchClientSettings);
+            return services;
+        }
+
+        public static IServiceCollection AddFindACourseTransientFaultHandlingPolicies(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings, IPolicyRegistry<string> policyRegistry = null)
+        {
+            var policyOptions = courseSearchClientSettings?.PolicyOptions;
+ 
+            if (policyRegistry == null)
+            {
+                policyRegistry = services.AddPolicyRegistry();
+            }
+
+            services.AddPolicies(policyRegistry, nameof(CourseSearchClientSettings), policyOptions)
+            .AddHttpClient<IFindACourseClient, FindACourseClient>(courseSearchClientSettings?.CourseSearchSvcSettings, nameof(CourseSearchClientSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
+
+            return services;
+        }
+
+        private static void AddCoreServices(IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings)
         {
             services.AddSingleton(courseSearchClientSettings);
 
@@ -81,15 +117,6 @@ namespace DFC.FindACourseClient
 
             services.AddScoped<IFindACourseClient, FindACourseClient>();
             services.AddScoped<IAuditService, AuditService>();
-
-            var policyOptions = courseSearchClientSettings?.PolicyOptions;
-            var policyRegistry = services.AddPolicyRegistry();
-
-            services
-                .AddPolicies(policyRegistry, nameof(CourseSearchClientSettings), policyOptions)
-                .AddHttpClient<IFindACourseClient, FindACourseClient>(courseSearchClientSettings?.CourseSearchSvcSettings, nameof(CourseSearchClientSettings), nameof(PolicyOptions.HttpRetry), nameof(PolicyOptions.HttpCircuitBreaker));
-
-            return services;
         }
     }
 }
