@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -77,6 +78,29 @@ namespace DFC.FindACourseClient
             };
         }
 
+        public async Task<Comp.CourseSearchResult> SearchCoursesAsync(Comp.CourseSearchProperties courseSearchProperties)
+        {
+            if (courseSearchProperties.Filters.SearchTerm == null)
+            {
+                courseSearchProperties.Filters.SearchTerm = string.Empty;
+            }
+
+            var request = BuildCourseSearchRequest(courseSearchProperties);
+            var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
+
+            return new Comp.CourseSearchResult
+            {
+                ResultProperties =
+                {
+                    TotalPages = apiResult?.Total == 0 ? 0 : GetTotalPages((apiResult?.Total).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    TotalResultCount = (apiResult?.Total).GetValueOrDefault(),
+                    Page = apiResult?.Start == 0 ? 0 : GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
+                    OrderedBy = courseSearchProperties.OrderedBy,
+                },
+                Courses = mapper.Map<List<Comp.Course>>(apiResult?.Results),
+            };
+        }
+
         public async Task<CourseDetails> GetCourseDetailsAsync(string courseId, string oppurtunityId)
         {
             if (string.IsNullOrWhiteSpace(courseId))
@@ -88,6 +112,19 @@ namespace DFC.FindACourseClient
             var apiResult = await findACourseClient.CourseGetAsync(request);
 
             return mapper.Map<CourseDetails>(apiResult);
+        }
+
+        public async Task<Comp.CourseDetails> GetCompositeCourseDetailsAsync(string courseId, string oppurtunityId)
+        {
+            if (string.IsNullOrWhiteSpace(courseId))
+            {
+                return await Task.FromResult<Comp.CourseDetails>(null);
+            }
+
+            var request = BuildCourseGetRequest(courseId, oppurtunityId);
+            var apiResult = await findACourseClient.CourseGetAsync(request);
+
+            return mapper.Map<Comp.CourseDetails>(apiResult);
         }
 
         private static int GetTotalPages(int totalResults, int pageSize)
@@ -134,6 +171,25 @@ namespace DFC.FindACourseClient
                 Postcode = input.Filters?.PostCode,
                 SortBy = input.OrderedBy.MapToSortBy(),
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
+                SubjectKeyword = input.Filters.SearchTerm,
+                ProviderName = input.Filters?.Provider,
+            };
+        }
+
+        private static CourseSearchRequest BuildCourseSearchRequest(Comp.CourseSearchProperties input)
+        {
+            return new CourseSearchRequest
+            {
+                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
+                Start = input.Count * (input.Page - 1),
+                Limit = input.Count,
+                DeliveryModes = input.Filters.CourseType.MapToCompositeDeliveryModes(),
+                StudyModes = input.Filters.CourseHours.MapToCompositeStudyModes(),
+                AttendancePatterns = input.Filters.CourseStudyTime.MapToCompositeAttendancePattern(),
+                Town = input.Filters?.Town,
+                Postcode = input.Filters?.PostCode,
+                SortBy = input.OrderedBy.MapToCompositeSortBy(),
+                StartDateFrom = input.Filters.StartDate.GetEarliestCompositeStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
             };

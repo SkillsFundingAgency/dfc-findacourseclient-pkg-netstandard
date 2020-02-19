@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -33,6 +34,39 @@ namespace DFC.FindACourseClient
             }
 
             return result.Distinct().ToList();
+        }
+
+        internal static List<StudyMode> MapToCompositeStudyModes(this IList<Comp.CourseHours> courseHours)
+        {
+            var studyModeList = new List<StudyMode>();
+
+            foreach (var item in courseHours)
+            {
+                switch (item)
+                {
+                    case Comp.CourseHours.Fulltime:
+                        studyModeList.Add(StudyMode.FullTime);
+                        break;
+
+                    case Comp.CourseHours.PartTime:
+                        studyModeList.Add(StudyMode.PartTime);
+                        break;
+
+                    case Comp.CourseHours.Flexible:
+                        studyModeList.Add(StudyMode.Flexible);
+                        break;
+
+                    case Comp.CourseHours.All:
+                    default:
+                        studyModeList.Add(StudyMode.Flexible);
+                        studyModeList.Add(StudyMode.PartTime);
+                        studyModeList.Add(StudyMode.FullTime);
+                        studyModeList.Add(StudyMode.Undefined);
+                        break;
+                }
+            }
+
+            return studyModeList.Distinct().ToList();
         }
     }
 }

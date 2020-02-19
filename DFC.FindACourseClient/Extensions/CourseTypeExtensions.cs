@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -32,6 +33,39 @@ namespace DFC.FindACourseClient
             }
 
             return result.Distinct().ToList();
+        }
+
+        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.CourseType> courseTypes)
+        {
+            var deliveryModeList = new List<DeliveryMode>();
+
+            foreach (var item in courseTypes)
+            {
+                switch (item)
+                {
+                    case Comp.CourseType.ClassroomBased:
+                        deliveryModeList.Add(DeliveryMode.ClassroomBased);
+                        break;
+
+                    case Comp.CourseType.Online:
+                        deliveryModeList.Add(DeliveryMode.Online);
+                        break;
+
+                    case Comp.CourseType.WorkBased:
+                        deliveryModeList.Add(DeliveryMode.WorkBased);
+                        break;
+
+                    case Comp.CourseType.All:
+                    default:
+                        deliveryModeList.Add(DeliveryMode.ClassroomBased);
+                        deliveryModeList.Add(DeliveryMode.WorkBased);
+                        deliveryModeList.Add(DeliveryMode.Online);
+                        deliveryModeList.Add(DeliveryMode.Undefined);
+                        break;
+                }
+            }
+
+            return deliveryModeList.Distinct().ToList();
         }
     }
 }
