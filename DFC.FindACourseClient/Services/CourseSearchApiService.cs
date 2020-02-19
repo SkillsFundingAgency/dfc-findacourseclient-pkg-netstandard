@@ -85,9 +85,7 @@ namespace DFC.FindACourseClient
                 courseSearchProperties.Filters.SearchTerm = string.Empty;
             }
 
-            var mappedCourseSearchProperties = mapper.Map<CourseSearchProperties>(courseSearchProperties);
-
-            var request = BuildCourseSearchRequest(mappedCourseSearchProperties);
+            var request = BuildCourseSearchRequest(courseSearchProperties);
             var apiResult = await findACourseClient.CourseSearchAsync(request).ConfigureAwait(false);
 
             return new Comp.CourseSearchResult
@@ -173,6 +171,25 @@ namespace DFC.FindACourseClient
                 Postcode = input.Filters?.PostCode,
                 SortBy = input.OrderedBy.MapToSortBy(),
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
+                SubjectKeyword = input.Filters.SearchTerm,
+                ProviderName = input.Filters?.Provider,
+            };
+        }
+
+        private static CourseSearchRequest BuildCourseSearchRequest(Comp.CourseSearchProperties input)
+        {
+            return new CourseSearchRequest
+            {
+                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
+                Start = input.Count * (input.Page - 1),
+                Limit = input.Count,
+                DeliveryModes = input.Filters.CourseType.MapToCompositeDeliveryModes(),
+                StudyModes = input.Filters.CourseHours.MapToCompositeStudyModes(),
+                AttendancePatterns = input.Filters.CourseStudyTime.MapToCompositeAttendancePattern(),
+                Town = input.Filters?.Town,
+                Postcode = input.Filters?.PostCode,
+                SortBy = input.OrderedBy.MapToCompositeSortBy(),
+                StartDateFrom = input.Filters.StartDate.GetEarliestCompositeStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
             };

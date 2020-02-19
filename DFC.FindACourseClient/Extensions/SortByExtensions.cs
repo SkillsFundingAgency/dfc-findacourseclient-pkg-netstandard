@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -19,6 +20,28 @@ namespace DFC.FindACourseClient
                     result = SortBy.AscendingStartDate;
                     break;
                 case CourseSearchOrderBy.Distance:
+                    result = SortBy.Distance;
+                    break;
+                default:
+                    break;
+            }
+
+            return (int)result;
+        }
+
+        internal static int MapToCompositeSortBy(this Comp.CourseSearchOrderBy orderBy)
+        {
+            var result = SortBy.Undefined;
+
+            switch (orderBy)
+            {
+                case Comp.CourseSearchOrderBy.Relevance:
+                    result = SortBy.Relevance;
+                    break;
+                case Comp.CourseSearchOrderBy.StartDate:
+                    result = SortBy.AscendingStartDate;
+                    break;
+                case Comp.CourseSearchOrderBy.Distance:
                     result = SortBy.Distance;
                     break;
                 default:

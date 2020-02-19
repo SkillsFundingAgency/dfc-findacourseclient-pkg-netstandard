@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -52,6 +53,38 @@ namespace DFC.FindACourseClient
         }
 
         public async Task<CourseSearchResponse> CourseSearchAsync(CourseSearchRequest courseSearchRequest)
+        {
+            var responseContent = string.Empty;
+            try
+            {
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch";
+                logger.LogDebug($"Search for courses POST : {url}, using properties: {JsonConvert.SerializeObject(courseSearchRequest)}");
+
+                var response = await httpClient.PostAsync(url, courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
+                responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+
+                logger.LogDebug($"Received response {response?.StatusCode} for url : {url}, using properties: {JsonConvert.SerializeObject(courseSearchRequest)}");
+                if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+                {
+                    logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{courseSearchRequest}' \nResponse : {responseContent}");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        return new CourseSearchResponse() { Total = 0, Limit = 0, Results = Enumerable.Empty<Result>() };
+                    }
+
+                    response?.EnsureSuccessStatusCode();
+                }
+
+                return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            }
+            finally
+            {
+                auditService.CreateAudit(courseSearchRequest, responseContent, correlationId);
+            }
+        }
+
+        public async Task<CourseSearchResponse> CourseSearchWithEnumListsAsync(CourseSearchRequest courseSearchRequest)
         {
             var responseContent = string.Empty;
             try
