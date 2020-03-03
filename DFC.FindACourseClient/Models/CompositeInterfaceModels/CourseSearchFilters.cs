@@ -17,6 +17,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public DateTime StartDateFrom { get; set; }
 
+        public DateTime StartDateTo { get; set; }
+
         public string Provider { get; set; }
 
         public string PostCode { get; set; }
@@ -37,6 +39,5 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
-        
     }
 }

@@ -8,6 +8,8 @@ namespace DFC.FindACourseClient
 
         public DateTime StartDateFrom { get; set; }
 
+        public DateTime StartDateTo { get; set; }
+
         public string Provider { get; set; }
 
         public string PostCode { get; set; }

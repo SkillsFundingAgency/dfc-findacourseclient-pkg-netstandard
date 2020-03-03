@@ -18,6 +18,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public string Cost { get; set; }
 
+        public string CostDescription { get; set; }
+
         public string Location { get; set; }
 
         public LocationDetails LocationDetails { get; set; }
@@ -35,5 +37,9 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public string StartDateLabel { get; set; }
 
         public bool AdvancedLearnerLoansOffered { get; set; }
+
+        public string Region { get; set; }
+
+        public bool National { get; set; }
     }
 }

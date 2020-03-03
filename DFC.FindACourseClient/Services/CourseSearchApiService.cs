@@ -192,6 +192,7 @@ namespace DFC.FindACourseClient
                 StartDateFrom = input.Filters.StartDate.GetEarliestCompositeStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
+                StartDateTo = (input.Filters.StartDateTo < DateTime.Now) ? null : input.Filters.StartDateTo.ToString("yyyy-MM-ddTHH:mm:ssZ"),
             };
         }
     }
