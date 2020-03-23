@@ -15,7 +15,6 @@
     </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/SkillsFundingAgency/dfc-findacourseclient-pkg-netstandard</RepositoryUrl>
-    <Version>2.1.21</Version>
   </PropertyGroup>
 
   <ItemGroup>
