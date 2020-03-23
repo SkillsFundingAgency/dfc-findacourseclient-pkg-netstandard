@@ -18,16 +18,19 @@ trigger:
 pr:
   - master
   - dev
-    
+
+pool:
+  name: NCS - CI and CD
+  demands:
+  - msbuild
+  - visualstudio
+
 jobs:
 - job: Build
   displayName: Build
-  pool:
-    name: NCS - CI and CD
-    demands:
-    - msbuild
-    - visualstudio
-  
+  workspace:
+    clean: all
+
   steps:
   # Copy app settings template file, otherwise the build will fail
   - task: PowerShell@2
