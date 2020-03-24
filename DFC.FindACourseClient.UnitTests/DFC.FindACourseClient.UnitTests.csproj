@@ -21,7 +21,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.0-preview-20200310-03" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
