@@ -18,16 +18,19 @@ trigger:
 pr:
   - master
   - dev
-    
+
+pool:
+  name: NCS - CI and CD
+  demands:
+  - msbuild
+  - visualstudio
+
 jobs:
 - job: Build
   displayName: Build
-  pool:
-    name: NCS - CI and CD
-    demands:
-    - msbuild
-    - visualstudio
-  
+  workspace:
+    clean: all
+
   steps:
   # Copy app settings template file, otherwise the build will fail
   - task: PowerShell@2
@@ -37,18 +40,13 @@ jobs:
       script:
         Copy-Item -Path "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings-template.json" -Destination "$(System.DefaultWorkingDirectory)\$(SolutionBaseName).IntegrationTests\appsettings.json"
 
-  - task: DotNetCoreCLI@2  
-    inputs:
-      command: custom
-      custom: clean
-
   # Build Package + Unit Tests
   - template: AzureDevOpsTemplates/Build/dfc-dotnetcore-build.yml@dfc-devops
     parameters:
       SolutionBaseName: $(SolutionBaseName)
       BuildPlatform: $(BuildPlatform)
       BuildConfiguration: $(BuildConfiguration)
-      DotNetCoreVersion: 2.2.402
+      DotNetCoreVersion: 3.1.101
       TestSuffix: UnitTests
 
   - task: PowerShell@2
