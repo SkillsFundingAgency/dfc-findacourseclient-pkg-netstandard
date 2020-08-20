@@ -20,7 +20,7 @@ namespace DFC.FindACourseClient
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords)
+        public async Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords, bool shouldThrowException = false)
         {
             if (string.IsNullOrWhiteSpace(jobProfileKeywords))
             {
@@ -51,6 +51,11 @@ namespace DFC.FindACourseClient
             catch (Exception ex)
             {
                 auditService.CreateAudit(request, ex);
+                if (shouldThrowException)
+                {
+                    throw ex;
+                }
+
                 return Enumerable.Empty<Course>();
             }
         }
