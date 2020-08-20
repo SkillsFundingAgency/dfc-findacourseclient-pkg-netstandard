@@ -72,6 +72,22 @@ namespace DFC.FindACourseClient.UnitTests.Services
             Assert.Empty(result);
         }
 
+        [Fact]
+        public async Task GetCoursesAsyncThrownExceptionsWhenRequestd()
+        {
+            // Arrange
+            var findACourseClient = A.Fake<IFindACourseClient>();
+            A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Throws<Exception>();
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, defaultAuditService, defaultMapper);
+
+            // Act
+            Task Result() => courseSearchService.GetCoursesAsync("SomeKeyword", true);
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(Result).ConfigureAwait(false);
+        }
+
         private CourseSearchResponse BuildCourseSearchResponse(int startItem = 1, int totalItems = 123, int limit = 10)
         {
             return new CourseSearchResponse
