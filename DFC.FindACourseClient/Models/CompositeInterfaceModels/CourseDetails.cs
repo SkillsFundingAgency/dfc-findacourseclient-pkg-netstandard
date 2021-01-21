@@ -10,15 +10,11 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public IList<Oppurtunity> Oppurtunities { get; set; }
 
-        public string Description { get; set; }
-
         public string EntryRequirements { get; set; }
 
         public string QualificationName { get; set; }
 
         public string AssessmentMethod { get; set; }
-
-        public string Cost { get; set; }
 
         public string EquipmentRequired { get; set; }
 
@@ -41,7 +37,5 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public string WhatYoullLearn { get; set; }
 
         public string HowYoullLearn { get; set; }
-
-        public bool? National { get; set; }
     }
 }

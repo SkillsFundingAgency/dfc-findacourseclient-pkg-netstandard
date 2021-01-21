@@ -132,6 +132,18 @@ namespace DFC.FindACourseClient
             return mapper.Map<Comp.CourseDetails>(apiResult);
         }
 
+        public async Task<Comp.TLevelDetails> GetTLevelDetailsAsync(string tLevelId)
+        {
+            if (string.IsNullOrWhiteSpace(tLevelId))
+            {
+                return await Task.FromResult<Comp.TLevelDetails>(null);
+            }
+
+            var apiResult = await findACourseClient.TLevelGetAsync(tLevelId);
+
+            return mapper.Map<Comp.TLevelDetails>(apiResult);
+        }
+
         private static int GetTotalPages(int totalResults, int pageSize)
         {
             return (int)Math.Ceiling((decimal)totalResults / pageSize);

@@ -86,7 +86,7 @@ namespace DFC.FindACourseClient
         public static IServiceCollection AddFindACourseTransientFaultHandlingPolicies(this IServiceCollection services, CourseSearchClientSettings courseSearchClientSettings, IPolicyRegistry<string> policyRegistry = null)
         {
             var policyOptions = courseSearchClientSettings?.PolicyOptions;
- 
+
             if (policyRegistry == null)
             {
                 policyRegistry = services.AddPolicyRegistry();

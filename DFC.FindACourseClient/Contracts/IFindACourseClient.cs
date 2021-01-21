@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient
 {
@@ -7,5 +8,7 @@ namespace DFC.FindACourseClient
         Task<CourseSearchResponse> CourseSearchAsync(CourseSearchRequest courseSearchRequest);
 
         Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest);
+
+        Task<TLevelDetailResponse> TLevelGetAsync(string tLevelId);
     }
 }

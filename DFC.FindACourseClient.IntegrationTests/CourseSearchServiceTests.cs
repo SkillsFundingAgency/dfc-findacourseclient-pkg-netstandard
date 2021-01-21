@@ -3,8 +3,10 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using CUIModels = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient.IntegrationTests
 {
@@ -65,12 +67,38 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseSearchRequest = new CourseSearchProperties
             {
-                Filters = new CourseSearchFilters { SearchTerm = "biology" },
-                OrderedBy = CourseSearchOrderBy.Distance,
+                Filters = new CourseSearchFilters { SearchTerm = "Surveying" },
+                OrderedBy = CourseSearchOrderBy.Relevance,
             };
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task CopositeCourseSearch()
+        {
+            var courseSearchRequest = new CUIModels.CourseSearchProperties
+            {
+                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "T Level" },
+                OrderedBy = CUIModels.CourseSearchOrderBy.Relevance,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task CopositeTLevelSDetails()
+        {
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var tLevelResponse = await courseSearchService.GetTLevelDetailsAsync("00000000-0000-0000-0000-000000000000").ConfigureAwait(false);
+
+            tLevelResponse.Should().NotBeNull();
         }
     }
 }

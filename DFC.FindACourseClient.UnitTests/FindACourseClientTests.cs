@@ -193,7 +193,6 @@ namespace DFC.FindACourseClient.UnitTests
             httpResponse.Dispose();
             httpClient.Dispose();
             fakeHttpMessageHandler.Dispose();
-
         }
     }
 }
