@@ -44,5 +44,7 @@ namespace DFC.FindACourseClient
         public int? DurationValue { get; set; }
 
         public decimal? Cost { get; set; }
+
+        public string CostDescription { get; set; }
     }
 }

@@ -41,5 +41,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public string Duration { get; set; }
 
         public string Cost { get; set; }
+
+        public string CostDescription { get; set; }
     }
 }

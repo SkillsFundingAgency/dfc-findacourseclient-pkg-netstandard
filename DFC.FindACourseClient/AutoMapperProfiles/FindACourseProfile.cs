@@ -216,22 +216,13 @@ namespace DFC.FindACourseClient
             // TLevel Details
             CreateMap<TLevelDetailResponse, Comp.TLevelDetails>()
                 .ForMember(d => d.TLevelId, s => s.MapFrom(f => f.TLevelId.ToString()))
-                .ForMember(d => d.WhoFor, s => s.MapFrom(f => f.WhoFor))
-                .ForMember(d => d.EntryRequirements, s => s.MapFrom(f => f.EntryRequirements))
-                .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.WhatYoullLearn))
-                .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.HowYoullLearn))
-                .ForMember(d => d.HowYoullBeAssessed, s => s.MapFrom(f => f.HowYoullBeAssessed))
-                .ForMember(d => d.WhatYouCanDoNext, s => s.MapFrom(f => f.WhatYouCanDoNext))
-                .ForMember(d => d.YourReference, s => s.MapFrom(f => f.YourReference))
-                .ForMember(d => d.Website, s => s.MapFrom(f => f.Website))
-                .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate))
                 .ForMember(d => d.DeliveryMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
                 .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.StudyMode.GetFriendlyName()))
-                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
-                .ForMember(d => d.Cost, s => s.MapFrom(f => f.Cost));
+                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"));
 
             CreateMap<TLevelQualification, Comp.TLevelQualification>();
+
             CreateMap<TLevelProvider, Comp.TLevelProvider>()
                 .ForMember(d => d.EmployerSatisfactionSpecified, s => s.MapFrom(f => f.EmployerSatisfaction.HasValue))
                 .ForMember(d => d.EmployerSatisfaction, s => s.MapFrom(f => double.Parse(f.EmployerSatisfaction.GetValueOrDefault(0).ToString())))

@@ -131,12 +131,6 @@ namespace DFC.FindACourseClient
                 if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
                 {
                     logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{url}' \nResponse : {responseContent}");
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    {
-                        return new TLevelDetailResponse();
-                    }
-
                     response?.EnsureSuccessStatusCode();
                 }
 
