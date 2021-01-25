@@ -78,7 +78,7 @@ namespace DFC.FindACourseClient.IntegrationTests
         }
 
         [Fact]
-        public async Task CopositeCourseSearch()
+        public async Task CompositeCourseSearch()
         {
             var courseSearchRequest = new CUIModels.CourseSearchProperties
             {
@@ -93,7 +93,7 @@ namespace DFC.FindACourseClient.IntegrationTests
         }
 
         [Fact]
-        public async Task CopositeTLevelSDetails()
+        public async Task CompositeTLevelSDetails()
         {
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var tLevelResponse = await courseSearchService.GetTLevelDetailsAsync("00000000-0000-0000-0000-000000000000").ConfigureAwait(false);
