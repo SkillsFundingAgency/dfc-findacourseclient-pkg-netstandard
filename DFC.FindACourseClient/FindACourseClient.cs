@@ -115,5 +115,31 @@ namespace DFC.FindACourseClient
                 auditService.CreateAudit(courseSearchRequest, responseContent, correlationId);
             }
         }
+
+        public async Task<TLevelDetailResponse> TLevelGetAsync(string tLevelId)
+        {
+            var responseContent = string.Empty;
+            try
+            {
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}tleveldetail?{tLevelId}";
+                logger.LogDebug($"Getting TLevel  : {url}");
+
+                var response = await httpClient.GetAsync(url).ConfigureAwait(false);
+                responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+
+                logger.LogDebug($"Received response {response?.StatusCode} for url : {url}");
+                if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+                {
+                    logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{url}' \nResponse : {responseContent}");
+                    response?.EnsureSuccessStatusCode();
+                }
+
+                return JsonConvert.DeserializeObject<TLevelDetailResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            }
+            finally
+            {
+                auditService.CreateAudit(tLevelId, responseContent, correlationId);
+            }
+        }
     }
 }

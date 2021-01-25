@@ -107,12 +107,18 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
                 .ForMember(d => d.LocationAddress, s => s.MapFrom(f => string.IsNullOrWhiteSpace(f.VenueAddress) ? f.Region : f.VenueAddress));
 
+            CreateMap<Result, LocationDetails>()
+                .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
+                .ForMember(d => d.LocationAddress, s => s.MapFrom(f => string.IsNullOrWhiteSpace(f.VenueAddress) ? f.Region : f.VenueAddress));
+
             //NEW COMPOSITE MAPPINGS - NEED MERGING LATER ON
 
             // Course Search
             CreateMap<Result, Comp.Course>()
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.CourseId.ToString()))
+                .ForMember(d => d.TLevelId, s => s.MapFrom(f => f.TLevelId.ToString()))
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
+                .ForMember(d => d.OfferingType, s => s.MapFrom(f => f.CourseOfferingType))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
                 .ForMember(d => d.Description, s => s.MapFrom(f => f.CourseDescription))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
@@ -206,6 +212,24 @@ namespace DFC.FindACourseClient
 
             CreateMap<CourseDetailResponseSubRegion, Comp.SubRegion>();
             CreateMap<CourseDetailResponseParentRegion, Comp.ParentRegion>();
+
+            // TLevel Details
+            CreateMap<TLevelDetailResponse, Comp.TLevelDetails>()
+                .ForMember(d => d.TLevelId, s => s.MapFrom(f => f.TLevelId.ToString()))
+                .ForMember(d => d.DeliveryMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
+                .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
+                .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.StudyMode.GetFriendlyName()))
+                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"));
+
+            CreateMap<TLevelQualification, Comp.TLevelQualification>();
+
+            CreateMap<TLevelProvider, Comp.TLevelProvider>()
+                .ForMember(d => d.EmployerSatisfactionSpecified, s => s.MapFrom(f => f.EmployerSatisfaction.HasValue))
+                .ForMember(d => d.EmployerSatisfaction, s => s.MapFrom(f => double.Parse(f.EmployerSatisfaction.GetValueOrDefault(0).ToString())))
+                .ForMember(d => d.LearnerSatisfactionSpecified, s => s.MapFrom(f => f.LearnerSatisfaction.HasValue))
+                .ForMember(d => d.LearnerSatisfaction, s => s.MapFrom(f => double.Parse(f.LearnerSatisfaction.GetValueOrDefault(0).ToString())));
+
+            CreateMap<TLevelLocation, Comp.TLevelLocation>();
         }
     }
 }
