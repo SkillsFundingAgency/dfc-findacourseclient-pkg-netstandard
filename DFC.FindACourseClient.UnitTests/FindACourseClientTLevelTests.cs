@@ -39,6 +39,7 @@ namespace DFC.FindACourseClient.UnitTests
             {
                 TLevelId = tLevelId,
                 Qualification = new TLevelQualification() { TLevelName = "testTLevel" },
+                Provider = new TLevelProvider() { ProviderName = "testProvider"},
             };
 
             var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
@@ -59,6 +60,7 @@ namespace DFC.FindACourseClient.UnitTests
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedResponse.Qualification.TLevelName, result.Qualification.TLevelName);
+            Assert.Equal(expectedResponse.Provider.ProviderName, result.Provider.ProviderName);
             Assert.Equal(expectedResponse.TLevelId, result.TLevelId);
 
             httpResponse.Dispose();
