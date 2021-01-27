@@ -10,7 +10,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public TLevelQualification Qualification { get; set; }
 
-        public TLevelProvider Provider { get; set; }
+        public ProviderDetails ProviderDetails { get; set; }
 
         public string WhoFor { get; set; }
 
