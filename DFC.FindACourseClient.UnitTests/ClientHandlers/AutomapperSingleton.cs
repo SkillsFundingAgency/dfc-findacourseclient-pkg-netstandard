@@ -13,7 +13,11 @@ namespace DFC.FindACourseClient.UnitTests.ClientHandlers
                 if (mapper == null)
                 {
                     // Auto Mapper Configurations
-                    var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new FindACourseProfile()); });
+                    var mappingConfig = new MapperConfiguration(mc =>
+                    {
+                        mc.AddProfile(new FindACourseProfile());
+                        mc.AddProfile(new TLevelDetailsProfile());
+                    });
                     IMapper createdMapper = mappingConfig.CreateMapper();
                     mapper = createdMapper;
                 }

@@ -30,7 +30,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public DateTime? StartDate { get; set; }
 
-        public List<TLevelLocation> Locations { get; set; }
+        public List<Venue> Venues { get; set; }
 
         public string DeliveryMode { get; set; }
 

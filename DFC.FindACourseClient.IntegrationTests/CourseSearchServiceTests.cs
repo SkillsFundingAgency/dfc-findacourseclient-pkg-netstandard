@@ -38,6 +38,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                 return new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile(typeof(FindACourseProfile));
+                    cfg.AddProfile(typeof(TLevelDetailsProfile));
                 }).CreateMapper();
             });
 
