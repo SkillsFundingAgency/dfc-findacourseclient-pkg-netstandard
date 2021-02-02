@@ -48,6 +48,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
 
             // Assert
             Assert.Equal(tLevelId.ToString(), result.TLevelId.ToString());
+            Assert.Equal(nameof(TLevelProvider.ProviderName), result.ProviderDetails.Name);
         }
 
         private TLevelDetailResponse BuildTLevelResponse()
@@ -55,6 +56,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
             return new TLevelDetailResponse
             {
                 TLevelId = tLevelId,
+                Provider = new TLevelProvider() { ProviderName = nameof(TLevelProvider.ProviderName) },
             };
         }
     }

@@ -10,7 +10,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public TLevelQualification Qualification { get; set; }
 
-        public TLevelProvider Provider { get; set; }
+        public ProviderDetails ProviderDetails { get; set; }
 
         public string WhoFor { get; set; }
 
@@ -30,7 +30,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public DateTime? StartDate { get; set; }
 
-        public List<TLevelLocation> Locations { get; set; }
+        public List<Venue> Venues { get; set; }
 
         public string DeliveryMode { get; set; }
 
