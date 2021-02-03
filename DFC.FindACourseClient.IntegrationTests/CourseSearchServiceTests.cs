@@ -83,7 +83,7 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseSearchRequest = new CUIModels.CourseSearchProperties
             {
-                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "T Level" },
+                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "TLevel" },
                 OrderedBy = CUIModels.CourseSearchOrderBy.Relevance,
             };
 
