@@ -4,6 +4,8 @@
     {
         public string VenueName { get; set; }
 
+        public string Id { get; set; }
+
         public Address Location { get; set; } = new Address();
 
         public string EmailAddress { get; set; }

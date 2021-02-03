@@ -6,6 +6,8 @@ namespace DFC.FindACourseClient
 {
     public class TLevelLocation
     {
+        public Guid TLevelLocationId { get; set; }
+
         public string VenueName { get; set; }
 
         public string AddressLine1 { get; set; }
