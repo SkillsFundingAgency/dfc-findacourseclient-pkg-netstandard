@@ -12,6 +12,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public string TLevelId { get; set; }
 
+        public string TLevelLocationId { get; set; }
+
         public OfferingType OfferingType { get; set; }
 
         public string ProviderName { get; set; }

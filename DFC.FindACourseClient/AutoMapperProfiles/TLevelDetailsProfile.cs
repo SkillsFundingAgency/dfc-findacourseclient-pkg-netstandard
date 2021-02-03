@@ -42,6 +42,7 @@ namespace DFC.FindACourseClient
             CreateMap<TLevelLocation, Comp.Venue>()
             .ForMember(d => d.EmailAddress, s => s.MapFrom(f => f.Email))
             .ForMember(d => d.PhoneNumber, s => s.MapFrom(f => f.Telephone))
+            .ForMember(d => d.Id, s => s.MapFrom(f => f.TLevelLocationId))
             .ForMember(d => d.Location, s => s.MapFrom(f => f));
 
             CreateMap<TLevelLocation, Comp.Address>()

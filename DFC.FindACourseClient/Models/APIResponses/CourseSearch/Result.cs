@@ -14,7 +14,9 @@ namespace DFC.FindACourseClient
 
         public Guid TLevelId { get; set; }
 
-        public CourseOfferingType CourseOfferingType { get; set; }
+        public Guid TLevelLocationId { get; set; }
+
+        public CourseOfferingType OfferingType { get; set; }
 
         public Guid CourseRunId { get; set; }
 
