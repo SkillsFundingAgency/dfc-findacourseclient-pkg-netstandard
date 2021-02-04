@@ -84,7 +84,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             var courseSearchRequest = new CUIModels.CourseSearchProperties
             {
                 Filters = new CUIModels.CourseSearchFilters { SearchTerm = "T Level" },
-                OrderedBy = CUIModels.CourseSearchOrderBy.Relevance,
+                OrderedBy = CUIModels.CourseSearchOrderBy.RecentlyAdded,
             };
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
