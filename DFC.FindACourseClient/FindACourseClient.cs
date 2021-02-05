@@ -121,7 +121,7 @@ namespace DFC.FindACourseClient
             var responseContent = string.Empty;
             try
             {
-                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}tleveldetail?{tLevelId}";
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}tleveldetail?tLevelId={tLevelId}";
                 logger.LogDebug($"Getting TLevel  : {url}");
 
                 var response = await httpClient.GetAsync(url).ConfigureAwait(false);

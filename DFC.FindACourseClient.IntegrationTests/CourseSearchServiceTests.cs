@@ -97,7 +97,7 @@ namespace DFC.FindACourseClient.IntegrationTests
         public async Task CompositeTLevelSDetails()
         {
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
-            var tLevelResponse = await courseSearchService.GetTLevelDetailsAsync("00000000-0000-0000-0000-000000000000").ConfigureAwait(false);
+            var tLevelResponse = await courseSearchService.GetTLevelDetailsAsync("01baf1e4-6ee0-497a-86c4-04bb1c11a6b9").ConfigureAwait(false);
 
             tLevelResponse.Should().NotBeNull();
         }
