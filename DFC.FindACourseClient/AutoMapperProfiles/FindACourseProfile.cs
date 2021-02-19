@@ -150,7 +150,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
                 .ForMember(d => d.EntryRequirements, s => s.MapFrom(f => f.Course.EntryRequirements))
                 .ForMember(d => d.EquipmentRequired, s => s.MapFrom(f => f.Course.WhatYoullNeed))
-                .ForMember(d => d.Oppurtunities, s => s.MapFrom(f => f.AlternativeCourseRuns))
+                .ForMember(d => d.AlternativeCourseRuns, s => s.MapFrom(f => f.AlternativeCourseRuns))
                 .ForMember(d => d.ProviderDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.ProviderName, s => s.MapFrom(f => f.Provider.ProviderName))
                 .ForMember(d => d.QualificationLevel, s => s.MapFrom(f => f.Qualification.QualificationLevel.ToString()))
@@ -173,10 +173,12 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
                 .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn));
 
-            CreateMap<CourseDetailResponseAlternativeCourseRun, Comp.Oppurtunity>()
-                .ForMember(d => d.OppurtunityId, s => s.MapFrom(f => f.CourseRunId.ToString()))
+            CreateMap<CourseDetailResponseAlternativeCourseRun, Comp.AlternativeCourseRun>()
+                .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
                 .ForMember(d => d.VenueName, s => s.MapFrom(f => f.Venue.VenueName))
-                .ForMember(d => d.VenueUrl, s => s.MapFrom(f => f.Venue.Website));
+                .ForMember(d => d.VenueUrl, s => s.MapFrom(f => f.Venue.Website))
+                .ForMember(d => d.CourseURL, s => s.MapFrom(f => f.CourseURL))
+                .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate));
 
             CreateMap<CourseRunDetailResponse, Comp.ProviderDetails>()
                 .ForMember(d => d.Website, s => s.MapFrom(f => f.Provider.Website))

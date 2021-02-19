@@ -8,7 +8,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public ProviderDetails ProviderDetails { get; set; }
 
-        public IList<Oppurtunity> Oppurtunities { get; set; }
+        public IList<AlternativeCourseRun> AlternativeCourseRuns { get; set; }
 
         public string EntryRequirements { get; set; }
 
