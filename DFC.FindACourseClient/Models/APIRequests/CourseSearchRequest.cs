@@ -31,5 +31,9 @@ namespace DFC.FindACourseClient
         public int Limit { get; set; }
 
         public int Start { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
     }
 }

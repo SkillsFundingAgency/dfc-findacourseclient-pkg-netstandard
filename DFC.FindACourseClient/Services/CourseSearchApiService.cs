@@ -210,6 +210,8 @@ namespace DFC.FindACourseClient
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 StartDateTo = (input.Filters.StartDateTo < DateTime.Now) ? null : input.Filters.StartDateTo.ToString("yyyy-MM-ddTHH:mm:ssZ"),
+                Longitude = input.Filters.Longitude,
+                Latitude = input.Filters.Latitude,
             };
         }
     }

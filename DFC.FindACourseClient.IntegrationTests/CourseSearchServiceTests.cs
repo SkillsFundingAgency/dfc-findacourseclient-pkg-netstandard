@@ -101,5 +101,19 @@ namespace DFC.FindACourseClient.IntegrationTests
 
             tLevelResponse.Should().NotBeNull();
         }
+
+        [Fact]
+        public async Task CompositeCourseLongLatSearch()
+        {
+            var courseSearchRequest = new CUIModels.CourseSearchProperties
+            {
+                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "Maths", Longitude = -1.877556, Latitude = 52.468725, Distance = 10, DistanceSpecified = true},
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
     }
 }
