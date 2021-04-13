@@ -39,7 +39,7 @@ namespace DFC.FindACourseClient.UnitTests
             {
                 TLevelId = tLevelId,
                 Qualification = new TLevelQualification() { TLevelName = "testTLevel" },
-                Provider = new TLevelProvider() { ProviderName = "testProvider"},
+                Provider = new TLevelProvider() { ProviderName = "testProvider" },
             };
 
             var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
