@@ -141,7 +141,6 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseSearchRequest = new CUIModels.CourseSearchProperties
             {
-                //Location for Birmingham
                 Filters = new CUIModels.CourseSearchFilters { Town = "Derby", Distance = 5, DistanceSpecified = true },
             };
             courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
