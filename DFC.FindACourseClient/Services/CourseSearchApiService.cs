@@ -190,6 +190,8 @@ namespace DFC.FindACourseClient
                 StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
+                CampaignCode = input.Filters?.CampaignCode,
+
             };
         }
 
@@ -212,6 +214,7 @@ namespace DFC.FindACourseClient
                 StartDateTo = (input.Filters.StartDateTo < DateTime.Now) ? null : input.Filters.StartDateTo.ToString("yyyy-MM-ddTHH:mm:ssZ"),
                 Longitude = input.Filters.Longitude,
                 Latitude = input.Filters.Latitude,
+                CampaignCode = input.Filters?.CampaignCode,
             };
         }
     }
