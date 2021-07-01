@@ -26,6 +26,8 @@ namespace DFC.FindACourseClient
 
         public CourseType CourseType { get; set; }
 
+        public string CampaignCode { get; set; }
+
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
     }
