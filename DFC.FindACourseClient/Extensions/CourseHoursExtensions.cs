@@ -58,10 +58,6 @@ namespace DFC.FindACourseClient
 
                     case Comp.CourseHours.All:
                     default:
-                        studyModeList.Add(StudyMode.Flexible);
-                        studyModeList.Add(StudyMode.PartTime);
-                        studyModeList.Add(StudyMode.FullTime);
-                        studyModeList.Add(StudyMode.Undefined);
                         break;
                 }
             }

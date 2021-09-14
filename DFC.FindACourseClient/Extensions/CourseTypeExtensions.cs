@@ -57,10 +57,6 @@ namespace DFC.FindACourseClient
 
                     case Comp.CourseType.All:
                     default:
-                        deliveryModeList.Add(DeliveryMode.ClassroomBased);
-                        deliveryModeList.Add(DeliveryMode.WorkBased);
-                        deliveryModeList.Add(DeliveryMode.Online);
-                        deliveryModeList.Add(DeliveryMode.Undefined);
                         break;
                 }
             }
