@@ -37,5 +37,70 @@ namespace DFC.FindACourseClient
         public double? Longitude { get; set; }
 
         public string CampaignCode { get; set; }
+
+        public bool ShouldSerializeDistance()
+        {
+            return (Longitude != null && Latitude != null) || !string.IsNullOrEmpty(Postcode);
+        }
+
+        public bool ShouldSerializeProviderName()
+        {
+            return !string.IsNullOrEmpty(ProviderName);
+        }
+
+        public bool ShouldSerializeQualificationLevels()
+        {
+            return QualificationLevels?.Count > 0;
+        }
+
+        public bool ShouldSerializeStudyModes()
+        {
+            return StudyModes?.Count > 0;
+        }
+
+        public bool ShouldSerializeDeliveryModes()
+        {
+            return DeliveryModes?.Count > 0;
+        }
+
+        public bool ShouldSerializeAttendancePatterns()
+        {
+            return AttendancePatterns?.Count > 0;
+        }
+
+        public bool ShouldSerializeTown()
+        {
+            return !string.IsNullOrEmpty(Town);
+        }
+
+        public bool ShouldSerializePostcode()
+        {
+            return !string.IsNullOrEmpty(Postcode);
+        }
+
+        public bool ShouldSerializeStartDateFrom()
+        {
+            return !string.IsNullOrEmpty(StartDateFrom);
+        }
+
+        public bool ShouldSerializeStartDateTo()
+        {
+            return !string.IsNullOrEmpty(StartDateTo);
+        }
+
+        public bool ShouldSerializeLatitude()
+        {
+            return Latitude != null;
+        }
+
+        public bool ShouldSerializeLongitude()
+        {
+            return Longitude != null;
+        }
+
+        public bool ShouldSerializeCampaignCode()
+        {
+            return !string.IsNullOrEmpty(CampaignCode);
+        }
     }
 }
