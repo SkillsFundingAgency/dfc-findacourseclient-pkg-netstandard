@@ -167,13 +167,13 @@ namespace DFC.FindACourseClient.UnitTests
         [InlineData("01-02-2021", true)]
         [InlineData(null, false)]
         [InlineData("", false)]
-        public void StartDateFromSentIfValid(string startDateFrom, bool shouldSend)
+        public void StartDateFromSentIfValid(string startDate, bool shouldSend)
         {
-            courseSearchRequest.StartDateFrom = startDateFrom;
+            courseSearchRequest.StartDate = startDate;
 
             if (shouldSend)
             {
-                shouldContainParameters.Add(nameof(courseSearchRequest.StartDateFrom));
+                shouldContainParameters.Add(nameof(courseSearchRequest.StartDate));
             }
 
             CheckRequestContainsOnlyExpectedParameters();

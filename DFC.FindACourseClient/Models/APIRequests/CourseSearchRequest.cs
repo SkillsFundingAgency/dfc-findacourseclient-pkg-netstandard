@@ -24,7 +24,7 @@ namespace DFC.FindACourseClient
 
         public int SortBy { get; set; }
 
-        public string StartDateFrom { get; set; }
+        public string StartDate { get; set; }
 
         public string StartDateTo { get; set; }
 
@@ -78,9 +78,9 @@ namespace DFC.FindACourseClient
             return !string.IsNullOrEmpty(Postcode);
         }
 
-        public bool ShouldSerializeStartDateFrom()
+        public bool ShouldSerializeStartDate()
         {
-            return !string.IsNullOrEmpty(StartDateFrom);
+            return !string.IsNullOrEmpty(StartDate);
         }
 
         public bool ShouldSerializeStartDateTo()
