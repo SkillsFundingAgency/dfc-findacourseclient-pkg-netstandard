@@ -159,7 +159,7 @@ namespace DFC.FindACourseClient
             return new CourseSearchRequest
             {
                 SubjectKeyword = request,
-                StartDate = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
+                StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
                 DeliveryModes = CourseType.All.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 0,
@@ -187,7 +187,7 @@ namespace DFC.FindACourseClient
                 Town = input.Filters?.Town,
                 Postcode = input.Filters?.PostCode,
                 SortBy = input.OrderedBy.MapToSortBy(),
-                StartDate = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
+                StartDateFrom = input.Filters.StartDate.GetEarliestStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 CampaignCode = input.Filters?.CampaignCode,
@@ -208,7 +208,7 @@ namespace DFC.FindACourseClient
                 Town = input.Filters?.Town,
                 Postcode = input.Filters?.PostCode,
                 SortBy = input.OrderedBy.MapToCompositeSortBy(),
-                StartDate = input.Filters.StartDate.GetEarliestCompositeStartDate(input.Filters.StartDateFrom),
+                StartDateFrom = input.Filters.StartDate.GetEarliestCompositeStartDate(input.Filters.StartDateFrom),
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 StartDateTo = (input.Filters.StartDateTo < DateTime.Now) ? null : input.Filters.StartDateTo.ToString("yyyy-MM-ddTHH:mm:ssZ"),
