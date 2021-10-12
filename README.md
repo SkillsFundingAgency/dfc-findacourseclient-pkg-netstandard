@@ -101,5 +101,5 @@ In your application startup, you must instead manually add your Automapper profi
 ## Built With
 
 * Microsoft Visual Studio 2019
-* .Net Core 2.2
+* .netstandard2.0
 
