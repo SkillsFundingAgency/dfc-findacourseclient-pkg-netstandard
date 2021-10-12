@@ -20,6 +20,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public DateTime? StartDate { get; set; }
 
+        public bool FlexibleStartDate { get; set; }
+
         public string Description { get; set; }
 
         public string Cost { get; set; }

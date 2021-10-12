@@ -142,6 +142,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.Course.CourseId.ToString()))
                 .ForMember(d => d.Cost, s => s.MapFrom(f => f.Cost))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate))
+                .ForMember(d => d.FlexibleStartDate, s => s.MapFrom(f => f.FlexibleStartDate))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
