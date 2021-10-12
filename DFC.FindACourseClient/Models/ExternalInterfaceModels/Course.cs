@@ -14,6 +14,8 @@ namespace DFC.FindACourseClient
 
         public DateTime? StartDate { get; set; }
 
+        public bool FlexibleStartDate { get; set; }
+
         public string Location { get; set; }
 
         public LocationDetails LocationDetails { get; set; }
