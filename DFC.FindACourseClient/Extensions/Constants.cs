@@ -4,6 +4,6 @@
     {
         internal const string FindACourseClientKey = "FaC";
         internal const string ApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
-        internal static string LocalEnvironment = "local";
+        internal const string LocalEnvironment = "local";
     }
 }

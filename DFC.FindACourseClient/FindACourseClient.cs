@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
@@ -46,6 +45,11 @@ namespace DFC.FindACourseClient
 
                 return JsonConvert.DeserializeObject<CourseRunDetailResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, $"Exception getting API data for request :'{courseGetRequest}'");
+                return null;
+            }
             finally
             {
                 auditService.CreateAudit(courseGetRequest, responseContent, correlationId);
@@ -59,7 +63,6 @@ namespace DFC.FindACourseClient
             {
                 var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}coursesearch";
                 logger.LogDebug($"Search for courses POST : {url}, using properties: {JsonConvert.SerializeObject(courseSearchRequest)}");
-
 
                 var response = await httpClient.PostAsync(url, courseSearchRequest, new JsonMediaTypeFormatter()).ConfigureAwait(false);
                 responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
@@ -78,6 +81,11 @@ namespace DFC.FindACourseClient
                 }
 
                 return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, $"Exception getting API data for request :'{courseSearchRequest}'");
+                return null;
             }
             finally
             {
@@ -111,6 +119,11 @@ namespace DFC.FindACourseClient
 
                 return JsonConvert.DeserializeObject<CourseSearchResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, $"Exception getting API data for request :'{courseSearchRequest}'");
+                return null;
+            }
             finally
             {
                 auditService.CreateAudit(courseSearchRequest, responseContent, correlationId);
@@ -136,6 +149,11 @@ namespace DFC.FindACourseClient
                 }
 
                 return JsonConvert.DeserializeObject<TLevelDetailResponse>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, $"Exception getting API data for request :'{tLevelId}'");
+                return null;
             }
             finally
             {

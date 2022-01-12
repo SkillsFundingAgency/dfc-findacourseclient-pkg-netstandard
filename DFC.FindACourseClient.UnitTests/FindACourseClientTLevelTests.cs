@@ -42,15 +42,15 @@ namespace DFC.FindACourseClient.UnitTests
                 Provider = new TLevelProvider() { ProviderName = "testProvider" },
             };
 
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
+            using var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
 
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
             A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
 
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
@@ -62,34 +62,26 @@ namespace DFC.FindACourseClient.UnitTests
             Assert.Equal(expectedResponse.Qualification.TLevelName, result.Qualification.TLevelName);
             Assert.Equal(expectedResponse.Provider.ProviderName, result.Provider.ProviderName);
             Assert.Equal(expectedResponse.TLevelId, result.TLevelId);
-
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
         }
 
         [Fact]
-        public async Task TLevelGetAsyncReturnsHttpRequestExceptionWhenApiReturnsNotSuccessful()
+        public async Task TLevelGetAsyncCatchesExceptionWhenApiReturnsNotSuccessful()
         {
             // Arrange
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
-
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
-            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
+            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Throws<Exception>();
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
-            await Assert.ThrowsAsync<HttpRequestException>(async () => await findACourseClient.TLevelGetAsync(tLevelId.ToString()).ConfigureAwait(false)).ConfigureAwait(false);
+            var result = await findACourseClient.TLevelGetAsync(tLevelId.ToString()).ConfigureAwait(false);
 
             // Assert
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
+            Assert.Null(result);
         }
     }
 }

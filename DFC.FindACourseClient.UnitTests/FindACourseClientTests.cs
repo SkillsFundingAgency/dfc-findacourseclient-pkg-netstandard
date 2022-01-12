@@ -47,15 +47,15 @@ namespace DFC.FindACourseClient.UnitTests
                 Course = new CourseDetailResponseCourse { CourseId = courseId },
             };
 
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
+            using var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
 
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
             A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
 
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
@@ -67,36 +67,27 @@ namespace DFC.FindACourseClient.UnitTests
             Assert.Equal(expectedResponse.CourseName, result.CourseName);
             Assert.Equal(expectedResponse.CourseRunId, result.CourseRunId);
             Assert.Equal(expectedResponse.Course.CourseId, result.Course.CourseId);
-
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
         }
 
         [Fact]
-        public async Task CourseGetAsyncReturnsHttpRequestExceptionWhenApiReturnsNotSuccessful()
+        public async Task CourseGetAsyncCatchesExceptionWhenApiReturnsNotSuccessful()
         {
             // Arrange
             var courseGetRequest = new CourseGetRequest { CourseId = courseId, RunId = courseRunId };
-
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
-
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
-            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
+            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Throws<Exception>();
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
-            await Assert.ThrowsAsync<HttpRequestException>(async () => await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false)).ConfigureAwait(false);
+            var result = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);
 
             // Assert
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
+            Assert.Null(result);
         }
 
         [Fact]
@@ -117,15 +108,15 @@ namespace DFC.FindACourseClient.UnitTests
                 },
             };
 
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
+            using var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
 
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
             A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
@@ -136,36 +127,28 @@ namespace DFC.FindACourseClient.UnitTests
             Assert.Equal(expectedResponse.Results.FirstOrDefault()?.CourseName, result.Results?.FirstOrDefault()?.CourseName);
             Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseRunId, result.Results?.FirstOrDefault()?.CourseRunId);
             Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseId, result.Results?.FirstOrDefault()?.CourseId);
-
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
         }
 
         [Fact]
-        public async Task CourseSearchAsyncReturnsHttpRequestExceptionWhenApiReturnsNotSuccessful()
+        public async Task CourseSearchAsyncCatchesExceptionWhenApiReturnsNotSuccessful()
         {
             // Arrange
             var courseSearchRequest = new CourseSearchRequest { SubjectKeyword = "Somekeyword" };
 
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.ServiceUnavailable, Content = new StringContent("{}") };
-
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
-            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
+            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Throws<Exception>();
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             // Act
-            await Assert.ThrowsAsync<HttpRequestException>(async () => await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false)).ConfigureAwait(false);
+            var result = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
 
             // Assert
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
+            Assert.Null(result);
         }
 
         [Fact]
@@ -173,16 +156,14 @@ namespace DFC.FindACourseClient.UnitTests
         {
             // Arrange
             var courseSearchRequest = new CourseSearchRequest { SubjectKeyword = "Somekeyword" };
-
-            var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
-
+            using var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent("{}") };
             var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
             A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
 
             var auditService = A.Fake<IAuditService>();
 
-            var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
-            var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
             var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
 
             var result = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
@@ -190,9 +171,6 @@ namespace DFC.FindACourseClient.UnitTests
             // Assert
             Assert.NotNull(result);
             Assert.Empty(result.Results);
-            httpResponse.Dispose();
-            httpClient.Dispose();
-            fakeHttpMessageHandler.Dispose();
         }
     }
 }

@@ -179,7 +179,7 @@ namespace DFC.FindACourseClient
         {
             return new CourseSearchRequest
             {
-                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
+                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
                 DeliveryModes = input.Filters.CourseType.MapToDeliveryModes(),
@@ -191,7 +191,6 @@ namespace DFC.FindACourseClient
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 CampaignCode = input.Filters?.CampaignCode,
-
             };
         }
 
@@ -199,7 +198,7 @@ namespace DFC.FindACourseClient
         {
             return new CourseSearchRequest
             {
-                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default(float),
+                Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
                 DeliveryModes = input.Filters.CourseType.MapToCompositeDeliveryModes(),
