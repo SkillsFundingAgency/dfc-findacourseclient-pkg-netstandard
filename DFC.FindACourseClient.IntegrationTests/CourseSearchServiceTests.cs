@@ -108,7 +108,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             var courseSearchRequest = new CUIModels.CourseSearchProperties
             {
                 //Location for Birmingham
-                Filters = new CUIModels.CourseSearchFilters {Longitude = -1.877556, Latitude = 52.468725, Distance = 5, DistanceSpecified = true},
+                Filters = new CUIModels.CourseSearchFilters { Longitude = -1.877556, Latitude = 52.468725, Distance = 5, DistanceSpecified = true },
             };
             courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
 

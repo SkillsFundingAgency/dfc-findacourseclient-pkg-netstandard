@@ -13,10 +13,10 @@ namespace DFC.FindACourseClient.UnitTests
 {
     public class RequestParameterSerialisationTests
     {
-        private CourseSearchRequest courseSearchRequest;
-        private JsonMediaTypeFormatter jsonMediaTypeFormatter;
-        private List<string> shouldContainParameters;
-        private MemoryStream ms;
+        private readonly CourseSearchRequest courseSearchRequest;
+        private readonly JsonMediaTypeFormatter jsonMediaTypeFormatter;
+        private readonly List<string> shouldContainParameters;
+        private readonly MemoryStream ms;
 
         public RequestParameterSerialisationTests()
         {
@@ -73,7 +73,7 @@ namespace DFC.FindACourseClient.UnitTests
         [InlineData(false)]
         public void StudyModesIsSentIfValid(bool hasValue)
         {
-            courseSearchRequest.StudyModes = hasValue ? new List<StudyMode>() { StudyMode.Flexible, StudyMode.FullTime} : new List<StudyMode>();
+            courseSearchRequest.StudyModes = hasValue ? new List<StudyMode>() { StudyMode.Flexible, StudyMode.FullTime } : new List<StudyMode>();
 
             if (hasValue)
             {
@@ -182,7 +182,6 @@ namespace DFC.FindACourseClient.UnitTests
         [Fact]
         public void LogLatAndDistanceIsSentIfValid()
         {
-
             courseSearchRequest.Longitude = 12.34;
             courseSearchRequest.Latitude = 56.78;
             courseSearchRequest.Distance = 123;
@@ -207,7 +206,6 @@ namespace DFC.FindACourseClient.UnitTests
 
             CheckRequestContainsOnlyExpectedParameters();
         }
-
 
         private void CheckRequestContainsOnlyExpectedParameters()
         {
@@ -237,7 +235,7 @@ namespace DFC.FindACourseClient.UnitTests
                     else if (type == typeof(List<StudyMode>))
                     {
                         var propList = prop.GetValue(courseSearchRequest) as List<StudyMode>;
-                        request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int) n)).ToArray())}]");
+                        request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
                     }
                     else if (type == typeof(List<DeliveryMode>))
                     {
@@ -248,7 +246,6 @@ namespace DFC.FindACourseClient.UnitTests
                     {
                         Assert.True(true == false, "Type of property is not supported, amend this test");
                     }
-
                 }
                 else
                 {
