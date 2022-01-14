@@ -31,7 +31,5 @@ namespace DFC.FindACourseClient
         public string StudyMode { get; set; }
 
         public string StartDateLabel { get; set; }
-
-        public bool AdvancedLearnerLoansOffered { get; set; }
     }
 }

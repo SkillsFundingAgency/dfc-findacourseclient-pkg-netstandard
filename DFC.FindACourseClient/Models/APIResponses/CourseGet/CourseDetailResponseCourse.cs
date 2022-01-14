@@ -4,8 +4,6 @@ namespace DFC.FindACourseClient
 {
     public class CourseDetailResponseCourse
     {
-        public bool AdvancedLearnerLoan { get; set; }
-
         public string AwardOrgCode { get; set; }
 
         public string CourseDescription { get; set; }
