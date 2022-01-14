@@ -79,7 +79,6 @@ namespace DFC.FindACourseClient.UnitTests.Services
                     AwardOrgCode = "AwardOrgCode",
                     CourseDescription = "CourseDescription",
                     EntryRequirements = "EntryRequirements",
-                    AdvancedLearnerLoan = true,
                     LearnAimRef = "LearnAimRef",
                     HowYoullLearn = "HowYoullLearn",
                     WhatYoullLearn = "WhatYoullLearn",

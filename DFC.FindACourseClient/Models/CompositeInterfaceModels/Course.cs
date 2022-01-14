@@ -44,10 +44,10 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public string StartDateLabel { get; set; }
 
-        public bool AdvancedLearnerLoansOffered { get; set; }
-
         public string Region { get; set; }
 
         public bool National { get; set; }
+
+        public bool HasCampaignCode { get; set; }
     }
 }
