@@ -11,6 +11,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
             this.CourseHours = new List<CourseHours>();
             this.CourseType = new List<CourseType>();
             this.CourseStudyTime = new List<AttendancePattern>();
+            QualificationLevels = new List<int>();
         }
 
         public string SearchTerm { get; set; }
@@ -36,6 +37,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public IList<CourseType> CourseType { get; set; }
 
         public IList<AttendancePattern> CourseStudyTime { get; set; }
+
+        public List<int> QualificationLevels { get; set; }
 
         public bool IsValidStartDateFrom =>
             StartDate == StartDate.SelectDateFrom && !StartDateFrom.Equals(DateTime.MinValue);
