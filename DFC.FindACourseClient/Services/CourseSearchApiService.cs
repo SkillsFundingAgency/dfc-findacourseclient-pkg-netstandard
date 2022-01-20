@@ -204,6 +204,7 @@ namespace DFC.FindACourseClient
                 DeliveryModes = input.Filters.CourseType.MapToCompositeDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToCompositeStudyModes(),
                 AttendancePatterns = input.Filters.CourseStudyTime.MapToCompositeAttendancePattern(),
+                QualificationLevels = input.Filters.QualificationLevels,
                 Town = input.Filters?.Town,
                 Postcode = input.Filters?.PostCode,
                 SortBy = input.OrderedBy.MapToCompositeSortBy(),
