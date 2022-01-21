@@ -10,7 +10,7 @@ namespace DFC.FindACourseClient
 
         public string ProviderName { get; set; }
 
-        public List<int> QualificationLevels { get; set; }
+        public List<string> QualificationLevels { get; set; }
 
         public List<StudyMode> StudyModes { get; set; }
 
