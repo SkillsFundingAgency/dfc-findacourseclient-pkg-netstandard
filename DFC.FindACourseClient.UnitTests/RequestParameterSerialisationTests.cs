@@ -58,7 +58,7 @@ namespace DFC.FindACourseClient.UnitTests
         [InlineData(false)]
         public void QualificationLevelsIsSentIfValid(bool hasValue)
         {
-            courseSearchRequest.QualificationLevels = hasValue ? new List<int>() { 1, 2, 3 } : new List<int>();
+            courseSearchRequest.QualificationLevels = hasValue ? new List<string>() { "1", "2", "3" } : new List<string>();
 
             if (hasValue)
             {
@@ -241,6 +241,11 @@ namespace DFC.FindACourseClient.UnitTests
                     {
                         var propList = prop.GetValue(courseSearchRequest) as List<DeliveryMode>;
                         request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
+                    }
+                    else if (type == typeof(List<string>))
+                    {
+                        var propList = prop.GetValue(courseSearchRequest) as List<string>;
+                        request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => $"\"{n}\"").ToArray())}]");
                     }
                     else
                     {
