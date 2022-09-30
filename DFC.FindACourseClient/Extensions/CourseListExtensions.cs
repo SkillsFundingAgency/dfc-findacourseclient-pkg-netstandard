@@ -5,11 +5,11 @@ namespace DFC.FindACourseClient
 {
     internal static class CourseListExtensions
     {
-        internal static IEnumerable<Course> SelectCoursesForJobProfile(this IEnumerable<Course> courses)
+        internal static IEnumerable<CourseOrTlevel> SelectCoursesForJobProfile(this IEnumerable<CourseOrTlevel> courses)
         {
             if (courses == null)
             {
-                return Enumerable.Empty<Course>();
+                return Enumerable.Empty<CourseOrTlevel>();
             }
 
             if (courses.Count() > 2)

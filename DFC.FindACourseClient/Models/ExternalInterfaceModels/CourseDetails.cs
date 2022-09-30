@@ -2,7 +2,7 @@
 
 namespace DFC.FindACourseClient
 {
-    public class CourseDetails : Course
+    public class CourseDetails : CourseOrTlevel
     {
         public Venue VenueDetails { get; set; }
 

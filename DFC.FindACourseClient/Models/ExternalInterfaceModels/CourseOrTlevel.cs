@@ -2,13 +2,16 @@
 
 namespace DFC.FindACourseClient
 {
-    public class Course
+    public class CourseOrTlevel
     {
         public string Title { get; set; }
 
         public string CourseId { get; set; }
 
         public string RunId { get; set; }
+        public Guid TLevelId { get; set; }
+
+        public Guid TLevelLocationId { get; set; }
 
         public string ProviderName { get; set; }
 

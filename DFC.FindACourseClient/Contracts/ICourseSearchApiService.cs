@@ -6,7 +6,7 @@ namespace DFC.FindACourseClient
 {
     public interface ICourseSearchApiService
     {
-        Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords, bool shouldThrowException = false);
+        Task<IEnumerable<CourseOrTlevel>> GetCoursesAsync(string jobProfileKeywords, bool shouldThrowException = false);
 
         Task<CourseSearchResult> SearchCoursesAsync(CourseSearchProperties courseSearchProperties);
 
