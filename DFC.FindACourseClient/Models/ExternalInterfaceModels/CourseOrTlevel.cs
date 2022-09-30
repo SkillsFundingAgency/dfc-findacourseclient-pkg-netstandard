@@ -9,9 +9,9 @@ namespace DFC.FindACourseClient
         public string CourseId { get; set; }
 
         public string RunId { get; set; }
-        public Guid TLevelId { get; set; }
+        public string TLevelId { get; set; }
 
-        public Guid TLevelLocationId { get; set; }
+        public string TLevelLocationId { get; set; }
 
         public string ProviderName { get; set; }
 
