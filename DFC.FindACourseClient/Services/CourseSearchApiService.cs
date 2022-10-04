@@ -20,11 +20,11 @@ namespace DFC.FindACourseClient
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<CourseOrTlevel>> GetCoursesAsync(string jobProfileKeywords, bool shouldThrowException = false)
+        public async Task<IEnumerable<Course>> GetCoursesAsync(string jobProfileKeywords, bool shouldThrowException = false)
         {
             if (string.IsNullOrWhiteSpace(jobProfileKeywords))
             {
-                return await Task.FromResult<IEnumerable<CourseOrTlevel>>(null);
+                return await Task.FromResult<IEnumerable<Course>>(null);
             }
 
             var request = BuildCourseListRequest(jobProfileKeywords);
@@ -43,7 +43,7 @@ namespace DFC.FindACourseClient
                         Page = GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                         OrderedBy = (CourseSearchOrderBy)Enum.Parse(typeof(CourseSearchOrderBy), request.SortBy.ToString()),
                     },
-                    Courses = mapper.Map<List<CourseOrTlevel>>(apiResult?.Results),
+                    Courses = mapper.Map<List<Course>>(apiResult?.Results),
                 };
 
                 return response.Courses.SelectCoursesForJobProfile();
@@ -56,7 +56,7 @@ namespace DFC.FindACourseClient
                     throw ex;
                 }
 
-                return Enumerable.Empty<CourseOrTlevel>();
+                return Enumerable.Empty<Course>();
             }
         }
 
@@ -79,7 +79,7 @@ namespace DFC.FindACourseClient
                     Page = apiResult?.Start == 0 ? 0 : GetCurrentPageNumber((apiResult?.Start).GetValueOrDefault(), (apiResult?.Limit).GetValueOrDefault()),
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
-                Courses = mapper.Map<List<CourseOrTlevel>>(apiResult?.Results),
+                Courses = mapper.Map<List<Course>>(apiResult?.Results),
             };
         }
 

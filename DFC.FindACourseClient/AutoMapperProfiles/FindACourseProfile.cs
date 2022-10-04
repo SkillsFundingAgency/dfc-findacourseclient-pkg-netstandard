@@ -89,7 +89,7 @@ namespace DFC.FindACourseClient
             CreateMap<CourseDetailResponseParentRegion, ParentRegion>();
 
             // Course Search
-            CreateMap<Result, CourseOrTlevel>()
+            CreateMap<Result, Course>()
                 .ForMember(d => d.CourseId, s => s.MapFrom(f => f.CourseId.ToString()))
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))
                 .ForMember(d => d.TLevelId, s => s.MapFrom(f => f.TLevelId.ToString()))
