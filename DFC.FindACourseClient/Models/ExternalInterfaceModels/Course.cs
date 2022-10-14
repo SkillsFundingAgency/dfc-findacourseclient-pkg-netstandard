@@ -10,6 +10,10 @@ namespace DFC.FindACourseClient
 
         public string RunId { get; set; }
 
+        public string TLevelId { get; set; }
+
+        public string TLevelLocationId { get; set; }
+
         public string ProviderName { get; set; }
 
         public DateTime? StartDate { get; set; }

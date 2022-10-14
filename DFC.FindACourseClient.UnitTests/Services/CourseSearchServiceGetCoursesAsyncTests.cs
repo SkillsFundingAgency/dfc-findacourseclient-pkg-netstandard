@@ -56,6 +56,45 @@ namespace DFC.FindACourseClient.UnitTests.Services
         }
 
         [Fact]
+        public async Task GetCoursesAsyncReturnsTwoCoursesAndEachFromDifferentProvider()
+        {
+            // Arrange
+            var dummyApiResponse = BuildCourseSearchResponse();
+            var findACourseClient = A.Fake<IFindACourseClient>();
+            A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Returns(dummyApiResponse);
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, defaultAuditService, defaultMapper);
+
+            // Act
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
+            var resultList = result.ToList();
+
+            // Assert
+            Assert.True(resultList.Count == 2);
+            Assert.Equal(ProviderName1, resultList[0].ProviderName);
+            Assert.Equal(ProviderName2, resultList[1].ProviderName);
+        }
+
+        [Fact]
+        public async Task GetCoursesAsyncReturnsTLevelList()
+        {
+            // Arrange
+            var dummyApiResponse = BuildTLevelSearchResponse();
+            var findACourseClient = A.Fake<IFindACourseClient>();
+            A.CallTo(() => findACourseClient.CourseSearchAsync(A<CourseSearchRequest>.Ignored)).Returns(dummyApiResponse);
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, defaultAuditService, defaultMapper);
+
+            // Act
+            var result = await courseSearchService.GetCoursesAsync("SomeKeyword").ConfigureAwait(false);
+            var resultList = result.ToList();
+
+            // Assert
+            Assert.Equal(dummyApiResponse.Results?.FirstOrDefault()?.TLevelId.ToString(), resultList.FirstOrDefault()?.TLevelId);
+            Assert.True(resultList.Count == 2);
+        }
+
+        [Fact]
         public async Task GetCoursesAsyncWritesToAuditLogWhenExceptionIsThrown()
         {
             // Arrange
@@ -124,6 +163,40 @@ namespace DFC.FindACourseClient.UnitTests.Services
                         CourseId = Guid.NewGuid(),
                         CourseRunId = Guid.NewGuid(),
                         ProviderName = ProviderName1,
+                    },
+                },
+            };
+        }
+
+        private CourseSearchResponse BuildTLevelSearchResponse(int startItem = 1, int totalItems = 123, int limit = 10)
+        {
+            return new CourseSearchResponse
+            {
+                Start = startItem,
+                Total = totalItems,
+                Limit = limit,
+                Results = new List<Result>
+                {
+                    new Result
+                    {
+                        CourseDescription = "TLevel Course Desc 1",
+                        TLevelId = Guid.NewGuid(),
+                        TLevelLocationId = Guid.NewGuid(),
+                        ProviderName = ProviderName1,
+                    },
+                    new Result
+                    {
+                        CourseDescription = "TLevel Course Desc 2",
+                        TLevelId = Guid.NewGuid(),
+                        TLevelLocationId = Guid.NewGuid(),
+                        ProviderName = ProviderName1,
+                    },
+                    new Result
+                    {
+                        CourseDescription = "TLevel Course Desc 3",
+                        TLevelId = Guid.NewGuid(),
+                        TLevelLocationId = Guid.NewGuid(),
+                        ProviderName = ProviderName2,
                     },
                 },
             };

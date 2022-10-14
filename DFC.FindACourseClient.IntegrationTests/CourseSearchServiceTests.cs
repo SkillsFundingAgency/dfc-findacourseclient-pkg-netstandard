@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Autofac;
+using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -79,6 +80,21 @@ namespace DFC.FindACourseClient.IntegrationTests
         }
 
         [Fact]
+        public async Task CourseSearchForTLevels()
+        {
+            var courseSearchRequest = new CourseSearchProperties
+            {
+                Filters = new CourseSearchFilters { SearchTerm = "T Level" },
+                OrderedBy = CourseSearchOrderBy.Relevance,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
         public async Task CompositeCourseSearch()
         {
             var courseSearchRequest = new CUIModels.CourseSearchProperties
@@ -133,7 +149,8 @@ namespace DFC.FindACourseClient.IntegrationTests
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
 
             searchResponse.Should().NotBeNull();
-            searchResponse.Courses.OrderByDescending(c => c.LocationDetails.Distance).FirstOrDefault().Location.Should().Contain("Newcastle");
+            searchResponse.Courses.OrderBy(c => c.LocationDetails.Distance).FirstOrDefault().Location
+                .ToUpper(System.Globalization.CultureInfo.InvariantCulture).Should().Contain("NEWCASTLE");
         }
 
         [Fact]
@@ -149,7 +166,8 @@ namespace DFC.FindACourseClient.IntegrationTests
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
 
             searchResponse.Should().NotBeNull();
-            searchResponse.Courses.OrderByDescending(c => c.LocationDetails.Distance).FirstOrDefault().Location.Should().Contain("Derby");
+            searchResponse.Courses.OrderByDescending(c => c.LocationDetails.Distance).FirstOrDefault().Location
+                .ToUpper(System.Globalization.CultureInfo.InvariantCulture).Should().Contain("DERBY");
         }
     }
 }
