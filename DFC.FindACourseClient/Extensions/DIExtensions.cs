@@ -104,7 +104,7 @@ namespace DFC.FindACourseClient
 
             if (courseSearchClientSettings?.CourseSearchAuditCosmosDbSettings?.DatabaseId != null)
             {
-                services.AddScoped<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>
+                services.AddSingleton<ICosmosRepository<ApiAuditRecordCourse>, CosmosRepository<ApiAuditRecordCourse>>(s =>
                 {
                     var cosmosDbAuditConnection = courseSearchClientSettings.CourseSearchAuditCosmosDbSettings;
                     var documentClient = new DocumentClient(cosmosDbAuditConnection.EndpointUrl, cosmosDbAuditConnection.AccessKey);
@@ -115,8 +115,8 @@ namespace DFC.FindACourseClient
                 });
             }
 
-            services.AddScoped<IFindACourseClient, FindACourseClient>();
-            services.AddScoped<IAuditService, AuditService>();
+            services.AddSingleton<IFindACourseClient, FindACourseClient>();
+            services.AddSingleton<IAuditService, AuditService>();
         }
     }
 }
