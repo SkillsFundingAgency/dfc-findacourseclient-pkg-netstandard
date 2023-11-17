@@ -130,6 +130,47 @@ namespace DFC.FindACourseClient.UnitTests
         }
 
         [Fact]
+        public async Task CourseSearchAsyncReturnsDeliveryModeWhenApiCallIsSuccessful()
+        {
+            // Arrange
+            var courseSearchRequest = new CourseSearchRequest { SubjectKeyword = "Somekeyword" };
+            var expectedResponse = new CourseSearchResponse
+            {
+                Results = new List<Result>
+                {
+                    new Result
+                    {
+                        CourseId = courseId,
+                        CourseRunId = courseRunId,
+                        CourseName = "CourseName",
+                        DeliveryMode = "Blended Learning",
+                    },
+                },
+            };
+
+            using var httpResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(JsonConvert.SerializeObject(expectedResponse)) };
+
+            var fakeHttpRequestSender = A.Fake<IFakeHttpRequestSender>();
+            A.CallTo(() => fakeHttpRequestSender.Send(A<HttpRequestMessage>.Ignored)).Returns(httpResponse);
+
+            var auditService = A.Fake<IAuditService>();
+
+            using var fakeHttpMessageHandler = new FakeHttpMessageHandler(fakeHttpRequestSender);
+            using var httpClient = new HttpClient(fakeHttpMessageHandler) { BaseAddress = new Uri("http://SomeDummyUrl") };
+            var findACourseClient = new FindACourseClient(httpClient, defaultSettings, auditService, defaultLogger);
+
+            // Act
+            var result = await findACourseClient.CourseSearchAsync(courseSearchRequest).ConfigureAwait(false);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedResponse.Results.FirstOrDefault()?.DeliveryMode, result.Results?.FirstOrDefault()?.DeliveryMode);
+            Assert.Equal(expectedResponse.Results.FirstOrDefault()?.CourseName, result.Results?.FirstOrDefault()?.CourseName);
+            Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseRunId, result.Results?.FirstOrDefault()?.CourseRunId);
+            Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseId, result.Results?.FirstOrDefault()?.CourseId);
+        }
+
+        [Fact]
         public async Task CourseSearchAsyncCatchesExceptionWhenApiReturnsNotSuccessful()
         {
             // Arrange
