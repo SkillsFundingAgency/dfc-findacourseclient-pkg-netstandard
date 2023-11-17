@@ -15,5 +15,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         [Display(Name = "Work based", Order = 4)]
         WorkBased,
+
+        [Display(Name = "Blended Learning", Order = 5)]
+        BlendedLearning,
     }
 }
