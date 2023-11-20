@@ -168,6 +168,7 @@ namespace DFC.FindACourseClient.UnitTests
             Assert.Equal(expectedResponse.Results.FirstOrDefault()?.CourseName, result.Results?.FirstOrDefault()?.CourseName);
             Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseRunId, result.Results?.FirstOrDefault()?.CourseRunId);
             Assert.Equal(expectedResponse.Results?.FirstOrDefault()?.CourseId, result.Results?.FirstOrDefault()?.CourseId);
+
         }
 
         [Fact]
