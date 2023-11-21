@@ -138,7 +138,7 @@ namespace DFC.FindACourseClient.UnitTests
             {
                 Results = new List<Result>
                 {
-                    new Result
+                    new ()
                     {
                         CourseId = courseId,
                         CourseRunId = courseRunId,
