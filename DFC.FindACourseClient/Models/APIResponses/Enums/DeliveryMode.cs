@@ -15,5 +15,8 @@ namespace DFC.FindACourseClient
 
         [Description("Work based")]
         WorkBased = 3,
+
+        [Description("Blended learning")]
+        BlendedLearning = 4,
     }
 }

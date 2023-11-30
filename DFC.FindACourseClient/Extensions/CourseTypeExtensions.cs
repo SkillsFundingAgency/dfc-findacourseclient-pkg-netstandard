@@ -11,6 +11,10 @@ namespace DFC.FindACourseClient
             var result = new List<DeliveryMode>();
             switch (courseTypes)
             {
+                case CourseType.BlendedLearning:
+                    result.Add(DeliveryMode.BlendedLearning);
+                    break;
+
                 case CourseType.ClassroomBased:
                     result.Add(DeliveryMode.ClassroomBased);
                     break;
@@ -25,6 +29,7 @@ namespace DFC.FindACourseClient
 
                 case CourseType.All:
                 default:
+                    result.Add(DeliveryMode.BlendedLearning);
                     result.Add(DeliveryMode.ClassroomBased);
                     result.Add(DeliveryMode.WorkBased);
                     result.Add(DeliveryMode.Online);
@@ -43,6 +48,10 @@ namespace DFC.FindACourseClient
             {
                 switch (item)
                 {
+                    case Comp.CourseType.BlendedLearning:
+                        deliveryModeList.Add(DeliveryMode.BlendedLearning);
+                        break;
+
                     case Comp.CourseType.ClassroomBased:
                         deliveryModeList.Add(DeliveryMode.ClassroomBased);
                         break;

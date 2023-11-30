@@ -21,5 +21,8 @@ namespace DFC.FindACourseClient
 
         [Description("Hours")]
         Hours = 5,
+
+        [Description("Minutes")]
+        Minutes = 6,
     }
 }
