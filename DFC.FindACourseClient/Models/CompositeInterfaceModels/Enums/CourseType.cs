@@ -1,22 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace DFC.CompositeInterfaceModels.FindACourseClient
+namespace DFC.FindACourseClient.Models.CompositeInterfaceModels.Enums
 {
     public enum CourseType
     {
-        [Display(Name = "All", Order = 1)]
-        All,
+        [Display(Name = "Essential Skills", Order = 1)]
+        EssentialSkills,
 
-        [Display(Name = "Classroom based", Order = 2)]
-        ClassroomBased,
+        [Display(Name = "T-levels", Order = 2)]
+        TLevels,
 
-        [Display(Name = "Online", Order = 3)]
-        Online,
+        [Display(Name = "HTQs", Order = 3)]
+        HTQs,
 
-        [Display(Name = "Work based", Order = 4)]
-        WorkBased,
+        [Display(Name = "Free courses for Jobs", Order = 4)]
+        FreeCoursesForJobs,
 
-        [Display(Name = "Blended learning", Order = 5)]
-        BlendedLearning,
+        [Display(Name = "Multiply", Order = 5)]
+        Multiply,
+
+        [Display(Name = "Skills Bootcamps", Order = 5)]
+        SkillsBootcamps,
     }
 }

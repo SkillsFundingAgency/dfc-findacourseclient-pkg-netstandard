@@ -24,6 +24,7 @@ namespace DFC.FindACourseClient
 
         public CourseHours CourseHours { get; set; }
 
+        public LearningMethod LearningMethod { get; set; }
         public CourseType CourseType { get; set; }
 
         public string CampaignCode { get; set; }

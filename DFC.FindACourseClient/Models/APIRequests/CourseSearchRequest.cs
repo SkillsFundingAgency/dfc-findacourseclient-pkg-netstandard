@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DFC.FindACourseClient.Models.CompositeInterfaceModels.Enums;
+using System.Collections.Generic;
 
 namespace DFC.FindACourseClient
 {
@@ -11,10 +12,11 @@ namespace DFC.FindACourseClient
         public string ProviderName { get; set; }
 
         public List<string> QualificationLevels { get; set; }
-
+            
         public List<StudyMode> StudyModes { get; set; }
 
         public List<DeliveryMode> DeliveryModes { get; set; }
+        public List<CourseType> CourseTypes { get; set; }
 
         public List<int> AttendancePatterns { get; set; }
 

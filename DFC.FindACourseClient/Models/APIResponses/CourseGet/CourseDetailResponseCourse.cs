@@ -25,5 +25,6 @@ namespace DFC.FindACourseClient
         public string HowYoullBeAssessed { get; set; }
 
         public string HowYoullLearn { get; set; }
+        public CourseType CourseType { get; set; }
     }
 }

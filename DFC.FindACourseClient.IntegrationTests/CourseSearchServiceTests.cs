@@ -126,7 +126,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                 //Location for Birmingham
                 Filters = new CUIModels.CourseSearchFilters { Longitude = -1.877556, Latitude = 52.468725, Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
@@ -143,7 +143,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                 //Postcode for Newcastle
                 Filters = new CUIModels.CourseSearchFilters { PostCode = "NE1 1AD", Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
@@ -160,7 +160,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             {
                 Filters = new CUIModels.CourseSearchFilters { Town = "Derby", Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);

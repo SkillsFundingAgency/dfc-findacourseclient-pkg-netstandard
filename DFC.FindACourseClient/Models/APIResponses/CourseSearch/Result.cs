@@ -44,6 +44,9 @@ namespace DFC.FindACourseClient
 
         public string VenueStudyModeDescription { get; set; }
 
+        public string CourseType { get; set; }
+        public string CourseTypeDescription { get; set; }
+
         public string DeliveryMode { get; set; }
 
         public string DeliveryModeDescription { get; set; }

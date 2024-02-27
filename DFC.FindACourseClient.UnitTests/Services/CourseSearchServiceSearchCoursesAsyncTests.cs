@@ -123,7 +123,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
                     SearchTerm = "Keyword",
                     DistanceSpecified = true,
                     CourseHours = CourseHours.Flexible,
-                    CourseType = CourseType.All,
+                    LearningMethod = LearningMethod.All,
                 },
                 Page = 3,
                 OrderedBy = CourseSearchOrderBy.Relevance,

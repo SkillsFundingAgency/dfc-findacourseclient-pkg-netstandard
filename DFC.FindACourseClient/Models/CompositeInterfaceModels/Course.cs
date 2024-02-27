@@ -38,6 +38,8 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public string AttendanceMode { get; set; }
 
+        public string CourseType { get; set; }
+
         public string AttendancePattern { get; set; }
 
         public string StudyMode { get; set; }

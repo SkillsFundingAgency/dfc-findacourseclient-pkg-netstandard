@@ -4,30 +4,30 @@ using Comp = DFC.CompositeInterfaceModels.FindACourseClient;
 
 namespace DFC.FindACourseClient
 {
-    internal static class CourseTypeExtensions
+    internal static class LearningMethodExtensions
     {
-        internal static List<DeliveryMode> MapToDeliveryModes(this CourseType courseTypes)
+        internal static List<DeliveryMode> MapToDeliveryModes(this LearningMethod courseTypes)
         {
             var result = new List<DeliveryMode>();
             switch (courseTypes)
             {
-                case CourseType.BlendedLearning:
+                case LearningMethod.BlendedLearning:
                     result.Add(DeliveryMode.BlendedLearning);
                     break;
 
-                case CourseType.ClassroomBased:
+                case LearningMethod.ClassroomBased:
                     result.Add(DeliveryMode.ClassroomBased);
                     break;
 
-                case CourseType.Online:
+                case LearningMethod.Online:
                     result.Add(DeliveryMode.Online);
                     break;
 
-                case CourseType.WorkBased:
+                case LearningMethod.WorkBased:
                     result.Add(DeliveryMode.WorkBased);
                     break;
 
-                case CourseType.All:
+                case LearningMethod.All:
                 default:
                     result.Add(DeliveryMode.BlendedLearning);
                     result.Add(DeliveryMode.ClassroomBased);
@@ -40,7 +40,7 @@ namespace DFC.FindACourseClient
             return result.Distinct().ToList();
         }
 
-        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.CourseType> courseTypes)
+        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.LearningMethod> courseTypes)
         {
             var deliveryModeList = new List<DeliveryMode>();
 
@@ -48,23 +48,23 @@ namespace DFC.FindACourseClient
             {
                 switch (item)
                 {
-                    case Comp.CourseType.BlendedLearning:
+                    case Comp.LearningMethod.BlendedLearning:
                         deliveryModeList.Add(DeliveryMode.BlendedLearning);
                         break;
 
-                    case Comp.CourseType.ClassroomBased:
+                    case Comp.LearningMethod.ClassroomBased:
                         deliveryModeList.Add(DeliveryMode.ClassroomBased);
                         break;
 
-                    case Comp.CourseType.Online:
+                    case Comp.LearningMethod.Online:
                         deliveryModeList.Add(DeliveryMode.Online);
                         break;
 
-                    case Comp.CourseType.WorkBased:
+                    case Comp.LearningMethod.WorkBased:
                         deliveryModeList.Add(DeliveryMode.WorkBased);
                         break;
 
-                    case Comp.CourseType.All:
+                    case Comp.LearningMethod.All:
                     default:
                         break;
                 }
