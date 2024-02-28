@@ -7,22 +7,24 @@ namespace DFC.FindACourseClient
 {
     public enum CourseType
     {
-        [Display(Name = "Essential Skills", Order = 1)]
+        [Display(Name = "All", Order = 1)]
+        All,
+        [Display(Name = "Essential Skills", Order = 2)]
         EssentialSkills,
 
-        [Display(Name = "T-levels", Order = 2)]
+        [Display(Name = "T-levels", Order = 3)]
         TLevels,
 
-        [Display(Name = "HTQs", Order = 3)]
+        [Display(Name = "HTQs", Order = 4)]
         HTQs,
 
-        [Display(Name = "Free courses for Jobs", Order = 4)]
+        [Display(Name = "Free courses for Jobs", Order = 5)]
         FreeCoursesForJobs,
 
-        [Display(Name = "Multiply", Order = 5)]
+        [Display(Name = "Multiply", Order = 6)]
         Multiply,
 
-        [Display(Name = "Skills Bootcamps", Order = 5)]
+        [Display(Name = "Skills Bootcamps", Order = 7)]
         SkillsBootcamps,
     }
 }
