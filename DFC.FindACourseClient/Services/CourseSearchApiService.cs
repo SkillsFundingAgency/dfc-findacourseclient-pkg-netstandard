@@ -160,6 +160,7 @@ namespace DFC.FindACourseClient
             {
                 SubjectKeyword = request,
                 StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
+                CourseTypes = CourseType.All.MapToCourseTypes(),
                 DeliveryModes = LearningMethod.All.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 0,
@@ -182,6 +183,7 @@ namespace DFC.FindACourseClient
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
+                CourseTypes = input.Filters.CourseType.MapToCourseTypes(),
                 DeliveryModes = input.Filters.LearningMethod.MapToDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToStudyModes(),
                 Town = input.Filters?.Town,
@@ -201,6 +203,7 @@ namespace DFC.FindACourseClient
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
+                CourseTypes = input.Filters.CourseType.MapToCompositeCourseTypes(),
                 DeliveryModes = input.Filters.LearningMethod.MapToCompositeDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToCompositeStudyModes(),
                 AttendancePatterns = input.Filters.CourseStudyTime.MapToCompositeAttendancePattern(),

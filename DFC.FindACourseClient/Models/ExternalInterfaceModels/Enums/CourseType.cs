@@ -9,6 +9,7 @@ namespace DFC.FindACourseClient
     {
         [Display(Name = "All", Order = 1)]
         All,
+
         [Display(Name = "Essential Skills", Order = 2)]
         EssentialSkills,
 
