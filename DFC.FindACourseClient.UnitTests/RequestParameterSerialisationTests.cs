@@ -242,6 +242,11 @@ namespace DFC.FindACourseClient.UnitTests
                         var propList = prop.GetValue(courseSearchRequest) as List<DeliveryMode>;
                         request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
                     }
+                    else if (type == typeof(List<CourseType>))
+                    {
+                        var propList = prop.GetValue(courseSearchRequest) as List<CourseType>;
+                        request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
+                    }
                     else if (type == typeof(List<string>))
                     {
                         var propList = prop.GetValue(courseSearchRequest) as List<string>;
