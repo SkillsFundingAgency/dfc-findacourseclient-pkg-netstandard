@@ -20,9 +20,9 @@ namespace DFC.FindACourseClient.UnitTests
 
         public RequestParameterSerialisationTests()
         {
-            courseSearchRequest = new CourseSearchRequest() { SubjectKeyword = "SearchTerm", SortBy = 1, Start = 2, Limit = 20 };
+            courseSearchRequest = new CourseSearchRequest() { SubjectKeyword = "SearchTerm", SortBy = 1, Start = 2, Limit = 20, CourseTypes = { CourseType.FreeCoursesForJobs } };
             jsonMediaTypeFormatter = new JsonMediaTypeFormatter();
-            shouldContainParameters = new List<string> { nameof(courseSearchRequest.SubjectKeyword), nameof(courseSearchRequest.SortBy), nameof(courseSearchRequest.Start), nameof(courseSearchRequest.Limit) };
+            shouldContainParameters = new List<string> { nameof(courseSearchRequest.SubjectKeyword), nameof(courseSearchRequest.SortBy), nameof(courseSearchRequest.Start), nameof(courseSearchRequest.Limit), nameof(courseSearchRequest.CourseTypes) };
             ms = new MemoryStream();
         }
 
