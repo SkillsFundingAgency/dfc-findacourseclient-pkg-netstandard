@@ -20,9 +20,9 @@ namespace DFC.FindACourseClient.UnitTests
 
         public RequestParameterSerialisationTests()
         {
-            courseSearchRequest = new CourseSearchRequest() { SubjectKeyword = "SearchTerm", SortBy = 1, Start = 2, Limit = 20, CourseTypes = new List<CourseType>() { CourseType.All } };
+            courseSearchRequest = new CourseSearchRequest() { SubjectKeyword = "SearchTerm", SortBy = 1, Start = 2, Limit = 20, CourseTypes = new List<CourseType>() { CourseType.All }, SectorIds = new List<int> { 1, 2, 3 }, EducationLevels = new List<EducationLevel>() { EducationLevel.All } };
             jsonMediaTypeFormatter = new JsonMediaTypeFormatter();
-            shouldContainParameters = new List<string> { nameof(courseSearchRequest.SubjectKeyword), nameof(courseSearchRequest.SortBy), nameof(courseSearchRequest.Start), nameof(courseSearchRequest.Limit), nameof(courseSearchRequest.CourseTypes) };
+            shouldContainParameters = new List<string> { nameof(courseSearchRequest.SubjectKeyword), nameof(courseSearchRequest.SortBy), nameof(courseSearchRequest.Start), nameof(courseSearchRequest.Limit), nameof(courseSearchRequest.CourseTypes), nameof(courseSearchRequest.SectorIds), nameof(courseSearchRequest.EducationLevels) };
             ms = new MemoryStream();
         }
 
@@ -245,6 +245,11 @@ namespace DFC.FindACourseClient.UnitTests
                     else if (type == typeof(List<CourseType>))
                     {
                         var propList = prop.GetValue(courseSearchRequest) as List<CourseType>;
+                        request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
+                    }
+                    else if (type == typeof(List<EducationLevel>))
+                    {
+                        var propList = prop.GetValue(courseSearchRequest) as List<EducationLevel>;
                         request.Should().Contain($"\"{prop.Name}\":[{string.Join(",", propList.Select(n => ((int)n)).ToArray())}]");
                     }
                     else if (type == typeof(List<string>))
