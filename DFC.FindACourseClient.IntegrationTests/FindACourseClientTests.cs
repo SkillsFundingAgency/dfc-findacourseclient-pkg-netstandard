@@ -54,8 +54,8 @@ namespace DFC.FindACourseClient.IntegrationTests
             //Get Details for a course
             var courseGetRequest = new CourseGetRequest
             {
-                CourseId = Guid.Parse("36d9dfb8-7fa9-4779-beae-ca65ba429bfd"),
-                RunId = Guid.Parse("4776fd59-f313-47c9-8fea-5f9cbc58bcd4"),
+                CourseId = Guid.Parse("B9CBCF15-50A2-42D5-954F-0F1B35E23EE6"),
+                RunId = Guid.Parse("77E1F156-0601-42C1-89E8-C1337A2357FA"),
             };
 
             var detailsResponse = await findACourseClient.CourseGetAsync(courseGetRequest).ConfigureAwait(false);

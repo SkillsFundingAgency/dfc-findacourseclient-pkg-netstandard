@@ -18,7 +18,6 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Cost, s => s.MapFrom(f => f.Cost))
                 .ForMember(d => d.StartDate, s => s.MapFrom(f => f.StartDate))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
-                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseType.GetFriendlyName()))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
                 .ForMember(d => d.Description, s => s.MapFrom(f => f.Course.CourseDescription))
@@ -46,7 +45,11 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.AwardingOrganisation, s => s.MapFrom(f => f.Qualification.AwardOrgName))
                 .ForMember(d => d.NextSteps, s => s.MapFrom(f => f.Course.WhereNext))
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
-                .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn));
+                .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn))
+                .ForMember(d => d.Sector, s => s.MapFrom(f => f.Course.SectorDescription))
+                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseType.GetFriendlyName()))
+                .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.Course.EducationLevel.GetFriendlyName()))
+                .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.Course.AwardingBody));
 
             CreateMap<CourseDetailResponseAlternativeCourseRun, Oppurtunity>()
                 .ForMember(d => d.OppurtunityId, s => s.MapFrom(f => f.CourseRunId.ToString()))
@@ -99,11 +102,14 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.StartDateLabel, s => s.ConvertUsing(new SearchResponseStartDateValueConverter(), f => f))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryModeDescription))
-                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.CourseTypeDescription))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.VenueAttendancePatternDescription))
                 .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.VenueStudyModeDescription))
                 .ForMember(d => d.Location, s => s.MapFrom(f => f.VenueTown))
-                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"));
+                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
+                .ForMember(d => d.Sector, s => s.MapFrom(f => f.SectorDescription))
+                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.CourseTypeDescription))
+                .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.EducationLevelDescription))
+                .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.AwardingBody));
 
             CreateMap<Result, LocationDetails>()
                 .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
@@ -125,12 +131,15 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.Description, s => s.MapFrom(f => f.CourseDescription))
                 .ForMember(d => d.LocationDetails, s => s.MapFrom(f => f))
                 .ForMember(d => d.StartDateLabel, s => s.ConvertUsing(new SearchResponseStartDateValueConverter(), f => f))
-                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.CourseTypeDescription))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryModeDescription))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.VenueAttendancePatternDescription))
                 .ForMember(d => d.StudyMode, s => s.MapFrom(f => f.VenueStudyModeDescription))
                 .ForMember(d => d.Location, s => s.MapFrom(f => f.VenueTown))
-                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"));
+                .ForMember(d => d.Duration, s => s.MapFrom(f => $"{f.DurationValue} {f.DurationUnit.ToString()}"))
+                .ForMember(d => d.Sector, s => s.MapFrom(f => f.SectorDescription))
+                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.CourseTypeDescription))
+                .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.EducationLevelDescription))
+                .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.AwardingBody));
 
             CreateMap<Result, Comp.LocationDetails>()
                .ForMember(d => d.Distance, s => s.MapFrom(f => float.Parse(f.Distance ?? "0")))
@@ -174,7 +183,10 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.AwardingOrganisation, s => s.MapFrom(f => f.Qualification.AwardOrgName))
                 .ForMember(d => d.NextSteps, s => s.MapFrom(f => f.Course.WhereNext))
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
-                .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn));
+                .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn))
+                .ForMember(d => d.Sector, s => s.MapFrom(f => f.Course.SectorDescription))
+                .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.Course.EducationLevelDescription))
+                .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.Course.AwardingBody));
 
             CreateMap<CourseDetailResponseAlternativeCourseRun, Comp.AlternativeCourseRun>()
                 .ForMember(d => d.RunId, s => s.MapFrom(f => f.CourseRunId.ToString()))

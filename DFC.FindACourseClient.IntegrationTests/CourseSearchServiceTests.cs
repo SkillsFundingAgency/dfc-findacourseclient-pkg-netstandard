@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -69,7 +70,22 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseSearchRequest = new CourseSearchProperties
             {
-                Filters = new CourseSearchFilters { SearchTerm = "Surveying" },
+                Filters = new CourseSearchFilters { SearchTerm = "Driving Test Theory", LearningMethod = LearningMethod.BlendedLearning },
+                OrderedBy = CourseSearchOrderBy.Relevance,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task CourseSearch_NonLars_Course()
+        {
+            var courseSearchRequest = new CourseSearchProperties
+            {
+                Filters = new CourseSearchFilters { SearchTerm = "Driving", SectorIds = new List<int> { 4, 8 }, CourseType = CourseType.SkillsBootcamp, EducationLevel = EducationLevel.Two },
                 OrderedBy = CourseSearchOrderBy.Relevance,
             };
 

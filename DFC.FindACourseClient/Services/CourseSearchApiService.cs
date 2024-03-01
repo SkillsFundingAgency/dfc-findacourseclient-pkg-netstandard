@@ -191,6 +191,9 @@ namespace DFC.FindACourseClient
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 CampaignCode = input.Filters?.CampaignCode,
+                CourseTypes = input.Filters?.CourseType.MapToCourseTypes(),
+                SectorIds = input.Filters?.SectorIds,
+                EducationLevels = input.Filters.EducationLevel.MapToEducationLevels(),
             };
         }
 

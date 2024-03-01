@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DFC.FindACourseClient
 {
     public class CourseSearchFilters
     {
+        public CourseSearchFilters()
+        {
+            EducationLevel = EducationLevel.All;
+        }
+
         public string SearchTerm { get; set; }
 
         public DateTime StartDateFrom { get; set; }
@@ -25,7 +31,12 @@ namespace DFC.FindACourseClient
         public CourseHours CourseHours { get; set; }
 
         public LearningMethod LearningMethod { get; set; }
+
         public CourseType CourseType { get; set; }
+
+        public List<int> SectorIds { get; set; }
+
+        public EducationLevel EducationLevel { get; set; }
 
         public string CampaignCode { get; set; }
 
