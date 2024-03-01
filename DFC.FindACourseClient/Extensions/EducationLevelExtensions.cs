@@ -58,5 +58,54 @@ namespace DFC.FindACourseClient
 
             return result.Distinct().ToList();
         }
+
+        internal static List<EducationLevel> MapToCompositeEducationLevels(this IList<Comp.EducationLevel> educationLevels)
+        {
+            var educationLevelList = new List<EducationLevel>();
+
+            foreach (var item in educationLevels)
+            {
+                switch (item)
+                {
+                    case Comp.EducationLevel.EntryLevel:
+                        educationLevelList.Add(EducationLevel.EntryLevel);
+                        break;
+
+                    case Comp.EducationLevel.One:
+                        educationLevelList.Add(EducationLevel.One);
+                        break;
+
+                    case Comp.EducationLevel.Two:
+                        educationLevelList.Add(EducationLevel.Two);
+                        break;
+
+                    case Comp.EducationLevel.Three:
+                        educationLevelList.Add(EducationLevel.Three);
+                        break;
+
+                    case Comp.EducationLevel.Four:
+                        educationLevelList.Add(EducationLevel.Four);
+                        break;
+
+                    case Comp.EducationLevel.Five:
+                        educationLevelList.Add(EducationLevel.Five);
+                        break;
+
+                    case Comp.EducationLevel.Six:
+                        educationLevelList.Add(EducationLevel.Six);
+                        break;
+
+                    case Comp.EducationLevel.Seven:
+                        educationLevelList.Add(EducationLevel.Seven);
+                        break;
+
+                    case Comp.EducationLevel.All:
+                    default:
+                        break;
+                }
+            }
+
+            return educationLevelList.Distinct().ToList();
+        }
     }
 }

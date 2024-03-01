@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DFC.FindACourseClient.Models.CompositeInterfaceModels.Enums
+namespace DFC.CompositeInterfaceModels.FindACourseClient
 {
     public enum EducationLevel
     {

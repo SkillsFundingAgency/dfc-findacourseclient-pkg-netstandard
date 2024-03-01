@@ -49,5 +49,46 @@ namespace DFC.FindACourseClient
 
             return result.Distinct().ToList();
         }
+
+        internal static List<CourseType> MapToCompositeCourseTypes(this IList<Comp.CourseType> courseTypes)
+        {
+            var result = new List<CourseType>();
+
+            foreach (var item in courseTypes)
+            {
+                switch (item)
+                {
+                    case Comp.CourseType.EssentialSkills:
+                        result.Add(CourseType.EssentialSkills);
+                        break;
+
+                    case Comp.CourseType.TLevels:
+                        result.Add(CourseType.TLevels);
+                        break;
+
+                    case Comp.CourseType.HTQs:
+                        result.Add(CourseType.HTQs);
+                        break;
+
+                    case Comp.CourseType.FreeCoursesForJobs:
+                        result.Add(CourseType.FreeCoursesForJobs);
+                        break;
+
+                    case Comp.CourseType.Multiply:
+                        result.Add(CourseType.Multiply);
+                        break;
+
+                    case Comp.CourseType.SkillsBootcamp:
+                        result.Add(CourseType.SkillsBootcamp);
+                        break;
+
+                    case Comp.CourseType.All:
+                    default:
+                        break;
+                }
+            }
+
+            return result.Distinct().ToList();
+        }
     }
 }

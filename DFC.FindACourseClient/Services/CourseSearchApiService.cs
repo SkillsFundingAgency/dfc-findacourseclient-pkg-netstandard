@@ -160,6 +160,7 @@ namespace DFC.FindACourseClient
             {
                 SubjectKeyword = request,
                 StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
+                CourseTypes = CourseType.All.MapToCourseTypes(),
                 DeliveryModes = LearningMethod.All.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 0,
@@ -218,6 +219,9 @@ namespace DFC.FindACourseClient
                 Longitude = input.Filters.Longitude,
                 Latitude = input.Filters.Latitude,
                 CampaignCode = input.Filters?.CampaignCode,
+                CourseTypes = input.Filters.CourseType.MapToCompositeCourseTypes(),
+                SectorIds = input.Filters?.SectorIds.ToList(),
+                EducationLevels = input.Filters.EducationLevel.MapToCompositeEducationLevels(),
             };
         }
     }

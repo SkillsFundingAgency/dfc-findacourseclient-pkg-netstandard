@@ -6,10 +6,10 @@ namespace DFC.FindACourseClient
 {
     internal static class LearningMethodExtensions
     {
-        internal static List<DeliveryMode> MapToDeliveryModes(this LearningMethod courseTypes)
+        internal static List<DeliveryMode> MapToDeliveryModes(this LearningMethod learningMethods)
         {
             var result = new List<DeliveryMode>();
-            switch (courseTypes)
+            switch (learningMethods)
             {
                 case LearningMethod.BlendedLearning:
                     result.Add(DeliveryMode.BlendedLearning);
@@ -40,11 +40,11 @@ namespace DFC.FindACourseClient
             return result.Distinct().ToList();
         }
 
-        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.LearningMethod> courseTypes)
+        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.LearningMethod> learningMethods)
         {
             var deliveryModeList = new List<DeliveryMode>();
 
-            foreach (var item in courseTypes)
+            foreach (var item in learningMethods)
             {
                 switch (item)
                 {

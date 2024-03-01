@@ -1,7 +1,6 @@
 ﻿using DFC.FindACourseClient;
 using System;
 using System.Collections.Generic;
-using Comp = DFC.FindACourseClient.Models.CompositeInterfaceModels.Enums;
 
 namespace DFC.CompositeInterfaceModels.FindACourseClient
 {
@@ -9,9 +8,9 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
     {
         public CourseSearchFilters()
         {
-            this.Sector = new List<int>();
-            this.CourseType = new List<Comp.CourseType>();
-            this.EducationLevel = new List<Comp.EducationLevel>();
+            this.SectorIds = new List<int>();
+            this.CourseType = new List<CourseType>();
+            this.EducationLevel = new List<EducationLevel>();
             this.CourseHours = new List<CourseHours>();
             this.LearningMethod = new List<LearningMethod>();
             this.CourseStudyTime = new List<AttendancePattern>();
@@ -40,11 +39,11 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public IList<LearningMethod> LearningMethod { get; set; }
 
-        public IList<Comp.CourseType> CourseType { get; set; }
+        public IList<CourseType> CourseType { get; set; }
 
-        public IList<int> Sector { get; set; }
+        public IList<int> SectorIds { get; set; }
 
-        public IList<Comp.EducationLevel> EducationLevel { get; set; }
+        public IList<EducationLevel> EducationLevel { get; set; }
 
         public IList<AttendancePattern> CourseStudyTime { get; set; }
 

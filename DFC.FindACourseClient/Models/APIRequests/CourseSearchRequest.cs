@@ -1,5 +1,4 @@
-﻿using DFC.FindACourseClient.Models.CompositeInterfaceModels.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DFC.FindACourseClient
 {
