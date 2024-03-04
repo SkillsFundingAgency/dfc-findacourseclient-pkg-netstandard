@@ -146,6 +146,7 @@ namespace DFC.FindACourseClient.UnitTests.Services
                     },
                     NotionalNVQLevelv2 = new List<NotionalNVQLevelv2> { new NotionalNVQLevelv2 { Count = 1, Value = "NotionalNVQLevelv2" } },
                     Region = new List<Region> { new Region { Count = 1, Value = "Region1" } },
+                    SectorId = new List<Facet> { new Facet { Count = 1, Value = "1" }, new Facet { Count = 1, Value = "2" } },
                 },
                 Results = new List<Result>
                 {
