@@ -30,7 +30,7 @@ namespace DFC.FindACourseClient
 
         public string SectorDescription { get; set; }
 
-        public CourseType CourseType { get; set; }
+        public CourseType? CourseType { get; set; }
 
         public string CourseTypeDescription { get; set; }
 

@@ -126,6 +126,21 @@ namespace DFC.FindACourseClient.IntegrationTests
         }
 
         [Fact]
+        public async Task CompositeCourseSearch_NonLars()
+        {
+            var courseSearchRequest = new CUIModels.CourseSearchProperties
+            {
+                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "Test", CourseType = new List<CUIModels.CourseType> { CUIModels.CourseType.SkillsBootcamp } },
+                OrderedBy = CUIModels.CourseSearchOrderBy.RecentlyAdded,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
         public async Task CompositeTLevelSDetails()
         {
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);

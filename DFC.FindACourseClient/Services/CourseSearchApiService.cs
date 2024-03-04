@@ -80,6 +80,7 @@ namespace DFC.FindACourseClient
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Course>>(apiResult?.Results),
+                AttachedSectors = GetAttachedSectors(apiResult),
             };
         }
 
@@ -103,6 +104,7 @@ namespace DFC.FindACourseClient
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Comp.Course>>(apiResult?.Results),
+                AttachedSectors = GetAttachedSectors(apiResult),
             };
         }
 
@@ -142,6 +144,29 @@ namespace DFC.FindACourseClient
             var apiResult = await findACourseClient.TLevelGetAsync(tLevelId);
 
             return mapper.Map<Comp.TLevelDetails>(apiResult);
+        }
+
+        private static List<Sector> GetAttachedSectors(CourseSearchResponse apiResult)
+        {
+            var sectors = new List<Sector>();
+
+            var sectorIdsFacet = apiResult.Facets.SectorId
+                .Select(s => int.Parse(s.Value))
+                .ToList();
+
+            if (!sectorIdsFacet.Any())
+            {
+                return sectors;
+            }
+
+            sectors = apiResult.Results
+                .Where(r => r.SectorId.HasValue && sectorIdsFacet.Contains(r.SectorId.Value))
+                .Select(s => new Sector { Id = s.SectorId.Value, Description = s.SectorDescription })
+                .GroupBy(s => s.Id)
+                .Select(g => g.First())
+                .ToList();
+
+            return sectors;
         }
 
         private static int GetTotalPages(int totalResults, int pageSize)
