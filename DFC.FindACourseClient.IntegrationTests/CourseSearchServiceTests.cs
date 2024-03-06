@@ -200,5 +200,14 @@ namespace DFC.FindACourseClient.IntegrationTests
             searchResponse.Courses.OrderByDescending(c => c.LocationDetails.Distance).FirstOrDefault().Location
                 .ToUpper(System.Globalization.CultureInfo.InvariantCulture).Should().Contain("DERBY");
         }
+
+        [Fact]
+        public async Task GetSectors()
+        {
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var sectors = await courseSearchService.GetSectorsAsync().ConfigureAwait(false);
+
+            sectors.Should().NotBeNull();
+        }
     }
 }
