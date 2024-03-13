@@ -16,6 +16,8 @@ namespace DFC.FindACourseClient
 
         public List<DeliveryMode> DeliveryModes { get; set; }
 
+        public List<CourseType> CourseTypes { get; set; }
+
         public List<int> AttendancePatterns { get; set; }
 
         public string Town { get; set; }
@@ -37,6 +39,10 @@ namespace DFC.FindACourseClient
         public double? Longitude { get; set; }
 
         public string CampaignCode { get; set; }
+
+        public List<int> SectorIds { get; set; }
+
+        public List<EducationLevel> EducationLevels { get; set; }
 
         public bool ShouldSerializeDistance()
         {

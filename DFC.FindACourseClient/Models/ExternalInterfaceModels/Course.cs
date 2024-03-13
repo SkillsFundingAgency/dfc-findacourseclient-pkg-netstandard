@@ -35,5 +35,13 @@ namespace DFC.FindACourseClient
         public string StudyMode { get; set; }
 
         public string StartDateLabel { get; set; }
+
+        public string Sector { get; set; }
+
+        public string CourseType { get; set; }
+
+        public string EducationLevel { get; set; }
+
+        public string AwardingBody { get; set; }
     }
 }

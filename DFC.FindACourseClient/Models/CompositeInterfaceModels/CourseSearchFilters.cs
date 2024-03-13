@@ -8,8 +8,11 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
     {
         public CourseSearchFilters()
         {
-            this.CourseHours = new List<CourseHours>();
+            this.SectorIds = new List<int>();
             this.CourseType = new List<CourseType>();
+            this.EducationLevel = new List<EducationLevel>();
+            this.CourseHours = new List<CourseHours>();
+            this.LearningMethod = new List<LearningMethod>();
             this.CourseStudyTime = new List<AttendancePattern>();
             QualificationLevels = new List<string>();
         }
@@ -34,7 +37,13 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public List<CourseHours> CourseHours { get; set; }
 
+        public IList<LearningMethod> LearningMethod { get; set; }
+
         public IList<CourseType> CourseType { get; set; }
+
+        public IList<int> SectorIds { get; set; }
+
+        public IList<EducationLevel> EducationLevel { get; set; }
 
         public IList<AttendancePattern> CourseStudyTime { get; set; }
 

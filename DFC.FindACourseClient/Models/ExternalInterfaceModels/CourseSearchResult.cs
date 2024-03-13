@@ -7,5 +7,7 @@ namespace DFC.FindACourseClient
         public IEnumerable<Course> Courses { get; set; }
 
         public CourseSearchResultProperties ResultProperties { get; set; } = new CourseSearchResultProperties();
+
+        public List<string> AttachedSectorIds { get; set; }
     }
 }

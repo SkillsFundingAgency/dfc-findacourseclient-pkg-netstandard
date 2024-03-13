@@ -80,6 +80,7 @@ namespace DFC.FindACourseClient
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Course>>(apiResult?.Results),
+                AttachedSectorIds = apiResult?.Facets?.SectorId?.Select(s => s.Value).ToList() ?? new List<string>(),
             };
         }
 
@@ -103,6 +104,7 @@ namespace DFC.FindACourseClient
                     OrderedBy = courseSearchProperties.OrderedBy,
                 },
                 Courses = mapper.Map<List<Comp.Course>>(apiResult?.Results),
+                AttachedSectorIds = apiResult?.Facets?.SectorId?.Select(s => s.Value).ToList() ?? new List<string>(),
             };
         }
 
@@ -144,6 +146,13 @@ namespace DFC.FindACourseClient
             return mapper.Map<Comp.TLevelDetails>(apiResult);
         }
 
+        public async Task<List<Sector>> GetSectorsAsync()
+        {
+            var apiResult = await findACourseClient.SectorsGetAsync();
+
+            return apiResult;
+        }
+
         private static int GetTotalPages(int totalResults, int pageSize)
         {
             return (int)Math.Ceiling((decimal)totalResults / pageSize);
@@ -160,7 +169,8 @@ namespace DFC.FindACourseClient
             {
                 SubjectKeyword = request,
                 StartDateFrom = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc).ToString("o"),
-                DeliveryModes = CourseType.All.MapToDeliveryModes(),
+                CourseTypes = CourseType.All.MapToCourseTypes(),
+                DeliveryModes = LearningMethod.All.MapToDeliveryModes(),
                 Limit = 20,
                 Start = 0,
                 SortBy = (int)CourseSearchOrderBy.Relevance,
@@ -182,7 +192,7 @@ namespace DFC.FindACourseClient
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
-                DeliveryModes = input.Filters.CourseType.MapToDeliveryModes(),
+                DeliveryModes = input.Filters.LearningMethod.MapToDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToStudyModes(),
                 Town = input.Filters?.Town,
                 Postcode = input.Filters?.PostCode,
@@ -191,6 +201,9 @@ namespace DFC.FindACourseClient
                 SubjectKeyword = input.Filters.SearchTerm,
                 ProviderName = input.Filters?.Provider,
                 CampaignCode = input.Filters?.CampaignCode,
+                CourseTypes = input.Filters?.CourseType.MapToCourseTypes(),
+                SectorIds = input.Filters?.SectorIds,
+                EducationLevels = input.Filters.EducationLevel.MapToEducationLevels(),
             };
         }
 
@@ -201,7 +214,7 @@ namespace DFC.FindACourseClient
                 Distance = input.Filters.DistanceSpecified ? input.Filters.Distance : default,
                 Start = input.Count * (input.Page - 1),
                 Limit = input.Count,
-                DeliveryModes = input.Filters.CourseType.MapToCompositeDeliveryModes(),
+                DeliveryModes = input.Filters.LearningMethod.MapToCompositeDeliveryModes(),
                 StudyModes = input.Filters.CourseHours.MapToCompositeStudyModes(),
                 AttendancePatterns = input.Filters.CourseStudyTime.MapToCompositeAttendancePattern(),
                 QualificationLevels = input.Filters.QualificationLevels,
@@ -215,6 +228,9 @@ namespace DFC.FindACourseClient
                 Longitude = input.Filters.Longitude,
                 Latitude = input.Filters.Latitude,
                 CampaignCode = input.Filters?.CampaignCode,
+                CourseTypes = input.Filters.CourseType.MapToCompositeCourseTypes(),
+                SectorIds = input.Filters?.SectorIds.ToList(),
+                EducationLevels = input.Filters.EducationLevel.MapToCompositeEducationLevels(),
             };
         }
     }

@@ -49,5 +49,13 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public bool National { get; set; }
 
         public bool HasCampaignCode { get; set; }
+
+        public string Sector { get; set; }
+
+        public string CourseType { get; set; }
+
+        public string EducationLevel { get; set; }
+
+        public string AwardingBody { get; set; }
     }
 }

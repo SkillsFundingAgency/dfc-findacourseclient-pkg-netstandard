@@ -6,62 +6,80 @@ namespace DFC.FindACourseClient
 {
     internal static class CourseTypeExtensions
     {
-        internal static List<DeliveryMode> MapToDeliveryModes(this CourseType courseTypes)
+        internal static List<CourseType> MapToCourseTypes(this CourseType courseType)
         {
-            var result = new List<DeliveryMode>();
-            switch (courseTypes)
+            var result = new List<CourseType>();
+            switch (courseType)
             {
-                case CourseType.BlendedLearning:
-                    result.Add(DeliveryMode.BlendedLearning);
+                case CourseType.EssentialSkills:
+                    result.Add(CourseType.EssentialSkills);
                     break;
 
-                case CourseType.ClassroomBased:
-                    result.Add(DeliveryMode.ClassroomBased);
+                case CourseType.TLevels:
+                    result.Add(CourseType.TLevels);
                     break;
 
-                case CourseType.Online:
-                    result.Add(DeliveryMode.Online);
+                case CourseType.HTQs:
+                    result.Add(CourseType.HTQs);
                     break;
 
-                case CourseType.WorkBased:
-                    result.Add(DeliveryMode.WorkBased);
+                case CourseType.FreeCoursesForJobs:
+                    result.Add(CourseType.FreeCoursesForJobs);
                     break;
+
+                case CourseType.Multiply:
+                    result.Add(CourseType.Multiply);
+                    break;
+
+                case CourseType.SkillsBootcamp:
+                    result.Add(CourseType.SkillsBootcamp);
+                    break;
+
 
                 case CourseType.All:
                 default:
-                    result.Add(DeliveryMode.BlendedLearning);
-                    result.Add(DeliveryMode.ClassroomBased);
-                    result.Add(DeliveryMode.WorkBased);
-                    result.Add(DeliveryMode.Online);
-                    result.Add(DeliveryMode.Undefined);
+                    result.Add(CourseType.EssentialSkills);
+                    result.Add(CourseType.TLevels);
+                    result.Add(CourseType.HTQs);
+                    result.Add(CourseType.FreeCoursesForJobs);
+                    result.Add(CourseType.Multiply);
+                    result.Add(CourseType.SkillsBootcamp);
                     break;
             }
 
             return result.Distinct().ToList();
         }
 
-        internal static List<DeliveryMode> MapToCompositeDeliveryModes(this IList<Comp.CourseType> courseTypes)
+        internal static List<CourseType> MapToCompositeCourseTypes(this IList<Comp.CourseType> courseTypes)
         {
-            var deliveryModeList = new List<DeliveryMode>();
+            var result = new List<CourseType>();
 
             foreach (var item in courseTypes)
             {
                 switch (item)
                 {
-                    case Comp.CourseType.BlendedLearning:
-                        deliveryModeList.Add(DeliveryMode.BlendedLearning);
+                    case Comp.CourseType.EssentialSkills:
+                        result.Add(CourseType.EssentialSkills);
                         break;
 
-                    case Comp.CourseType.ClassroomBased:
-                        deliveryModeList.Add(DeliveryMode.ClassroomBased);
+                    case Comp.CourseType.TLevels:
+                        result.Add(CourseType.TLevels);
                         break;
 
-                    case Comp.CourseType.Online:
-                        deliveryModeList.Add(DeliveryMode.Online);
+                    case Comp.CourseType.HTQs:
+                        result.Add(CourseType.HTQs);
                         break;
 
-                    case Comp.CourseType.WorkBased:
-                        deliveryModeList.Add(DeliveryMode.WorkBased);
+                    case Comp.CourseType.FreeCoursesForJobs:
+                        result.Add(CourseType.FreeCoursesForJobs);
+                        break;
+
+                    case Comp.CourseType.Multiply:
+                        result.Add(CourseType.Multiply);
+                        break;
+
+                    case Comp.CourseType.SkillsBootcamp:
+                        result.Add(CourseType.SkillsBootcamp);
                         break;
 
                     case Comp.CourseType.All:
@@ -70,7 +88,7 @@ namespace DFC.FindACourseClient
                 }
             }
 
-            return deliveryModeList.Distinct().ToList();
+            return result.Distinct().ToList();
         }
     }
 }
