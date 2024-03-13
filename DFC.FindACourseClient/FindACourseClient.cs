@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -158,6 +159,37 @@ namespace DFC.FindACourseClient
             finally
             {
                 auditService.CreateAudit(tLevelId, responseContent, correlationId);
+            }
+        }
+
+        public async Task<List<Sector>> SectorsGetAsync()
+        {
+            var responseContent = string.Empty;
+            try
+            {
+                var url = $"{courseSearchClientSettings.CourseSearchSvcSettings.ServiceEndpoint}sectors";
+                logger.LogDebug($"Getting Sectors  : {url}");
+
+                var response = await httpClient.GetAsync(url).ConfigureAwait(false);
+                responseContent = await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+
+                logger.LogDebug($"Received response {response?.StatusCode} for url : {url}");
+                if (!(response?.IsSuccessStatusCode).GetValueOrDefault())
+                {
+                    logger?.LogError($"Error status {response?.StatusCode},  Getting API data for request :'{url}' \nResponse : {responseContent}");
+                    response?.EnsureSuccessStatusCode();
+                }
+
+                return JsonConvert.DeserializeObject<List<Sector>>(responseContent, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex, $"Exception getting API data for Sectors");
+                return null;
+            }
+            finally
+            {
+                auditService.CreateAudit(null, responseContent, correlationId);
             }
         }
     }

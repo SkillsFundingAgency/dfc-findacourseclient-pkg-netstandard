@@ -9,6 +9,6 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
 
         public CourseSearchResultProperties ResultProperties { get; set; } = new CourseSearchResultProperties();
 
-        public List<Sector> AttachedSectors { get; set; }
+        public List<string> AttachedSectorIds { get; set; }
     }
 }

@@ -62,5 +62,14 @@ namespace DFC.FindACourseClient.IntegrationTests
 
             detailsResponse.Course.CourseId.Should().Be(courseGetRequest.CourseId.ToString());
         }
+
+        [Fact]
+        public async Task SectorsGet()
+        {
+            var sectorsResponse = await findACourseClient.SectorsGetAsync().ConfigureAwait(false);
+
+            sectorsResponse.Should().NotBeNull();
+            sectorsResponse.Count.Should().BeGreaterThan(0);
+        }
     }
 }
