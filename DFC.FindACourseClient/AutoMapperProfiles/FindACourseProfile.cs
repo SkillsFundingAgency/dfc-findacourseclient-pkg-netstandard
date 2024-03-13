@@ -47,7 +47,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
                 .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn))
                 .ForMember(d => d.Sector, s => s.MapFrom(f => f.Course.SectorDescription))
-                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseType.GetFriendlyName()))
+                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseTypeDescription))
                 .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.Course.EducationLevel.GetFriendlyName()))
                 .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.Course.AwardingBody));
 
@@ -156,7 +156,6 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.FlexibleStartDate, s => s.MapFrom(f => f.FlexibleStartDate))
                 .ForMember(d => d.Title, s => s.MapFrom(f => f.CourseName))
                 .ForMember(d => d.AttendanceMode, s => s.MapFrom(f => f.DeliveryMode.GetFriendlyName()))
-                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseType.GetFriendlyName()))
                 .ForMember(d => d.AttendancePattern, s => s.MapFrom(f => f.AttendancePattern.GetFriendlyName()))
                 .ForMember(d => d.Description, s => s.MapFrom(f => f.Course.CourseDescription))
                 .ForMember(d => d.CourseWebpageLink, s => s.MapFrom(f => f.CourseURL))
@@ -184,6 +183,7 @@ namespace DFC.FindACourseClient
                 .ForMember(d => d.NextSteps, s => s.MapFrom(f => f.Course.WhereNext))
                 .ForMember(d => d.WhatYoullLearn, s => s.MapFrom(f => f.Course.WhatYoullLearn))
                 .ForMember(d => d.HowYoullLearn, s => s.MapFrom(f => f.Course.HowYoullLearn))
+                .ForMember(d => d.CourseType, s => s.MapFrom(f => f.Course.CourseTypeDescription))
                 .ForMember(d => d.Sector, s => s.MapFrom(f => f.Course.SectorDescription))
                 .ForMember(d => d.EducationLevel, s => s.MapFrom(f => f.Course.EducationLevelDescription))
                 .ForMember(d => d.AwardingBody, s => s.MapFrom(f => f.Course.AwardingBody));
