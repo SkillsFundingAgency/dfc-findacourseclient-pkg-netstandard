@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DFC.FindACourseClient;
+using System.Collections.Generic;
 
 namespace DFC.CompositeInterfaceModels.FindACourseClient
 {
@@ -7,5 +8,7 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         public IEnumerable<Course> Courses { get; set; }
 
         public CourseSearchResultProperties ResultProperties { get; set; } = new CourseSearchResultProperties();
+
+        public List<string> AttachedSectorIds { get; set; }
     }
 }

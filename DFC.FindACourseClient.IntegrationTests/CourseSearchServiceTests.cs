@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -69,7 +70,22 @@ namespace DFC.FindACourseClient.IntegrationTests
         {
             var courseSearchRequest = new CourseSearchProperties
             {
-                Filters = new CourseSearchFilters { SearchTerm = "Surveying" },
+                Filters = new CourseSearchFilters { SearchTerm = "Driving Test Theory", LearningMethod = LearningMethod.BlendedLearning },
+                OrderedBy = CourseSearchOrderBy.Relevance,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task CourseSearch_NonLars_Course()
+        {
+            var courseSearchRequest = new CourseSearchProperties
+            {
+                Filters = new CourseSearchFilters { SearchTerm = "Driving", SectorIds = new List<int> { 4, 8 }, CourseType = CourseType.SkillsBootcamp, EducationLevel = EducationLevel.Two },
                 OrderedBy = CourseSearchOrderBy.Relevance,
             };
 
@@ -110,6 +126,21 @@ namespace DFC.FindACourseClient.IntegrationTests
         }
 
         [Fact]
+        public async Task CompositeCourseSearch_NonLars()
+        {
+            var courseSearchRequest = new CUIModels.CourseSearchProperties
+            {
+                Filters = new CUIModels.CourseSearchFilters { SearchTerm = "Test", CourseType = new List<CUIModels.CourseType> { CUIModels.CourseType.SkillsBootcamp } },
+                OrderedBy = CUIModels.CourseSearchOrderBy.RecentlyAdded,
+            };
+
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
+
+            searchResponse.Should().NotBeNull();
+        }
+
+        [Fact]
         public async Task CompositeTLevelSDetails()
         {
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
@@ -126,7 +157,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                 //Location for Birmingham
                 Filters = new CUIModels.CourseSearchFilters { Longitude = -1.877556, Latitude = 52.468725, Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
@@ -143,7 +174,7 @@ namespace DFC.FindACourseClient.IntegrationTests
                 //Postcode for Newcastle
                 Filters = new CUIModels.CourseSearchFilters { PostCode = "NE1 1AD", Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
@@ -160,7 +191,7 @@ namespace DFC.FindACourseClient.IntegrationTests
             {
                 Filters = new CUIModels.CourseSearchFilters { Town = "Derby", Distance = 5, DistanceSpecified = true },
             };
-            courseSearchRequest.Filters.CourseType.Add(CUIModels.CourseType.ClassroomBased);
+            courseSearchRequest.Filters.LearningMethod.Add(CUIModels.LearningMethod.ClassroomBased);
 
             var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
             var searchResponse = await courseSearchService.SearchCoursesAsync(courseSearchRequest).ConfigureAwait(false);
@@ -168,6 +199,15 @@ namespace DFC.FindACourseClient.IntegrationTests
             searchResponse.Should().NotBeNull();
             searchResponse.Courses.OrderByDescending(c => c.LocationDetails.Distance).FirstOrDefault().Location
                 .ToUpper(System.Globalization.CultureInfo.InvariantCulture).Should().Contain("DERBY");
+        }
+
+        [Fact]
+        public async Task GetSectors()
+        {
+            var courseSearchService = new CourseSearchApiService(findACourseClient, auditService, mapper);
+            var sectors = await courseSearchService.GetSectorsAsync().ConfigureAwait(false);
+
+            sectors.Should().NotBeNull();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace DFC.CompositeInterfaceModels.FindACourseClient
 {
@@ -7,16 +10,22 @@ namespace DFC.CompositeInterfaceModels.FindACourseClient
         [Display(Name = "All", Order = 1)]
         All,
 
-        [Display(Name = "Classroom based", Order = 2)]
-        ClassroomBased,
+        [Display(Name = "Essential Skills", Order = 2)]
+        EssentialSkills,
 
-        [Display(Name = "Online", Order = 3)]
-        Online,
+        [Display(Name = "T-levels", Order = 3)]
+        TLevels,
 
-        [Display(Name = "Work based", Order = 4)]
-        WorkBased,
+        [Display(Name = "HTQs", Order = 4)]
+        HTQs,
 
-        [Display(Name = "Blended learning", Order = 5)]
-        BlendedLearning,
+        [Display(Name = "Free courses for Jobs", Order = 5)]
+        FreeCoursesForJobs,
+
+        [Display(Name = "Multiply", Order = 6)]
+        Multiply,
+
+        [Display(Name = "Skills Bootcamp", Order = 7)]
+        SkillsBootcamp,
     }
 }

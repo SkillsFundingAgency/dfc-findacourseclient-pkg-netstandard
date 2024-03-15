@@ -17,5 +17,7 @@ namespace DFC.FindACourseClient
         Task<Comp.CourseSearchResult> SearchCoursesAsync(Comp.CourseSearchProperties courseSearchProperties);
 
         Task<Comp.TLevelDetails> GetTLevelDetailsAsync(string tLevelId);
+
+        Task<List<Sector>> GetSectorsAsync();
     }
 }

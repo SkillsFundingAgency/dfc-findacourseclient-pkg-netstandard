@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DFC.FindACourseClient
@@ -10,5 +10,7 @@ namespace DFC.FindACourseClient
         Task<CourseRunDetailResponse> CourseGetAsync(CourseGetRequest courseGetRequest);
 
         Task<TLevelDetailResponse> TLevelGetAsync(string tLevelId);
+
+        Task<List<Sector>> SectorsGetAsync();
     }
 }
